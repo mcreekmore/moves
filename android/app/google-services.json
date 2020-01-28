@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1084666004751",
+    "firebase_url": "https://moves-df3fb.firebaseio.com",
+    "project_id": "moves-df3fb",
+    "storage_bucket": "moves-df3fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084666004751:android:b8c1ef650f04db3e23ea7a",
+        "android_client_info": {
+          "package_name": "io.creekmore.moves"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1084666004751-eq43aopk9t51eto69cguddvms1h5jucj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.creekmore.moves",
+            "certificate_hash": "b1ff240323eb49772ce919d41214084a8a645341"
+          }
+        },
+        {
+          "client_id": "1084666004751-i9o7d0v28qhkqqmc5lt17nqavjju3ql2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1084666004751-i9o7d0v28qhkqqmc5lt17nqavjju3ql2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
