@@ -1,5 +1,6 @@
 import 'package:moves/app_theme.dart';
 import 'package:moves/screens/map_screen.dart';
+import 'package:moves/screens_ui/suggest_location_screen.dart';
 import '../widgets/custom_drawer/drawer_user_controller.dart';
 import '../widgets/custom_drawer/home_drawer.dart';
 import 'feedback_screen.dart';
@@ -29,12 +30,12 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppTheme.nearlyWhite,
+      color: AppTheme().getContainerColor(),
       child: SafeArea(
         top: false,
         bottom: false,
         child: Scaffold(
-          backgroundColor: AppTheme.nearlyWhite,
+          backgroundColor: AppTheme().getContainerColor(),
           body: DrawerUserController(
             screenIndex: drawerIndex,
             drawerWidth: MediaQuery.of(context).size.width * 0.75,
@@ -77,6 +78,10 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       } else if (drawerIndex == DrawerIndex.About) {
         setState(() {
           screenView = AboutMe();
+        });
+      } else if (drawerIndex == DrawerIndex.Suggest) {
+        setState(() {
+          screenView = SuggestLocationScreen();
         });
       } else {
         //do in your way......

@@ -1,6 +1,6 @@
-# moves
+# Moves
 
-A new Flutter project.
+A Flutter project for local event tracking.
 
 ## Getting Started
 

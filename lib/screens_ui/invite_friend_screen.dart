@@ -70,7 +70,11 @@ class _InviteFriendState extends State<InviteFriend> {
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              AppTheme().toggleTheme();
+                            });
+                          },
                           child: Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

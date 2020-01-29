@@ -29,13 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
-  bottom_navy_bar:
-    dependency: "direct main"
+  bson:
+    dependency: transitive
     description:
-      name: bottom_navy_bar
+      name: bson
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.3.2"
+    version: "0.3.2"
   charcode:
     dependency: transitive
     description:
@@ -134,6 +134,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1+2"
+  fixnum:
+    dependency: transitive
+    description:
+      name: fixnum
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.11"
   floating_search_bar:
     dependency: "direct main"
     description:
@@ -226,6 +233,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.1+1"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.11.4"
   matcher:
     dependency: transitive
     description:
@@ -240,6 +254,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
+  mongo_dart:
+    dependency: "direct main"
+    description:
+      name: mongo_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
+  mongo_dart_query:
+    dependency: transitive
+    description:
+      name: mongo_dart_query
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1"
+  more:
+    dependency: transitive
+    description:
+      name: more
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.18.2"
   nested:
     dependency: transitive
     description:
@@ -275,6 +310,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  pool:
+    dependency: transitive
+    description:
+      name: pool
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.0"
   provider:
     dependency: "direct main"
     description:
@@ -289,6 +331,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  rflutter_alert:
+    dependency: "direct main"
+    description:
+      name: rflutter_alert
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   rxdart:
     dependency: "direct main"
     description:
@@ -296,13 +345,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.23.1"
-  search_map_place:
-    dependency: "direct main"
-    description:
-      name: search_map_place
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -392,6 +434,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.0+2"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.4"
   vector_math:
     dependency: transitive
     description:

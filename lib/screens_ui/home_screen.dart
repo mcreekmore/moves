@@ -35,7 +35,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.white,
+      //backgroundColor: AppTheme.white,
+      backgroundColor: AppTheme().getContainerColor(),
       body: FutureBuilder<bool>(
         future: getData(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
@@ -133,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   'Moves',
                   style: TextStyle(
                     fontSize: 22,
-                    color: AppTheme.darkText,
+                    color: AppTheme().getTextColor(),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -153,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       BorderRadius.circular(AppBar().preferredSize.height),
                   child: Icon(
                     multiple ? Icons.dashboard : Icons.view_agenda,
-                    color: AppTheme.dark_grey,
+                    color: AppTheme().getIconColor(),
                   ),
                   onTap: () {
                     setState(() {
