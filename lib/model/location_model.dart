@@ -7,6 +7,8 @@ class LocationModel {
   String city;
   String street;
   String zip;
+  int lat;
+  int lon;
   String email;
   String phone;
   String website;
@@ -20,6 +22,8 @@ class LocationModel {
     this.city,
     this.street,
     this.zip,
+    this.lat,
+    this.lon,
     this.email,
     this.phone,
     this.website,

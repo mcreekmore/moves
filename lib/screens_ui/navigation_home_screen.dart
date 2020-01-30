@@ -9,9 +9,9 @@ import 'home_screen.dart';
 import 'invite_friend_screen.dart';
 import 'about_me_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:moves/store/store.dart';
-import 'package:moves/model/location_model.dart';
+// import 'package:provider/provider.dart';
+// import 'package:moves/store/store.dart';
+// import 'package:moves/model/location_model.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -28,33 +28,14 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     drawerIndex = DrawerIndex.HOME;
     screenView = const MyHomePage();
     super.initState();
-    getLocations();
+    //getLocations();
   }
 
-  void getLocations() async {
-    List<LocationModel> parsedLocations = [];
-    List<dynamic> locations =
-        await Provider.of<Store>(context, listen: false).getData();
-    //print(locations);
-    for (var location in locations) {
-      parsedLocations.add(
-        LocationModel(
-          name: location["name"],
-          description: location["description"],
-          type: location["type"],
-          country: location["country"],
-          region: location["region"],
-          city: location["city"],
-          street: location["street"],
-          zip: location["zip"],
-          email: location["email"],
-          phone: location["phone"],
-          website: location["website"],
-        ),
-      );
-    }
-    print(parsedLocations[0].website);
-  }
+  // void getLocations() async {
+  //   List<LocationModel> locations =
+  //       await Provider.of<Store>(context, listen: false).getData();
+  //   //print(locations[0].name);
+  // }
 
   @override
   Widget build(BuildContext context) {

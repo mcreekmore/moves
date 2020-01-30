@@ -13,23 +13,23 @@ class HomeList {
   Widget navigateScreen;
   String imagePath;
 
-  static List<HomeList> homeList = [];
+  //static List<HomeList> homeList = [];
 
   // static List<HomeList> homeList = [
-  // HomeList(
-  //   imagePath: 'assets/hotel/hotel_booking.png',
-  //   //navigateScreen: HotelHomeScreen(),
-  //   navigateScreen: Container(),
-  // ),
-  // HomeList(
-  //   imagePath: 'assets/fitness_app/fitness_app.png',
-  //   //navigateScreen: FitnessAppHomeScreen(),
-  //   navigateScreen: Container(),
-  // ),
-  // HomeList(
-  //   imagePath: 'assets/design_course/design_course.png',
-  //   //navigateScreen: DesignCourseHomeScreen(),
-  //   navigateScreen: Container(),
-  // ),
+  //   HomeList(
+  //     imagePath: 'assets/hotel/hotel_booking.png',
+  //     //navigateScreen: HotelHomeScreen(),
+  //     navigateScreen: Container(),
+  //   ),
+  //   HomeList(
+  //     imagePath: 'assets/fitness_app/fitness_app.png',
+  //     //navigateScreen: FitnessAppHomeScreen(),
+  //     navigateScreen: Container(),
+  //   ),
+  //   HomeList(
+  //     imagePath: 'assets/design_course/design_course.png',
+  //     //navigateScreen: DesignCourseHomeScreen(),
+  //     navigateScreen: Container(),
+  //   ),
   // ];
 }

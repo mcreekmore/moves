@@ -12,20 +12,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
-  List<HomeList> homeList = HomeList.homeList;
+  //List<HomeList> homeList = HomeList.homeList;
+
   AnimationController animationController;
   bool multiple = true;
+  //List<HomeList> homeList = [];
 
   @override
   void initState() {
     // calls API for list of locations
-    //homeList = await Provider.of<Store>(context).getData();
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     super.initState();
     //getLocations();
     //WidgetsBinding.instance.addPostFrameCallback((_) {
-    //getLocations();
+    //getHomeList();
     //});
   }
 
@@ -34,10 +35,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return true;
   }
 
-  void getLocations() async {
-    var locations = await Provider.of<Store>(context, listen: false).getData();
-    print(locations);
-  }
+  // void getHomeList() {
+  //   //var locations = await Provider.of<Store>(context, listen: false).getData();
+  //   homeList = Provider.of<Store>(context).homeList;
+  //   print(homeList);
+  // }
 
   @override
   void dispose() {
@@ -77,9 +79,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             children: List<Widget>.generate(
-                              homeList.length,
+                              Provider.of<Store>(context).homeList.length,
                               (int index) {
-                                final int count = homeList.length;
+                                final int count =
+                                    Provider.of<Store>(context).homeList.length;
                                 final Animation<double> animation =
                                     Tween<double>(begin: 0.0, end: 1.0).animate(
                                   CurvedAnimation(
@@ -92,13 +95,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                 return HomeListView(
                                   animation: animation,
                                   animationController: animationController,
-                                  listData: homeList[index],
+                                  listData: Provider.of<Store>(context)
+                                      .homeList[index],
                                   callBack: () {
                                     Navigator.push<dynamic>(
                                       context,
                                       MaterialPageRoute<dynamic>(
                                         builder: (BuildContext context) =>
-                                            homeList[index].navigateScreen,
+                                            Provider.of<Store>(context)
+                                                .homeList[index]
+                                                .navigateScreen,
                                       ),
                                     );
                                   },

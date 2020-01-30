@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:http/http.dart' as http;
+import 'package:geocoder/geocoder.dart';
+
 //import 'package:http/http.dart' as http;
 
 class SuggestLocationScreen extends StatefulWidget {
@@ -370,30 +373,47 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                                   blurRadius: 8.0),
                             ],
                           ),
+                          // suggest button
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _locationController.clear();
-                                  _descriptionController.clear();
-                                  _countryController.clear();
-                                  _regionController.clear();
-                                  _cityController.clear();
-                                  _streetController.clear();
-                                  _zipController.clear();
-                                  _emailController.clear();
-                                  _phoneController.clear();
-                                  _websiteController.clear();
-                                  Alert(
-                                    context: context,
-                                    title: "Thank you!",
-                                    desc:
-                                        "Your suggested place has been successfully sent.",
-                                    image: Image.asset(
-                                        "assets/images/good-job.png"),
-                                  ).show();
-                                });
+                              onTap: () async {
+                                if (locationName == '' ||
+                                    selectedType == '' ||
+                                    country == '' ||
+                                    region == '' ||
+                                    city == '' ||
+                                    street == '' ||
+                                    zip == '' ||
+                                    email == '' ||
+                                    phone == '') {
+                                  setState(() {
+                                    Alert(
+                                      context: context,
+                                      title: "Neccessary Fields Required",
+                                      desc:
+                                          "All fields marked with a * are required",
+                                      image: Image.asset(
+                                          "assets/images/error.png"),
+                                    ).show();
+                                  });
+                                } else {
+                                  //var res = await makePostRequest();
+                                  await makePostRequest();
+                                  //print(res);
+                                  clearTextFields();
+
+                                  setState(() {
+                                    Alert(
+                                      context: context,
+                                      title: "Thank you!",
+                                      desc:
+                                          "Your suggested place has been successfully sent.",
+                                      image: Image.asset(
+                                          "assets/images/good-job.png"),
+                                    ).show();
+                                  });
+                                }
                               },
                               child: Center(
                                 child: Row(
@@ -440,21 +460,13 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                                   blurRadius: 8.0),
                             ],
                           ),
+                          // clear button
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
                                 setState(() {
-                                  _locationController.clear();
-                                  _descriptionController.clear();
-                                  _countryController.clear();
-                                  _regionController.clear();
-                                  _cityController.clear();
-                                  _streetController.clear();
-                                  _zipController.clear();
-                                  _emailController.clear();
-                                  _phoneController.clear();
-                                  _websiteController.clear();
+                                  clearTextFields();
                                 });
                               },
                               child: Center(
@@ -517,4 +529,50 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
   String email = '';
   String phone = '';
   String website = '';
+
+  void clearTextFields() {
+    _locationController.clear();
+    _descriptionController.clear();
+    _countryController.clear();
+    _regionController.clear();
+    _cityController.clear();
+    _streetController.clear();
+    _zipController.clear();
+    _emailController.clear();
+    _phoneController.clear();
+    _websiteController.clear();
+  }
+
+  dynamic calcLatLon() async {
+    final query = "$street, $region $city";
+    var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    var first = addresses.first;
+    //print("${first.featureName} : ${first.coordinates}");
+    return first.coordinates;
+  }
+
+  Future makePostRequest() async {
+    Coordinates coordinates = await calcLatLon();
+    //print(coordinates.runtimeType);
+
+    var url = 'https://creekmore.io/api/locations';
+    await http.post(url, body: {
+      'name': locationName,
+      'description': description,
+      'type': selectedType,
+      'country': country,
+      'region': region,
+      'city': city,
+      'street': street,
+      'zip': zip,
+      'lat': coordinates.latitude.toString(),
+      'lon': coordinates.longitude.toString(),
+      'email': email,
+      'phone': phone,
+      'website': website,
+    }); // if you want to print, add 'var response =' before the await
+    // print('Response status: ${response.statusCode}');
+    // print('Response body: ${response.body}');
+    // print(await http.read('https://creekmore.io/api/locations'));
+  }
 }
