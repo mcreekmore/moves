@@ -41,7 +41,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
   @override
   void initState() {
     // disable swipe on mapscreen
-    print(widget.screenIndex);
+    //print(widget.screenIndex);
     if (widget.screenIndex.toString() == 'Map') {
       isMapScreen = true;
     }

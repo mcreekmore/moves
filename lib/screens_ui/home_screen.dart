@@ -1,9 +1,11 @@
 import 'package:moves/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../model/homelist.dart';
+import 'package:provider/provider.dart';
+import 'package:moves/store/store.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key}) : super(key: key);
+  const MyHomePage();
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -16,14 +18,25 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    // calls API for list of locations
+    //homeList = await Provider.of<Store>(context).getData();
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     super.initState();
+    //getLocations();
+    //WidgetsBinding.instance.addPostFrameCallback((_) {
+    getLocations();
+    //});
   }
 
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 0));
     return true;
+  }
+
+  void getLocations() async {
+    var locations = await Provider.of<Store>(context, listen: false).getData();
+    print(locations);
   }
 
   @override

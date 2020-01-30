@@ -2,22 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:moves/app_theme.dart';
-import 'package:mongo_dart/mongo_dart.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert'; // JSON parser
+import '../model/homelist.dart';
+
 //import 'dart:collection';
 
 class Store with ChangeNotifier {
   Store();
   AppTheme appTheme = AppTheme();
+  // development uri
+  var uri = Uri.http('10.0.2.2:3000', '/api/locations/approved');
+
+  // prod uri
+  // var uri = Uri.http('creekmore.io', '/api/locations/approved');
 
   // state
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseUser signedInUser;
+  List<HomeList> homeList = [];
   // getters
 
   // mutators
 
   // methods
+
+  Future<dynamic> getData() async {
+    http.Response response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      var data = response.body;
+      print(data);
+
+      return jsonDecode(data); // this should ALWAYS be dynamic
+    } else {
+      print(response.statusCode);
+      return response.statusCode;
+    }
+  }
+
   Future<String> signInWithEmail({String email, String password}) async {
     try {
       final AuthResult result = await _auth.signInWithEmailAndPassword(

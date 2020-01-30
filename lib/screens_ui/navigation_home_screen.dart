@@ -9,6 +9,8 @@ import 'home_screen.dart';
 import 'invite_friend_screen.dart';
 import 'about_me_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:moves/store/store.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -25,6 +27,12 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     drawerIndex = DrawerIndex.HOME;
     screenView = const MyHomePage();
     super.initState();
+    getLocations();
+  }
+
+  void getLocations() async {
+    var locations = await Provider.of<Store>(context, listen: false).getData();
+    print(locations);
   }
 
   @override

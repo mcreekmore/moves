@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+//import 'package:http/http.dart' as http;
 
 class SuggestLocationScreen extends StatefulWidget {
   @override
@@ -316,7 +317,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                       phone = phoneTyped;
                     },
                     decoration: const InputDecoration(
-                      labelText: 'Phone',
+                      labelText: '*Phone',
                       border: OutlineInputBorder(),
                     ),
                     validator: (value) {
