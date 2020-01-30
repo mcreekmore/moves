@@ -11,6 +11,7 @@ import 'about_me_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
+import 'package:moves/model/location_model.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -31,8 +32,28 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   }
 
   void getLocations() async {
-    var locations = await Provider.of<Store>(context, listen: false).getData();
-    print(locations);
+    List<LocationModel> parsedLocations = [];
+    List<dynamic> locations =
+        await Provider.of<Store>(context, listen: false).getData();
+    //print(locations);
+    for (var location in locations) {
+      parsedLocations.add(
+        LocationModel(
+          name: location["name"],
+          description: location["description"],
+          type: location["type"],
+          country: location["country"],
+          region: location["region"],
+          city: location["city"],
+          street: location["street"],
+          zip: location["zip"],
+          email: location["email"],
+          phone: location["phone"],
+          website: location["website"],
+        ),
+      );
+    }
+    print(parsedLocations[0].website);
   }
 
   @override

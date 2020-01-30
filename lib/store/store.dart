@@ -33,7 +33,7 @@ class Store with ChangeNotifier {
 
     if (response.statusCode == 200) {
       var data = response.body;
-      print(data);
+      //print(data);
 
       return jsonDecode(data); // this should ALWAYS be dynamic
     } else {

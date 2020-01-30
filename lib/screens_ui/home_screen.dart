@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     super.initState();
     //getLocations();
     //WidgetsBinding.instance.addPostFrameCallback((_) {
-    getLocations();
+    //getLocations();
     //});
   }
 
