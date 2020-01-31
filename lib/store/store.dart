@@ -5,12 +5,18 @@ import 'package:moves/app_theme.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // JSON parser
 import '../model/homelist.dart';
-import 'package:moves/model/location_model.dart';
+//import 'package:moves/model/location_post_model.dart';
+import 'package:moves/model/location_loaded_model.dart';
+import 'package:latlong/latlong.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:moves/screens_ui/location_screen.dart';
 
 //import 'dart:collection';
 
 class Store with ChangeNotifier {
-  Store();
+  Store() {
+    initData();
+  }
   AppTheme appTheme = AppTheme();
   // development uri
   //var uri = Uri.http('10.0.2.2:3000', '/api/locations/approved');
@@ -22,24 +28,9 @@ class Store with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseUser signedInUser;
-  List<HomeList> homeList = [
-    HomeList(
-      imagePath: 'assets/hotel/hotel_booking.png',
-      //navigateScreen: HotelHomeScreen(),
-      navigateScreen: Container(),
-    ),
-    HomeList(
-      imagePath: 'assets/fitness_app/fitness_app.png',
-      //navigateScreen: FitnessAppHomeScreen(),
-      navigateScreen: Container(),
-    ),
-    HomeList(
-      imagePath: 'assets/design_course/design_course.png',
-      //navigateScreen: DesignCourseHomeScreen(),
-      navigateScreen: Container(),
-    ),
-  ];
-  List<LocationModel> locations = [];
+  List<HomeList> homeList = [];
+  List<LocationLoadedModel> locations = [];
+  LatLng usersLocation = LatLng(0, 0);
 
   // getters
 
@@ -47,7 +38,12 @@ class Store with ChangeNotifier {
 
   // methods
 
-  Future<List<LocationModel>> getData() async {
+  Future initData() async {
+    await getCurrentLocation();
+    await getData();
+  }
+
+  Future<List<LocationLoadedModel>> getData() async {
     http.Response response = await http.get(uri);
 
     if (response.statusCode == 200) {
@@ -59,8 +55,10 @@ class Store with ChangeNotifier {
       List<dynamic> unparsedLocations = jsonDecode(data);
       //print(locations);
       for (var location in unparsedLocations) {
+        double distance = calcDistance(location);
+
         locations.add(
-          LocationModel(
+          LocationLoadedModel(
             name: location["name"],
             description: location["description"],
             type: location["type"],
@@ -74,15 +72,70 @@ class Store with ChangeNotifier {
             email: location["email"],
             phone: location["phone"],
             website: location["website"],
+            distance: distance.toDouble(),
           ),
         );
       }
+
+      sortLocations(locations);
+
+      buildHomeList(locations);
+
       notifyListeners();
       return locations;
     } else {
       print(response.statusCode);
       return null;
     }
+  }
+
+  void sortLocations(List<LocationLoadedModel> locations) {
+    locations.sort((a, b) => a.distance.compareTo(b.distance));
+  }
+
+  Future<void> getCurrentLocation() async {
+    try {
+      Position position = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      print(position);
+      double _latitude = position.latitude;
+      double _longitude = position.longitude;
+
+      usersLocation = LatLng(_latitude, _longitude);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  double calcDistance(location) {
+    final Distance distance = new Distance();
+
+    LatLng locationCoord =
+        LatLng(location["lat"].toDouble(), location["lon"].toDouble());
+
+    final double distanceCalced =
+        distance.as(LengthUnit.Kilometer, locationCoord, usersLocation);
+
+    return distanceCalced;
+  }
+
+  void buildHomeList(locations) {
+    homeList = [];
+    for (var location in locations) {
+      homeList.add(
+        HomeList(
+          imagePath:
+              'assets/icons/${location.type.toString().toLowerCase()}.png',
+          navigateScreen: LocationScreen(
+            location: location,
+          ),
+          location: location,
+        ),
+      );
+    }
+
+    //print(homeList);
+    //return homeList;
   }
 
   Future<String> signInWithEmail({String email, String password}) async {

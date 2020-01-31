@@ -1,4 +1,4 @@
-class LocationModel {
+class LocationPostModel {
   String name;
   String description;
   String type;
@@ -7,13 +7,13 @@ class LocationModel {
   String city;
   String street;
   String zip;
-  int lat;
-  int lon;
+  double lat;
+  double lon;
   String email;
   String phone;
   String website;
 
-  LocationModel({
+  LocationPostModel({
     this.name,
     this.description,
     this.type,

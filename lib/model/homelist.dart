@@ -3,33 +3,16 @@
 // import 'package:best_flutter_ui_templates/hotel_booking/hotel_home_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'location_loaded_model.dart';
 
 class HomeList {
   HomeList({
     this.navigateScreen,
     this.imagePath = '',
+    this.location,
   });
 
   Widget navigateScreen;
   String imagePath;
-
-  //static List<HomeList> homeList = [];
-
-  // static List<HomeList> homeList = [
-  //   HomeList(
-  //     imagePath: 'assets/hotel/hotel_booking.png',
-  //     //navigateScreen: HotelHomeScreen(),
-  //     navigateScreen: Container(),
-  //   ),
-  //   HomeList(
-  //     imagePath: 'assets/fitness_app/fitness_app.png',
-  //     //navigateScreen: FitnessAppHomeScreen(),
-  //     navigateScreen: Container(),
-  //   ),
-  //   HomeList(
-  //     imagePath: 'assets/design_course/design_course.png',
-  //     //navigateScreen: DesignCourseHomeScreen(),
-  //     navigateScreen: Container(),
-  //   ),
-  // ];
+  LocationLoadedModel location;
 }

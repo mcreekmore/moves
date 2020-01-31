@@ -180,6 +180,20 @@ class AppTheme {
     color: nearlyBlack, // was lightText
   );
 
+  InputDecoration getInputDecorationTheme(
+      {@required String labelText, @required Color fillColor}) {
+    return InputDecoration(
+      labelText: labelText,
+      fillColor: fillColor,
+      filled: true,
+      border: OutlineInputBorder(
+        borderRadius: new BorderRadius.circular(25.0),
+        borderSide: new BorderSide(),
+      ),
+      //fillColor: Colors.green
+    );
+  }
+
   SystemUiOverlayStyle getSystemOverlayStyle() {
     if (darkThemeSelected) {
       return SystemUiOverlayStyle(
@@ -196,7 +210,7 @@ class AppTheme {
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness:
-            Platform.isAndroid ? Brightness.dark : Brightness.light,
+            Platform.isAndroid ? Brightness.dark : Brightness.dark,
         systemNavigationBarColor: Colors.white,
         systemNavigationBarDividerColor: Colors.grey,
         systemNavigationBarIconBrightness: Brightness.dark,

@@ -25,6 +25,9 @@ dependencies:
   rflutter_alert: ^1.0.3
   #flutter_bloc: ^0.20.0
   geocoder: ^0.2.1
+  flutter_spinkit: "^4.1.1"
+  latlong: ^0.6.1
+  geolocator: ^5.2.0
 
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0
@@ -45,6 +48,7 @@ flutter:
     - assets/design_course/
     - assets/fitness_app/
     - assets/hotel/
+    - assets/icons/
 
   fonts:
     - family: WorkSans

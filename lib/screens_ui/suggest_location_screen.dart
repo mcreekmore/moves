@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:geocoder/geocoder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 //import 'package:http/http.dart' as http;
 
@@ -19,15 +20,18 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
     super.initState();
   }
 
+  Color textInputColor = Color(0xFFb5cdfc);
+
   List<String> typesOfLocations = [
     'Restaurant',
     'Hotel',
     'Bar',
-    'Coffee',
+    'Cafe',
+    'Music Venue',
+    'Grocery',
+    'Gas Station',
     'Bank',
     'Post Office',
-    'Gas Station',
-    'Grocery',
     'Hospital',
   ];
 
@@ -44,10 +48,12 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
     }
 
     return DropdownButtonFormField(
-      decoration: const InputDecoration(
-        labelText: '*Type',
-        border: OutlineInputBorder(),
-      ),
+      // decoration: const InputDecoration(
+      //   labelText: '*Type',
+      //   border: OutlineInputBorder(),
+      // ),
+      decoration: AppTheme().getInputDecorationTheme(
+          labelText: "*Type", fillColor: Color(0xFFb5cdfc)),
       value: selectedType,
       items: dropdownItems,
       onChanged: (value) {
@@ -135,13 +141,17 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     onChanged: (String name) {
                       locationName = name;
                     },
-                    decoration: const InputDecoration(
-                      labelText: '*Location Name',
-                      border: OutlineInputBorder(),
+                    // decoration: const InputDecoration(
+                    //   labelText: '*Location Name',
+                    //   border: OutlineInputBorder(),
+                    // ),
+                    decoration: AppTheme().getInputDecorationTheme(
+                      labelText: "*Location Name",
+                      fillColor: textInputColor,
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter some text';
+                        return 'Please enter a';
                       }
                       return null;
                     },
@@ -156,9 +166,13 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     onChanged: (String desc) {
                       description = desc;
                     },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Description',
+                    // decoration: InputDecoration(
+                    //   border: OutlineInputBorder(),
+                    //   labelText: 'Description',
+                    // ),
+                    decoration: AppTheme().getInputDecorationTheme(
+                      labelText: "Description",
+                      fillColor: textInputColor,
                     ),
                   ),
                 ),
@@ -187,9 +201,13 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     onChanged: (String countryTyped) {
                       country = countryTyped;
                     },
-                    decoration: const InputDecoration(
-                      labelText: '*Country',
-                      border: OutlineInputBorder(),
+                    // decoration: const InputDecoration(
+                    //   labelText: '*Country',
+                    //   border: OutlineInputBorder(),
+                    // ),
+                    decoration: AppTheme().getInputDecorationTheme(
+                      labelText: "*Country",
+                      fillColor: textInputColor,
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -207,9 +225,13 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     onChanged: (String regionTyped) {
                       region = regionTyped;
                     },
-                    decoration: const InputDecoration(
-                      labelText: '*Region (State)',
-                      border: OutlineInputBorder(),
+                    // decoration: const InputDecoration(
+                    //   labelText: '*Region (State)',
+                    //   border: OutlineInputBorder(),
+                    // ),
+                    decoration: AppTheme().getInputDecorationTheme(
+                      labelText: "*Region (State)",
+                      fillColor: textInputColor,
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -227,9 +249,13 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     onChanged: (String cityTyped) {
                       city = cityTyped;
                     },
-                    decoration: const InputDecoration(
-                      labelText: '*City',
-                      border: OutlineInputBorder(),
+                    // decoration: const InputDecoration(
+                    //   labelText: '*City',
+                    //   border: OutlineInputBorder(),
+                    // ),
+                    decoration: AppTheme().getInputDecorationTheme(
+                      labelText: "*City",
+                      fillColor: textInputColor,
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -247,9 +273,13 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     onChanged: (String streetTyped) {
                       street = streetTyped;
                     },
-                    decoration: const InputDecoration(
-                      labelText: '*Street',
-                      border: OutlineInputBorder(),
+                    // decoration: const InputDecoration(
+                    //   labelText: '*Street',
+                    //   border: OutlineInputBorder(),
+                    // ),
+                    decoration: AppTheme().getInputDecorationTheme(
+                      labelText: "*Street",
+                      fillColor: textInputColor,
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -267,9 +297,13 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     onChanged: (String zipTyped) {
                       zip = zipTyped;
                     },
-                    decoration: const InputDecoration(
-                      labelText: '*Zip',
-                      border: OutlineInputBorder(),
+                    // decoration: const InputDecoration(
+                    //   labelText: '*Zip',
+                    //   border: OutlineInputBorder(),
+                    // ),
+                    decoration: AppTheme().getInputDecorationTheme(
+                      labelText: "*Zip",
+                      fillColor: textInputColor,
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -299,9 +333,13 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     onChanged: (String emailTyped) {
                       email = emailTyped;
                     },
-                    decoration: const InputDecoration(
-                      labelText: '*E-mail',
-                      border: OutlineInputBorder(),
+                    // decoration: const InputDecoration(
+                    //   labelText: '*E-mail',
+                    //   border: OutlineInputBorder(),
+                    // ),
+                    decoration: AppTheme().getInputDecorationTheme(
+                      labelText: "*Email",
+                      fillColor: textInputColor,
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -319,9 +357,13 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     onChanged: (String phoneTyped) {
                       phone = phoneTyped;
                     },
-                    decoration: const InputDecoration(
-                      labelText: '*Phone',
-                      border: OutlineInputBorder(),
+                    // decoration: const InputDecoration(
+                    //   labelText: '*Phone',
+                    //   border: OutlineInputBorder(),
+                    // ),
+                    decoration: AppTheme().getInputDecorationTheme(
+                      labelText: "*Phone",
+                      fillColor: textInputColor,
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -339,9 +381,13 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     onChanged: (String websiteTyped) {
                       website = websiteTyped;
                     },
-                    decoration: const InputDecoration(
-                      labelText: 'Website',
-                      border: OutlineInputBorder(),
+                    // decoration: const InputDecoration(
+                    //   labelText: 'Website',
+                    //   border: OutlineInputBorder(),
+                    // ),
+                    decoration: AppTheme().getInputDecorationTheme(
+                      labelText: "Website",
+                      fillColor: textInputColor,
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -399,6 +445,15 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                                   });
                                 } else {
                                   //var res = await makePostRequest();
+
+                                  setState(() {
+                                    // cant tell if this works or not
+                                    SpinKitDoubleBounce(
+                                      color: Colors.blue,
+                                      size: 30.0,
+                                    );
+                                  });
+
                                   await makePostRequest();
                                   //print(res);
                                   clearTextFields();

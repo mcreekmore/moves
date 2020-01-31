@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../model/homelist.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
@@ -15,7 +16,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   //List<HomeList> homeList = HomeList.homeList;
 
   AnimationController animationController;
-  bool multiple = true;
+  bool multiple = false;
   //List<HomeList> homeList = [];
 
   @override
@@ -70,8 +71,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       future: getData(),
                       builder:
                           (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const SizedBox();
+                        if (!snapshot.hasData ||
+                            Provider.of<Store>(context).homeList.length == 0) {
+                          //return const SizedBox();
+                          return SpinKitDoubleBounce(
+                            color: Colors.blue,
+                            size: 30.0,
+                          );
                         } else {
                           return GridView(
                             padding: const EdgeInsets.only(
@@ -95,6 +101,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                 return HomeListView(
                                   animation: animation,
                                   animationController: animationController,
+                                  // listData: Provider.of<Store>(context)
+                                  //     .homeList[index],
                                   listData: Provider.of<Store>(context)
                                       .homeList[index],
                                   callBack: () {
@@ -113,10 +121,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             ),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: multiple ? 2 : 1,
+                              //crossAxisCount: multiple ? 2 : 1,
+                              crossAxisCount: 1,
                               mainAxisSpacing: 12.0,
                               crossAxisSpacing: 12.0,
-                              childAspectRatio: 1.5,
+                              childAspectRatio: 5, // this changes the card size
                             ),
                           );
                         }
@@ -214,21 +223,48 @@ class HomeListView extends StatelessWidget {
           child: Transform(
             transform: Matrix4.translationValues(
                 0.0, 50 * (1.0 - animation.value), 0.0),
-            child: AspectRatio(
-              aspectRatio: 1.5,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+              child: Container(
+                color: Colors.blue[50],
                 child: Stack(
                   alignment: AlignmentDirectional.center,
                   children: <Widget>[
-                    Image.asset(
-                      listData.imagePath,
-                      fit: BoxFit.cover,
+                    Positioned(
+                      left: 15,
+                      child: Image.asset(
+                        listData.imagePath,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Positioned(
+                      left: 80,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('${listData.location.name}'),
+                          Text(
+                            //TODO wrap text
+                            //TODO add country selector
+                            '${listData.location.street}, ${listData.location.region}, ${listData.location.country}',
+                            style: TextStyle(
+                                color: Colors.black.withOpacity(.4),
+                                fontSize: 13),
+                          ),
+                          Text(
+                            '${listData.location.distance} mi',
+                            style: TextStyle(
+                                color: Colors.black.withOpacity(.4),
+                                fontSize: 13),
+                          ),
+                        ],
+                      ),
                     ),
                     Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        splashColor: Colors.grey.withOpacity(0.2),
+                        splashColor: Colors.blue.withOpacity(0.2),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(4.0)),
                         onTap: () {
@@ -246,3 +282,60 @@ class HomeListView extends StatelessWidget {
     );
   }
 }
+
+// class HomeListView extends StatelessWidget {
+//   const HomeListView(
+//       {Key key,
+//       this.listData,
+//       this.callBack,
+//       this.animationController,
+//       this.animation})
+//       : super(key: key);
+
+//   final HomeList listData;
+//   final VoidCallback callBack;
+//   final AnimationController animationController;
+//   final Animation<dynamic> animation;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnimatedBuilder(
+//       animation: animationController,
+//       builder: (BuildContext context, Widget child) {
+//         return FadeTransition(
+//           opacity: animation,
+//           child: Transform(
+//             transform: Matrix4.translationValues(
+//                 0.0, 50 * (1.0 - animation.value), 0.0),
+//             child: AspectRatio(
+//               aspectRatio: 1.5,
+//               child: ClipRRect(
+//                 borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+//                 child: Stack(
+//                   alignment: AlignmentDirectional.center,
+//                   children: <Widget>[
+//                     Image.asset(
+//                       listData.imagePath,
+//                       fit: BoxFit.cover,
+//                     ),
+//                     Material(
+//                       color: Colors.transparent,
+//                       child: InkWell(
+//                         splashColor: Colors.grey.withOpacity(0.2),
+//                         borderRadius:
+//                             const BorderRadius.all(Radius.circular(4.0)),
+//                         onTap: () {
+//                           callBack();
+//                         },
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
