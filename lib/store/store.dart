@@ -10,6 +10,7 @@ import 'package:moves/model/location_loaded_model.dart';
 import 'package:latlong/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:moves/screens_ui/location_screen.dart';
+import 'package:moves/screens_ui/test_screen.dart';
 
 //import 'dart:collection';
 
@@ -126,7 +127,10 @@ class Store with ChangeNotifier {
         HomeList(
           imagePath:
               'assets/icons/${location.type.toString().toLowerCase()}.png',
-          navigateScreen: LocationScreen(
+          // navigateScreen: LocationScreen(
+          //   location: location,
+          // ),
+          navigateScreen: TestScreen(
             location: location,
           ),
           location: location,

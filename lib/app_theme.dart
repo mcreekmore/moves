@@ -198,19 +198,19 @@ class AppTheme {
     if (darkThemeSelected) {
       return SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
         statusBarBrightness:
-            Platform.isAndroid ? Brightness.light : Brightness.light,
-        systemNavigationBarColor: Colors.black,
+            Platform.isAndroid ? Brightness.light : Brightness.dark,
+        systemNavigationBarColor: Colors.white,
         systemNavigationBarDividerColor: Colors.grey,
-        systemNavigationBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: Brightness.dark,
       );
     } else {
       return SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness:
-            Platform.isAndroid ? Brightness.dark : Brightness.dark,
+            Platform.isAndroid ? Brightness.light : Brightness.dark,
         systemNavigationBarColor: Colors.white,
         systemNavigationBarDividerColor: Colors.grey,
         systemNavigationBarIconBrightness: Brightness.dark,
