@@ -245,7 +245,6 @@ class HomeListView extends StatelessWidget {
                         children: <Widget>[
                           Text('${listData.location.name}'),
                           Text(
-                            //TODO wrap text
                             //TODO add country selector
                             '${listData.location.street}, ${listData.location.region}, ${listData.location.country}',
                             style: TextStyle(
