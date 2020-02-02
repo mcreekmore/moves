@@ -130,7 +130,7 @@ class Store with ChangeNotifier {
           // navigateScreen: LocationScreen(
           //   location: location,
           // ),
-          navigateScreen: TestScreen(
+          navigateScreen: LocationScreen(
             location: location,
           ),
           location: location,

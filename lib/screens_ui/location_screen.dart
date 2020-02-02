@@ -58,11 +58,13 @@ class _LocationScreenState extends State<LocationScreen>
     final double tempHeight = MediaQuery.of(context).size.height -
         (MediaQuery.of(context).size.width / 1.2) +
         24.0;
+    var expandedHeight = 128.0;
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: Colors.blue[200],
+        //backgroundColor: Colors.blue[200],
+        backgroundColor: LocationTheme.nearlyBlue,
         child: Icon((Icons.add)),
       ),
       body: Material(
@@ -72,18 +74,20 @@ class _LocationScreenState extends State<LocationScreen>
           child: CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
-                stretch: true,
+                brightness: Brightness.light,
+                //stretch: true,
                 pinned: true,
-                expandedHeight: 150.0,
-                // backgroundColor: AppTheme.nearlyWhite,
+                expandedHeight: expandedHeight,
                 backgroundColor: AppTheme.nearlyWhite,
+                //backgroundColor: Color(0xFFb5cdfc),
+                //backgroundColor: LocationTheme.nearlyBlue,
                 iconTheme: IconThemeData(color: AppTheme.darkText),
                 flexibleSpace: FlexibleSpaceBar(
                   //background: Image.asset(
                   //  'assets/icons/${widget.location.type.toString().toLowerCase()}.png'),
-                  background: Image.asset(
-                      'assets/design_course/webInterFace.png',
-                      fit: BoxFit.fitWidth),
+                  // background: Image.asset(
+                  //     'assets/design_course/webInterFace.png',
+                  //     fit: BoxFit.fitWidth),
                   title: Text(
                     '${widget.location.name}',
                     style: TextStyle(
@@ -95,7 +99,7 @@ class _LocationScreenState extends State<LocationScreen>
                 ),
                 actions: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.add_circle),
+                    icon: Icon(Icons.favorite_border),
                     tooltip: 'Add new entry',
                     color: AppTheme.darkText,
                     onPressed: () {/* ... */},
@@ -103,239 +107,160 @@ class _LocationScreenState extends State<LocationScreen>
                 ],
               ),
               SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    // Container(
-                    //   color: AppTheme.nearlyWhite,
-                    //   child: Column(
-                    //     children: <Widget>[
-                    //       Text(
-                    //         'Overview',
-                    //         textAlign: TextAlign.center,
-                    //         style: AppTheme.headline,
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    SingleChildScrollView(
-                      // ADDED ^^^^
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: LocationTheme.nearlyWhite,
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(32.0),
-                              topRight: Radius.circular(32.0)),
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                                color: LocationTheme.grey.withOpacity(0.2),
-                                offset: const Offset(1.1, 1.1),
-                                blurRadius: 10.0),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8, right: 8),
-                          child: SingleChildScrollView(
-                            child: Container(
-                              constraints: BoxConstraints(
-                                minHeight: infoHeight,
-                                maxHeight: tempHeight > infoHeight
-                                    ? tempHeight
-                                    : infoHeight,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 32.0, left: 18, right: 16),
-                                    child: Text(
-                                      //'Web Design\nCourse',
-                                      widget.location.name,
+                delegate: SliverChildBuilderDelegate((_, i) {
+                  //return ListTile(title: Text('Item $i'));
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: AppTheme.nearlyWhite,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8, right: 8),
+                      child: SingleChildScrollView(
+                        child: Container(
+                          constraints: BoxConstraints(
+                            minHeight: infoHeight,
+                            maxHeight: tempHeight > infoHeight
+                                ? tempHeight
+                                : infoHeight,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              // Padding(
+                              //   padding: const EdgeInsets.only(
+                              //       top: 32.0, left: 18, right: 16),
+                              //   child: Text(
+                              //     //'Web Design\nCourse',
+                              //     widget.location.name,
+                              //     textAlign: TextAlign.left,
+                              //     style: TextStyle(
+                              //       fontWeight: FontWeight.w600,
+                              //       fontSize: 22,
+                              //       letterSpacing: 0.27,
+                              //       color: LocationTheme.darkerText,
+                              //     ),
+                              //   ),
+                              // ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16, right: 16, bottom: 8, top: 16),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      '${widget.location.distance} mi',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w200,
                                         fontSize: 22,
                                         letterSpacing: 0.27,
-                                        color: LocationTheme.darkerText,
+                                        color: LocationTheme.nearlyBlue,
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 16,
-                                        right: 16,
-                                        bottom: 8,
-                                        top: 16),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          '${widget.location.distance} mi',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w200,
-                                            fontSize: 22,
-                                            letterSpacing: 0.27,
+                                    Container(
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            '-',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w200,
+                                              fontSize: 22,
+                                              letterSpacing: 0.27,
+                                              color: LocationTheme.grey,
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.star,
                                             color: LocationTheme.nearlyBlue,
+                                            size: 24,
                                           ),
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                '4.3',
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w200,
-                                                  fontSize: 22,
-                                                  letterSpacing: 0.27,
-                                                  color: LocationTheme.grey,
-                                                ),
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: LocationTheme.nearlyBlue,
-                                                size: 24,
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Row(
-                                        children: <Widget>[
-                                          getTimeBoxUI('24', 'Classe'),
-                                          getTimeBoxUI('2hours', 'Time'),
-                                          getTimeBoxUI('24', 'Seat'),
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: AnimatedOpacity(
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      opacity: opacity2,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16,
-                                            right: 16,
-                                            top: 8,
-                                            bottom: 8),
-                                        child: Text(
-                                          'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
-                                          textAlign: TextAlign.justify,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w200,
-                                            fontSize: 14,
-                                            letterSpacing: 0.27,
-                                            color: LocationTheme.grey,
-                                          ),
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 16, bottom: 16, right: 16),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Container(
-                                            width: 48,
-                                            height: 48,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    LocationTheme.nearlyWhite,
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(16.0),
-                                                ),
-                                                border: Border.all(
-                                                    color: LocationTheme.grey
-                                                        .withOpacity(0.2)),
-                                              ),
-                                              child: Icon(
-                                                Icons.add,
-                                                color: LocationTheme.nearlyBlue,
-                                                size: 28,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 16,
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              height: 48,
-                                              decoration: BoxDecoration(
-                                                color: LocationTheme.nearlyBlue,
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(16.0),
-                                                ),
-                                                boxShadow: <BoxShadow>[
-                                                  BoxShadow(
-                                                      color: LocationTheme
-                                                          .nearlyBlue
-                                                          .withOpacity(0.5),
-                                                      offset: const Offset(
-                                                          1.1, 1.1),
-                                                      blurRadius: 10.0),
-                                                ],
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  'Join Course',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 18,
-                                                    letterSpacing: 0.0,
-                                                    color: LocationTheme
-                                                        .nearlyWhite,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height:
-                                        MediaQuery.of(context).padding.bottom,
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
+                              Card(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ListTile(
+                                        leading: Image.asset(
+                                            'assets/icons/${widget.location.type.toString().toLowerCase()}.png'),
+                                        title: Text('${widget.location.name}'),
+                                        subtitle: Text(
+                                            '${widget.location.street}, ${widget.location.region}, ${widget.location.country}, ${widget.location.zip}'),
+                                      ),
+                                    ),
+                                    // ButtonBar(
+                                    //   children: <Widget>[
+                                    //     FlatButton(
+                                    //       child: Text('NAVIGATE'),
+                                    //       onPressed: () {/* ... */},
+                                    //     ),
+                                    //     FlatButton(
+                                    //       child: Text('UPDATE'),
+                                    //       onPressed: () {/* ... */},
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 500),
+                                opacity: opacity1,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Row(
+                                    children: <Widget>[
+                                      getTimeBoxUI('24', 'Classe'),
+                                      getTimeBoxUI('2hours', 'Time'),
+                                      getTimeBoxUI('24', 'Seat'),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: AnimatedOpacity(
+                                  duration: const Duration(milliseconds: 500),
+                                  opacity: opacity2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 16, right: 16, top: 8, bottom: 8),
+                                    child: Text(
+                                      'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
+                                      textAlign: TextAlign.justify,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w200,
+                                        fontSize: 14,
+                                        letterSpacing: 0.27,
+                                        color: LocationTheme.grey,
+                                      ),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(
+                                height: MediaQuery.of(context).padding.bottom,
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-              )
+                  );
+                }, childCount: 1),
+              ),
             ],
           ),
         ),
