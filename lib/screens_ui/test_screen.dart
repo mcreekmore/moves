@@ -53,7 +53,7 @@ class _TestScreenState extends State<TestScreen> with TickerProviderStateMixin {
     final double tempHeight = MediaQuery.of(context).size.height -
         (MediaQuery.of(context).size.width / 1.2) +
         24.0;
-    var expandedHeight = 128.0;
+    var expandedHeight = 200.0;
 
     return Scaffold(
       backgroundColor: AppTheme.nearlyWhite,
@@ -61,6 +61,7 @@ class _TestScreenState extends State<TestScreen> with TickerProviderStateMixin {
         expandedHeight: expandedHeight,
         slivers: <Widget>[
           SliverAppBar(
+            brightness: Brightness.light,
             //stretch: true,
             pinned: true,
             expandedHeight: expandedHeight,
