@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moves/screens/home_screen.dart';
 import 'package:moves/screens/map_screen.dart';
-import 'package:moves/screens/profile_screen.dart';
+import 'package:moves/screens/sign_in.dart';
 
 class NavScreen extends StatefulWidget {
   static const TextStyle optionStyle =
@@ -46,7 +46,7 @@ class _NavScreenState extends State<NavScreen> {
           children: <Widget>[
             HomeScreen(),
             MapScreen(),
-            ProfileScreen(),
+            SignInScreen(),
           ],
         ),
       ),

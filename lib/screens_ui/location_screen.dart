@@ -3,8 +3,8 @@ import 'package:moves/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:moves/model/location_loaded_model.dart';
 import 'package:moves/themes/location_theme.dart';
-import 'package:moves/widgets/detail_scaffold.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LocationScreen extends StatefulWidget {
   LocationScreen({@required this.location});
@@ -17,7 +17,7 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen>
     with TickerProviderStateMixin {
-  final double infoHeight = 364.0;
+  //final double infoHeight = 800;
   AnimationController animationController;
   Animation<double> animation;
   double opacity1 = 0.0;
@@ -53,11 +53,19 @@ class _LocationScreenState extends State<LocationScreen>
 
   bool multiple = false;
 
+  // GOOGLE MAPS URL LAUNCHING
+  static Future<void> openMap(double latitude, double longitude) async {
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunch(googleUrl)) {
+      await launch(googleUrl);
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final double tempHeight = MediaQuery.of(context).size.height -
-        (MediaQuery.of(context).size.width / 1.2) +
-        24.0;
     var expandedHeight = 128.0;
 
     return Scaffold(
@@ -117,14 +125,14 @@ class _LocationScreenState extends State<LocationScreen>
                       padding: const EdgeInsets.only(left: 8, right: 8),
                       child: SingleChildScrollView(
                         child: Container(
-                          constraints: BoxConstraints(
-                            minHeight: infoHeight,
-                            maxHeight: tempHeight > infoHeight
-                                ? tempHeight
-                                : infoHeight,
-                          ),
+                          // constraints: BoxConstraints(
+                          //   minHeight: infoHeight,
+                          //   maxHeight: tempHeight > infoHeight
+                          //       ? tempHeight
+                          //       : infoHeight,
+                          // ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            //mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               // Padding(
@@ -150,67 +158,130 @@ class _LocationScreenState extends State<LocationScreen>
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    Text(
-                                      '${widget.location.distance} mi',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w200,
-                                        fontSize: 22,
-                                        letterSpacing: 0.27,
-                                        color: LocationTheme.nearlyBlue,
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Row(
-                                        children: <Widget>[
-                                          Text(
-                                            '-',
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w200,
-                                              fontSize: 22,
-                                              letterSpacing: 0.27,
-                                              color: LocationTheme.grey,
-                                            ),
-                                          ),
-                                          Icon(
-                                            Icons.star,
-                                            color: LocationTheme.nearlyBlue,
-                                            size: 24,
-                                          ),
-                                        ],
-                                      ),
-                                    )
+                                    // Text(
+                                    //   '${widget.location.distance} mi',
+                                    //   textAlign: TextAlign.left,
+                                    //   style: TextStyle(
+                                    //     fontWeight: FontWeight.w200,
+                                    //     fontSize: 22,
+                                    //     letterSpacing: 0.27,
+                                    //     color: LocationTheme.nearlyBlue,
+                                    //   ),
+                                    // ),
+                                    // Container(
+                                    //   child: Row(
+                                    //     children: <Widget>[
+                                    //       Text(
+                                    //         '-',
+                                    //         textAlign: TextAlign.left,
+                                    //         style: TextStyle(
+                                    //           fontWeight: FontWeight.w200,
+                                    //           fontSize: 22,
+                                    //           letterSpacing: 0.27,
+                                    //           color: LocationTheme.grey,
+                                    //         ),
+                                    //       ),
+                                    //       Icon(
+                                    //         Icons.star,
+                                    //         color: LocationTheme.nearlyBlue,
+                                    //         size: 24,
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // )
                                   ],
                                 ),
                               ),
-                              Card(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ListTile(
-                                        leading: Image.asset(
-                                            'assets/icons/${widget.location.type.toString().toLowerCase()}.png'),
-                                        title: Text('${widget.location.name}'),
-                                        subtitle: Text(
-                                            '${widget.location.street}, ${widget.location.region}, ${widget.location.country}, ${widget.location.zip}'),
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 500),
+                                opacity: opacity1,
+                                child: Card(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          leading: Icon(Icons
+                                              .my_location), //TODO have this change dynamically on type
+                                          title:
+                                              Text('${widget.location.name}'),
+                                          subtitle: Text(
+                                              '${widget.location.street}, ${widget.location.region}, ${widget.location.country}, ${widget.location.zip}'),
+                                        ),
                                       ),
-                                    ),
-                                    // ButtonBar(
-                                    //   children: <Widget>[
-                                    //     FlatButton(
-                                    //       child: Text('NAVIGATE'),
-                                    //       onPressed: () {/* ... */},
-                                    //     ),
-                                    //     FlatButton(
-                                    //       child: Text('UPDATE'),
-                                    //       onPressed: () {/* ... */},
-                                    //     ),
-                                    //   ],
-                                    // ),
-                                  ],
+                                      ButtonBar(
+                                        children: <Widget>[
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Text(
+                                                  '-',
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w200,
+                                                    fontSize: 22,
+                                                    letterSpacing: 0.27,
+                                                    color: LocationTheme.grey,
+                                                  ),
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color:
+                                                      LocationTheme.nearlyBlue,
+                                                  size: 24,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 20, left: 20),
+                                                  child: Text(
+                                                    '${widget.location.distance} mi',
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w200,
+                                                      fontSize: 22,
+                                                      letterSpacing: 0.27,
+                                                      color: LocationTheme
+                                                          .nearlyBlue,
+                                                    ),
+                                                  ),
+                                                ),
+                                                FlatButton(
+                                                  shape:
+                                                      new RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              new BorderRadius
+                                                                      .circular(
+                                                                  30.0)),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 5),
+                                                    child: Text(
+                                                      'NAVIGATE',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  color:
+                                                      LocationTheme.nearlyBlue,
+                                                  splashColor: Colors.white
+                                                      .withOpacity(0.3),
+                                                  onPressed: () {
+                                                    openMap(widget.location.lat,
+                                                        widget.location.lon);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               AnimatedOpacity(
@@ -218,16 +289,127 @@ class _LocationScreenState extends State<LocationScreen>
                                 opacity: opacity1,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8),
-                                  child: Row(
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: <Widget>[
+                                        getTimeBoxUI('24', 'Classe'),
+                                        getTimeBoxUI('2hours', 'Time'),
+                                        getTimeBoxUI('24', 'Seat'),
+                                        getTimeBoxUI('24', 'Classe'),
+                                        getTimeBoxUI('2hours', 'Time'),
+                                        getTimeBoxUI('24', 'Seat'),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 500),
+                                opacity: opacity1,
+                                child: Card(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      getTimeBoxUI('24', 'Classe'),
-                                      getTimeBoxUI('2hours', 'Time'),
-                                      getTimeBoxUI('24', 'Seat'),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          leading: Icon(Icons.description),
+                                          title: Text('Description'),
+                                          subtitle: widget
+                                                      .location.description !=
+                                                  ""
+                                              ? Text(
+                                                  '${widget.location.description}')
+                                              : Text('No Description'),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ),
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 500),
+                                opacity: opacity1,
+                                child: Card(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          leading: Icon(Icons.web),
+                                          // String name;
+                                          // String description;
+                                          // String type;
+                                          // String country;
+                                          // String region;
+                                          // String city;
+                                          // String street;
+                                          // String zip;
+                                          // double lat;
+                                          // double lon;
+                                          // String email;
+                                          // String phone;
+                                          // String website;
+                                          // double distance;
+                                          title: Text('Website'),
+                                          subtitle: widget.location.website !=
+                                                  ""
+                                              ? Text(
+                                                  '${widget.location.website}')
+                                              : Text('No Website Added'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 500),
+                                opacity: opacity1,
+                                child: Card(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          leading: Icon(Icons.phone),
+                                          title: Text('Phone'),
+                                          subtitle: widget.location.phone != ""
+                                              ? Text('${widget.location.phone}')
+                                              : Text('No Phone Added'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 500),
+                                opacity: opacity1,
+                                child: Card(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          leading: Icon(Icons.email),
+                                          title: Text('Email'),
+                                          subtitle: widget.location.email != ""
+                                              ? Text('${widget.location.email}')
+                                              : Text('No Email Added'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
                               Expanded(
+                                flex: 0,
                                 child: AnimatedOpacity(
                                   duration: const Duration(milliseconds: 500),
                                   opacity: opacity2,
@@ -249,9 +431,9 @@ class _LocationScreenState extends State<LocationScreen>
                                   ),
                                 ),
                               ),
-
                               SizedBox(
-                                height: MediaQuery.of(context).padding.bottom,
+                                //height: MediaQuery.of(context).padding.bottom,
+                                height: 90,
                               ),
                             ],
                           ),

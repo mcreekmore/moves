@@ -10,7 +10,8 @@ import 'package:moves/model/location_loaded_model.dart';
 import 'package:latlong/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:moves/screens_ui/location_screen.dart';
-import 'package:moves/screens_ui/test_screen.dart';
+//import 'package:moves/screens_ui/test_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //import 'dart:collection';
 
@@ -42,6 +43,20 @@ class Store with ChangeNotifier {
   Future initData() async {
     await getCurrentLocation();
     await getData();
+  }
+
+  Future<dynamic> getUserFromSharedPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    FirebaseUser signedInUserPref = prefs.get('signedInUserPref');
+    if (signedInUserPref == null) {
+      return null;
+    }
+    return signedInUserPref;
+  }
+
+  Future<void> signOutUserSharedPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    //await prefs.set
   }
 
   Future<List<LocationLoadedModel>> getData() async {
@@ -98,7 +113,7 @@ class Store with ChangeNotifier {
     try {
       Position position = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      print(position);
+      //print(position);
       double _latitude = position.latitude;
       double _longitude = position.longitude;
 
@@ -159,6 +174,7 @@ class Store with ChangeNotifier {
   }
 
   Future<String> signInWithGoogle() async {
+    print(signedInUser);
     try {
       final GoogleSignInAccount googleSignInAccount =
           await googleSignIn.signIn();
@@ -192,8 +208,12 @@ class Store with ChangeNotifier {
   }
 
   void signOutGoogle() async {
+    //print(signedInUser);
     await googleSignIn.signOut(); // signs out both regardless of sign in choice
     await _auth.signOut();
-    print("User Sign Out");
+    signedInUser = null;
+    //print(signedInUser);
+    //print("User Sign Out");
+    notifyListeners();
   }
 }

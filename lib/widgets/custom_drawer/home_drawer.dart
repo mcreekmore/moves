@@ -1,7 +1,8 @@
-//import 'package:provider/provider.dart';
-
+import 'package:provider/provider.dart';
+import 'package:moves/store/store.dart';
 import '../../app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:moves/screens/sign_in.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
@@ -21,6 +22,7 @@ class HomeDrawer extends StatefulWidget {
 
 class _HomeDrawerState extends State<HomeDrawer> {
   List<DrawerList> drawerList;
+
   @override
   void initState() {
     setdDrawerListArray();
@@ -72,6 +74,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    bool signedIn = Provider.of<Store>(context).signedInUser != null;
     return Scaffold(
       //backgroundColor: AppTheme.notWhite.withOpacity(0.5),
       backgroundColor: AppTheme().getDrawerColor(),
@@ -88,55 +91,114 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  AnimatedBuilder(
-                    animation: widget.iconAnimationController,
-                    builder: (BuildContext context, Widget child) {
-                      return ScaleTransition(
-                        scale: AlwaysStoppedAnimation<double>(
-                            1.0 - (widget.iconAnimationController.value) * 0.2),
-                        child: RotationTransition(
-                          turns: AlwaysStoppedAnimation<double>(Tween<double>(
-                                      begin: 0.0, end: 24.0)
-                                  .animate(CurvedAnimation(
-                                      parent: widget.iconAnimationController,
-                                      curve: Curves.fastOutSlowIn))
-                                  .value /
-                              360),
-                          child: Container(
-                            height: 120,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    //color: AppTheme.grey.withOpacity(0.6),
-                                    color: AppTheme().getDrawerIconShadow(),
-                                    offset: const Offset(2.0, 4.0),
-                                    blurRadius: 8),
-                              ],
+                  signedIn
+                      ? AnimatedBuilder(
+                          animation: widget.iconAnimationController,
+                          builder: (BuildContext context, Widget child) {
+                            return ScaleTransition(
+                              scale: AlwaysStoppedAnimation<double>(1.0 -
+                                  (widget.iconAnimationController.value) * 0.2),
+                              child: RotationTransition(
+                                turns: AlwaysStoppedAnimation<double>(
+                                    Tween<double>(begin: 0.0, end: 24.0)
+                                            .animate(CurvedAnimation(
+                                                parent: widget
+                                                    .iconAnimationController,
+                                                curve: Curves.fastOutSlowIn))
+                                            .value /
+                                        360),
+                                child: Container(
+                                  height: 120,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          //color: AppTheme.grey.withOpacity(0.6),
+                                          color:
+                                              AppTheme().getDrawerIconShadow(),
+                                          offset: const Offset(2.0, 4.0),
+                                          blurRadius: 8),
+                                    ],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(60.0)),
+                                    child:
+                                        Image.asset('assets/images/matt.jpg'),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        )
+                      : AnimatedBuilder(
+                          animation: widget.iconAnimationController,
+                          builder: (BuildContext context, Widget child) {
+                            return ScaleTransition(
+                              scale: AlwaysStoppedAnimation<double>(1.0 -
+                                  (widget.iconAnimationController.value) * 0.2),
+                              child: RotationTransition(
+                                turns: AlwaysStoppedAnimation<double>(
+                                    Tween<double>(begin: 0.0, end: 24.0)
+                                            .animate(CurvedAnimation(
+                                                parent: widget
+                                                    .iconAnimationController,
+                                                curve: Curves.fastOutSlowIn))
+                                            .value /
+                                        360),
+                                child: Container(
+                                  height: 120,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          color: AppTheme.grey.withOpacity(0.2),
+                                          // color:
+                                          //     AppTheme().getDrawerIconShadow(),
+                                          offset: const Offset(2.0, 4.0),
+                                          blurRadius: 8),
+                                    ],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(60.0)),
+                                    child: Icon(
+                                      Icons.person,
+                                      size: 100,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                  signedIn
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 8, left: 4),
+                          child: Text(
+                            '${Provider.of<Store>(context).signedInUser.displayName}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              //color: AppTheme.grey,
+                              color: AppTheme().getDrawerTextColor(),
+                              fontSize: 18,
                             ),
-                            child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('assets/images/matt.jpg'),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 8, left: 4),
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              //color: AppTheme.grey,
+                              color: AppTheme().getDrawerTextColor(),
+                              fontSize: 18,
                             ),
                           ),
                         ),
-                      );
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 4),
-                    child: Text(
-                      'Matt Creekmore',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        //color: AppTheme.grey,
-                        color: AppTheme().getDrawerTextColor(),
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -166,24 +228,53 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ),
           Column(
             children: <Widget>[
-              ListTile(
-                title: Text(
-                  'Sign Out',
-                  style: TextStyle(
-                    fontFamily: AppTheme.fontName,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    //color: AppTheme.darkText,
-                    color: AppTheme().getDrawerBodyTextColor(),
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                trailing: Icon(
-                  Icons.power_settings_new,
-                  color: Colors.red,
-                ),
-                onTap: () {},
-              ),
+              signedIn
+                  ? ListTile(
+                      title: Text(
+                        'Sign Out',
+                        style: TextStyle(
+                          fontFamily: AppTheme.fontName,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          //color: AppTheme.darkText,
+                          color: AppTheme().getDrawerBodyTextColor(),
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      trailing: Icon(
+                        Icons.power_settings_new,
+                        color: Colors.red,
+                      ),
+                      onTap: () {
+                        setState(() {
+                          Provider.of<Store>(context, listen: false)
+                              .signOutGoogle(); //TODO have this refresh the dock
+                        });
+                      },
+                    )
+                  : ListTile(
+                      title: Text(
+                        'Sign In',
+                        style: TextStyle(
+                          fontFamily: AppTheme.fontName,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          //color: AppTheme.darkText,
+                          color: AppTheme().getDrawerBodyTextColor(),
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      trailing: Icon(
+                        Icons.power_settings_new,
+                        color: Colors.blue,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignInScreen()));
+                      },
+                    ),
               SizedBox(
                 height: MediaQuery.of(context).padding.bottom,
               )
