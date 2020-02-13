@@ -1,7 +1,7 @@
 class LocationLoadedModel {
   String name;
   String description;
-  String type;
+  List<dynamic> types;
   String country;
   String region;
   String city;
@@ -17,7 +17,7 @@ class LocationLoadedModel {
   LocationLoadedModel({
     this.name,
     this.description,
-    this.type,
+    this.types,
     this.country,
     this.region,
     this.city,

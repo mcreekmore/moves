@@ -1,11 +1,14 @@
 import '../app_theme.dart';
-import 'dart:io';
+//import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'package:geocoder/geocoder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:moves/widgets/multi_select_dialogue.dart';
+import 'package:dio/dio.dart';
+//import 'dart:convert';
 
 //import 'package:http/http.dart' as http;
 
@@ -35,7 +38,10 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
     'Hospital',
   ];
 
-  DropdownButtonFormField androidDropDown() {
+  bool secondType = false;
+  bool thirdType = false;
+
+  DropdownButtonFormField androidDropDown(int index) {
     List<DropdownMenuItem<String>> dropdownItems = [];
 
     for (String typeOfLocation in typesOfLocations) {
@@ -58,7 +64,8 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
       items: dropdownItems,
       onChanged: (value) {
         setState(() {
-          selectedType = value.toString();
+          selectedTypeList[index] = value.toString();
+          selectedTypeList.add(value.toString());
         });
       },
     );
@@ -73,7 +80,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
     // );
   }
 
-  CupertinoPicker iOSPicker() {
+  CupertinoPicker iOSPicker(int index) {
     List<Text> pickerItems = [];
 
     for (String typeOfLocation in typesOfLocations) {
@@ -84,10 +91,64 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
       backgroundColor: Colors.lightBlue,
       itemExtent: 32,
       onSelectedItemChanged: (int selectedIndex) {
-        print(selectedIndex);
+        //print(selectedIndex);
       },
       children: pickerItems,
     );
+  }
+
+  Map<int, String> types = Map();
+  List<String> selectedTypes = [];
+
+  void _showMultiSelect(BuildContext context) async {
+    final items = <MultiSelectDialogItem<int>>[
+      MultiSelectDialogItem(1, 'Restaurant'),
+      MultiSelectDialogItem(2, 'Hotel'),
+      MultiSelectDialogItem(3, 'Bar'),
+      MultiSelectDialogItem(4, 'Cafe'),
+      MultiSelectDialogItem(5, 'Music Venue'),
+      MultiSelectDialogItem(6, 'Grocery'),
+      MultiSelectDialogItem(7, 'Gas Station'),
+      MultiSelectDialogItem(8, 'Bank'),
+      MultiSelectDialogItem(9, 'Post Office'),
+      MultiSelectDialogItem(10, 'Hospital'),
+    ];
+
+    final selectedValues = await showDialog<Set<int>>(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelectDialog(
+          items: items,
+          initialSelectedValues: [1].toSet(),
+        );
+      },
+    );
+
+    List<int> selectedValVarList = selectedValues.toList();
+
+    for (var i = 0; i < selectedValVarList.length; i++) {
+      if (selectedValVarList[i] == 1) {
+        selectedTypes.add('Restaurant');
+      } else if (selectedValVarList[i] == 2) {
+        selectedTypes.add('Hotel');
+      } else if (selectedValVarList[i] == 3) {
+        selectedTypes.add('Bar');
+      } else if (selectedValVarList[i] == 4) {
+        selectedTypes.add('Cafe');
+      } else if (selectedValVarList[i] == 5) {
+        selectedTypes.add('Music Venue');
+      } else if (selectedValVarList[i] == 6) {
+        selectedTypes.add('Grocery');
+      } else if (selectedValVarList[i] == 7) {
+        selectedTypes.add('Gas Station');
+      } else if (selectedValVarList[i] == 8) {
+        selectedTypes.add('Bank');
+      } else if (selectedValVarList[i] == 9) {
+        selectedTypes.add('Post Office');
+      } else if (selectedValVarList[i] == 10) {
+        selectedTypes.add('Hospital');
+      }
+    }
   }
 
   @override
@@ -176,10 +237,57 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     ),
                   ),
                 ),
-                // Type
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: Platform.isIOS ? iOSPicker() : androidDropDown(),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Container(
+                      width: 120,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(4.0)),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.6),
+                              offset: const Offset(4, 4),
+                              blurRadius: 8.0),
+                        ],
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            _showMultiSelect(context);
+                          },
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                // Icon(
+                                //   Icons.share,
+                                //   color: Colors.white,
+                                //   size: 22,
+                                // ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                    'Add Type',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
 
                 // Contact Information
@@ -293,6 +401,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                 Container(
                   padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
                   child: TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: _zipController,
                     onChanged: (String zipTyped) {
                       zip = zipTyped;
@@ -329,6 +438,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                 Container(
                   padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
                   child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                     onChanged: (String emailTyped) {
                       email = emailTyped;
@@ -353,6 +463,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                 Container(
                   padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
                   child: TextFormField(
+                    keyboardType: TextInputType.phone,
                     controller: _phoneController,
                     onChanged: (String phoneTyped) {
                       phone = phoneTyped;
@@ -377,6 +488,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                 Container(
                   padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
                   child: TextFormField(
+                    keyboardType: TextInputType.url,
                     controller: _websiteController,
                     onChanged: (String websiteTyped) {
                       website = websiteTyped;
@@ -425,7 +537,8 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                             child: InkWell(
                               onTap: () async {
                                 if (locationName == '' ||
-                                    selectedType == '' ||
+                                    //selectedType == '' ||
+                                    selectedTypeList == [] ||
                                     country == '' ||
                                     region == '' ||
                                     city == '' ||
@@ -573,7 +686,11 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
   var _phoneController = TextEditingController();
   var _websiteController = TextEditingController();
 
+  List<String> selectedTypeList = [];
+  Set<int> selectedTypeSetInt = {};
   String selectedType = "Restaurant";
+  String selectedType2 = '';
+  String selectedType3 = '';
   String locationName = '';
   String description = '';
   String country = '';
@@ -610,11 +727,37 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
     Coordinates coordinates = await calcLatLon();
     //print(coordinates.runtimeType);
 
-    var url = 'https://creekmore.io/api/locations';
-    await http.post(url, body: {
+    //var typesJson = json.encode({"types:", types});
+
+    //var url = 'https://creekmore.io/api/locations';
+    var url = 'http://10.0.2.2:3000/api/locations';
+    // var response = await http.post(url, body: {
+    //   'name': locationName,
+    //   'description': description,
+    //   //'types': types.toString(),
+    //   'types': selectedTypeSetInt.toList(),
+    //   'country': country,
+    //   'region': region,
+    //   'city': city,
+    //   'street': street,
+    //   'zip': zip,
+    //   'lat': coordinates.latitude.toString(),
+    //   'lon': coordinates.longitude.toString(),
+    //   'email': email,
+    //   'phone': phone,
+    //   'website': website,
+    // });
+
+    Dio dio = new Dio();
+
+    print(selectedTypeSetInt.toList());
+
+    await dio.post(url, data: {
       'name': locationName,
       'description': description,
-      'type': selectedType,
+      //'types': types.toString(),
+      //'types': selectedTypeSetInt.toList(),
+      'types': selectedTypes,
       'country': country,
       'region': region,
       'city': city,
@@ -625,7 +768,10 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
       'email': email,
       'phone': phone,
       'website': website,
-    }); // if you want to print, add 'var response =' before the await
+    });
+
+    //print(response.statusMessage);
+    // if you want to print, add 'var response =' before the await
     // print('Response status: ${response.statusCode}');
     // print('Response body: ${response.body}');
     // print(await http.read('https://creekmore.io/api/locations'));

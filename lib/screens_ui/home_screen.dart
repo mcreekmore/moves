@@ -180,15 +180,20 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 child: InkWell(
                   borderRadius:
                       BorderRadius.circular(AppBar().preferredSize.height),
-                  child: Icon(
-                    multiple ? Icons.dashboard : Icons.view_agenda,
-                    color: AppTheme().getIconColor(),
+                  child: IconButton(
+                    icon: Icon(
+                      //multiple ? Icons.dashboard : Icons.view_agenda,
+                      Icons.refresh,
+                      color: AppTheme().getIconColor(),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        //multiple = !multiple;
+                        Provider.of<Store>(context, listen: false).getData();
+                      });
+                    },
+                    tooltip: 'Refresh',
                   ),
-                  onTap: () {
-                    setState(() {
-                      multiple = !multiple;
-                    });
-                  },
                 ),
               ),
             ),
@@ -213,6 +218,30 @@ class HomeListView extends StatelessWidget {
   final AnimationController animationController;
   final Animation<dynamic> animation;
 
+  Icon iconTypeGetter(String type) {
+    if (type == 'Restaurant') {
+      return Icon(Icons.local_dining);
+    } else if (type == 'Hotel') {
+      return Icon(Icons.local_hotel);
+    } else if (type == 'Bar') {
+      return Icon(Icons.local_bar);
+    } else if (type == 'Cafe') {
+      return Icon(Icons.local_cafe);
+    } else if (type == 'Music Venue') {
+      return Icon(Icons.music_note);
+    } else if (type == 'Grocery') {
+      return Icon(Icons.local_grocery_store);
+    } else if (type == 'Gas Station') {
+      return Icon(Icons.local_gas_station);
+    } else if (type == 'Bank') {
+      return Icon(Icons.attach_money);
+    } else if (type == 'Post Office') {
+      return Icon(Icons.local_post_office);
+    } else {
+      return Icon(Icons.local_hospital);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -231,14 +260,15 @@ class HomeListView extends StatelessWidget {
                   alignment: AlignmentDirectional.center,
                   children: <Widget>[
                     Positioned(
-                      left: 15,
-                      child: Image.asset(
-                        listData.imagePath,
-                        fit: BoxFit.cover,
-                      ),
+                      left: 20,
+                      // child: Image.asset(
+                      //   listData.imagePath,
+                      //   fit: BoxFit.cover,
+                      // ),
+                      child: iconTypeGetter(listData.location.types[0]),
                     ),
                     Positioned(
-                      left: 80,
+                      left: 65,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,6 +311,55 @@ class HomeListView extends StatelessWidget {
     );
   }
 }
+
+/* card home screen tiles NO ON TAP TO ROUTE */
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnimatedBuilder(
+//       animation: animationController,
+//       builder: (BuildContext context, Widget child) {
+//         return FadeTransition(
+//           opacity: animation,
+//           child: Transform(
+//             transform: Matrix4.translationValues(
+//                 0.0, 50 * (1.0 - animation.value), 0.0),
+//             child: Card(
+//               child: Row(
+//                 children: <Widget>[
+//                   Image.asset(
+//                     listData.imagePath,
+//                     fit: BoxFit.cover,
+//                   ),
+//                   Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: <Widget>[
+//                       Container(
+//                           width: MediaQuery.of(context).size.width * 0.8,
+//                           child: Text('${listData.location.name}')),
+//                       Text(
+//                         //TODO add country selector
+//                         '${listData.location.street}, ${listData.location.region}, ${listData.location.country}',
+//                         style: TextStyle(
+//                             color: Colors.black.withOpacity(.4), fontSize: 13),
+//                       ),
+//                       Text(
+//                         '${listData.location.distance} mi',
+//                         style: TextStyle(
+//                             color: Colors.black.withOpacity(.4), fontSize: 13),
+//                       ),
+//                     ],
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
 
 // class HomeListView extends StatelessWidget {
 //   const HomeListView(

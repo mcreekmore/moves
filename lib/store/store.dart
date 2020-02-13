@@ -12,6 +12,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:moves/screens_ui/location_screen.dart';
 //import 'package:moves/screens_ui/test_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_maps_webservice/places.dart';
+//import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:moves/screens_ui/google_location_screen.dart';
+import 'package:moves/model/google_home_list.dart';
 
 //import 'dart:collection';
 
@@ -21,18 +25,23 @@ class Store with ChangeNotifier {
   }
   AppTheme appTheme = AppTheme();
   // development uri
-  //var uri = Uri.http('10.0.2.2:3000', '/api/locations/approved');
+  var uri = Uri.http('10.0.2.2:3000', '/api/locations/approved');
 
   // prod uri
-  var uri = Uri.http('creekmore.io', '/api/locations/approved');
+  //var uri = Uri.http('creekmore.io', '/api/locations/approved');
 
   // state
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseUser signedInUser;
   List<HomeList> homeList = [];
+  List<GoogleHomeList> googleHomeList = [];
   List<LocationLoadedModel> locations = [];
   LatLng usersLocation = LatLng(0, 0);
+  String placesAPIKeyAndroid = 'AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ';
+  final GoogleMapsPlaces places =
+      GoogleMapsPlaces(apiKey: "AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ");
+  List<PlacesSearchResult> googleLocationResults;
 
   // getters
 
@@ -42,7 +51,20 @@ class Store with ChangeNotifier {
 
   Future initData() async {
     await getCurrentLocation();
+    await getGoogleLocationData();
     await getData();
+  }
+
+  Future<void> getGoogleLocationData() async {
+    PlacesSearchResponse response = await places.searchNearbyWithRadius(
+        Location(usersLocation.latitude, usersLocation.longitude), 1500);
+    //print(response.results.first.name);
+    googleLocationResults = response.results;
+
+    // for (var location in googleLocationResults) {
+    //   print(location.id);
+    //   print(location.name);
+    // }
   }
 
   Future<dynamic> getUserFromSharedPref() async {
@@ -68,6 +90,8 @@ class Store with ChangeNotifier {
 
       //return jsonDecode(data); // this should ALWAYS be dynamic
 
+      locations = [];
+
       List<dynamic> unparsedLocations = jsonDecode(data);
       //print(locations);
       for (var location in unparsedLocations) {
@@ -77,7 +101,7 @@ class Store with ChangeNotifier {
           LocationLoadedModel(
             name: location["name"],
             description: location["description"],
-            type: location["type"],
+            types: location["types"],
             country: location["country"],
             region: location["region"],
             city: location["city"],
@@ -96,6 +120,7 @@ class Store with ChangeNotifier {
       sortLocations(locations);
 
       buildHomeList(locations);
+      //buildGoogleHomeList(googleLocationResults);
 
       notifyListeners();
       return locations;
@@ -141,7 +166,7 @@ class Store with ChangeNotifier {
       homeList.add(
         HomeList(
           imagePath:
-              'assets/icons/${location.type.toString().toLowerCase()}.png',
+              'assets/icons/${location.types[0].toString().toLowerCase()}.png',
           // navigateScreen: LocationScreen(
           //   location: location,
           // ),
@@ -152,6 +177,28 @@ class Store with ChangeNotifier {
         ),
       );
     }
+
+    //print(homeList);
+    //return homeList;
+  }
+
+  void buildGoogleHomeList(locations) {
+    googleHomeList = [];
+    for (var location in locations) {
+      googleHomeList.add(
+        GoogleHomeList(
+          imagePath: 'assets/icons/bar.png',
+          // navigateScreen: LocationScreen(
+          //   location: location,
+          // ),
+          navigateScreen: GoogleLocationScreen(
+            location: location,
+          ),
+          location: location,
+        ),
+      );
+    }
+    print(googleHomeList.length);
 
     //print(homeList);
     //return homeList;
@@ -199,6 +246,7 @@ class Store with ChangeNotifier {
       //print('signInWithGoogle succeeded: ${user.email}');
       signedInUser = user;
       //print(signedInUser);
+      notifyListeners();
 
       return 'signInWithGoogle succeeded: ${user.email}';
     } catch (e) {

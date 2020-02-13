@@ -473,7 +473,7 @@ class _LocationScreenState extends State<LocationScreen>
                 iconTheme: IconThemeData(color: AppTheme.darkText),
                 flexibleSpace: FlexibleSpaceBar(
                   background: Image.asset(
-                      'assets/icons/${widget.location.type.toString().toLowerCase()}.png'),
+                      'assets/icons/${widget.location.types[0].toString().toLowerCase()}.png'),
                   title: Text(
                     '${widget.location.name}',
                     style: TextStyle(

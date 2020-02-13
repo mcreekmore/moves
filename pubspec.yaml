@@ -4,7 +4,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -17,7 +17,7 @@ dependencies:
   cloud_firestore: ^0.13.0+1
   google_sign_in: ^4.1.1
   google_maps_flutter: ^0.5.21+15
-  rxdart: ^0.23.1
+  #rxdart: ^0.23.1
   provider: ^4.0.2
   #bottom_navy_bar: ^5.3.2
   #search_map_place: ^0.1.1
@@ -29,6 +29,9 @@ dependencies:
   latlong: ^0.6.1
   geolocator: ^5.2.0
   shared_preferences: ^0.5.6+1
+  google_maps_webservice: ^0.0.16
+  flutter_google_places: ^0.2.3
+  dio: ^3.0.8 # for post requests with arrays
 
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0

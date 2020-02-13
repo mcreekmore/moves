@@ -248,7 +248,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       onTap: () {
                         setState(() {
                           Provider.of<Store>(context, listen: false)
-                              .signOutGoogle(); //TODO have this refresh the dock
+                              .signOutGoogle();
                         });
                       },
                     )

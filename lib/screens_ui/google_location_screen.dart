@@ -1,21 +1,38 @@
 //import 'package:flutter/gestures.dart';
 import 'package:moves/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:moves/model/location_loaded_model.dart';
+//import 'package:moves/model/location_loaded_model.dart';
 import 'package:moves/themes/location_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:google_maps_webservice/places.dart';
 
-class LocationScreen extends StatefulWidget {
-  LocationScreen({@required this.location});
+class GoogleLocationScreen extends StatefulWidget {
+  GoogleLocationScreen({@required this.location});
 
-  final LocationLoadedModel location;
+  final PlacesSearchResult location;
+  //  this.icon,
+  //   this.geometry,
+  //   this.name,
+  //   this.openingHours,
+  //   this.photos,
+  //   this.placeId,
+  //   this.scope,
+  //   this.altIds,
+  //   this.priceLevel,
+  //   this.rating,
+  //   this.types,
+  //   this.vicinity,
+  //   this.formattedAddress,
+  //   this.permanentlyClosed,
+  //   this.id,
+  //   this.reference,
 
   @override
-  _LocationScreenState createState() => _LocationScreenState();
+  _GoogleLocationScreenState createState() => _GoogleLocationScreenState();
 }
 
-class _LocationScreenState extends State<LocationScreen>
+class _GoogleLocationScreenState extends State<GoogleLocationScreen>
     with TickerProviderStateMixin {
   //final double infoHeight = 800;
   AnimationController animationController;
@@ -32,6 +49,7 @@ class _LocationScreenState extends State<LocationScreen>
         parent: animationController,
         curve: Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
     setData();
+    print(widget.location.geometry.location);
     super.initState();
   }
 
@@ -96,24 +114,12 @@ class _LocationScreenState extends State<LocationScreen>
                   // background: Image.asset(
                   //     'assets/design_course/webInterFace.png',
                   //     fit: BoxFit.fitWidth),
-                  title: Container(
-                    constraints: BoxConstraints(
-                      minWidth: 100,
-                      maxWidth: MediaQuery.of(context).size.width * .85,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          '${widget.location.name}',
-                          style: TextStyle(
-                            //fontSize: 22,
-                            color: AppTheme.darkText,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
+                  title: Text(
+                    '${widget.location.name}',
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: AppTheme.darkText,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
@@ -215,11 +221,9 @@ class _LocationScreenState extends State<LocationScreen>
                                         padding: const EdgeInsets.all(8.0),
                                         child: ListTile(
                                           leading: Icon(Icons
-                                              .my_location), //TODO have this change dynamically on type
-                                          title:
-                                              Text('${widget.location.name}'),
-                                          subtitle: Text(
-                                              '${widget.location.street}, ${widget.location.region}, ${widget.location.country}, ${widget.location.zip}'),
+                                              .my_location), //kTODO have this change dynamically on type
+                                          title: Text(widget.location.name),
+                                          subtitle: Text(widget.location.name),
                                         ),
                                       ),
                                       ButtonBar(
@@ -243,23 +247,23 @@ class _LocationScreenState extends State<LocationScreen>
                                                       LocationTheme.nearlyBlue,
                                                   size: 24,
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 20, left: 20),
-                                                  child: Text(
-                                                    '${widget.location.distance} mi',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w200,
-                                                      fontSize: 22,
-                                                      letterSpacing: 0.27,
-                                                      color: LocationTheme
-                                                          .nearlyBlue,
-                                                    ),
-                                                  ),
-                                                ),
+                                                // Padding(
+                                                //   padding:
+                                                //       const EdgeInsets.only(
+                                                //           right: 20, left: 20),
+                                                //   child: Text(
+                                                //     widget.location.name,
+                                                //     textAlign: TextAlign.left,
+                                                //     style: TextStyle(
+                                                //       fontWeight:
+                                                //           FontWeight.w200,
+                                                //       fontSize: 22,
+                                                //       letterSpacing: 0.27,
+                                                //       color: LocationTheme
+                                                //           .nearlyBlue,
+                                                //     ),
+                                                //   ),
+                                                // ),
                                                 FlatButton(
                                                   shape:
                                                       new RoundedRectangleBorder(
@@ -283,8 +287,8 @@ class _LocationScreenState extends State<LocationScreen>
                                                   splashColor: Colors.white
                                                       .withOpacity(0.3),
                                                   onPressed: () {
-                                                    openMap(widget.location.lat,
-                                                        widget.location.lon);
+                                                    // openMap(widget.location.lat,
+                                                    //     widget.location.lon);
                                                   },
                                                 ),
                                               ],
@@ -328,11 +332,8 @@ class _LocationScreenState extends State<LocationScreen>
                                         child: ListTile(
                                           leading: Icon(Icons.description),
                                           title: Text('Description'),
-                                          subtitle: widget
-                                                      .location.description !=
-                                                  ""
-                                              ? Text(
-                                                  '${widget.location.description}')
+                                          subtitle: widget.location.name != ""
+                                              ? Text('${widget.location.name}')
                                               : Text('No Description'),
                                         ),
                                       ),
@@ -351,25 +352,9 @@ class _LocationScreenState extends State<LocationScreen>
                                         padding: const EdgeInsets.all(8.0),
                                         child: ListTile(
                                           leading: Icon(Icons.web),
-                                          // String name;
-                                          // String description;
-                                          // String type;
-                                          // String country;
-                                          // String region;
-                                          // String city;
-                                          // String street;
-                                          // String zip;
-                                          // double lat;
-                                          // double lon;
-                                          // String email;
-                                          // String phone;
-                                          // String website;
-                                          // double distance;
                                           title: Text('Website'),
-                                          subtitle: widget.location.website !=
-                                                  ""
-                                              ? Text(
-                                                  '${widget.location.website}')
+                                          subtitle: widget.location.name != ""
+                                              ? Text('${widget.location.name}')
                                               : Text('No Website Added'),
                                         ),
                                       ),
@@ -389,8 +374,8 @@ class _LocationScreenState extends State<LocationScreen>
                                         child: ListTile(
                                           leading: Icon(Icons.phone),
                                           title: Text('Phone'),
-                                          subtitle: widget.location.phone != ""
-                                              ? Text('${widget.location.phone}')
+                                          subtitle: widget.location.name != ""
+                                              ? Text('${widget.location.name}')
                                               : Text('No Phone Added'),
                                         ),
                                       ),
@@ -410,8 +395,8 @@ class _LocationScreenState extends State<LocationScreen>
                                         child: ListTile(
                                           leading: Icon(Icons.email),
                                           title: Text('Email'),
-                                          subtitle: widget.location.email != ""
-                                              ? Text('${widget.location.email}')
+                                          subtitle: widget.location.name != ""
+                                              ? Text('${widget.location.name}')
                                               : Text('No Email Added'),
                                         ),
                                       ),

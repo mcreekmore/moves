@@ -1,7 +1,7 @@
 class LocationPostModel {
   String name;
   String description;
-  String type;
+  List<String> types; //TODO implement multiple
   String country;
   String region;
   String city;
@@ -16,7 +16,7 @@ class LocationPostModel {
   LocationPostModel({
     this.name,
     this.description,
-    this.type,
+    this.types,
     this.country,
     this.region,
     this.city,
