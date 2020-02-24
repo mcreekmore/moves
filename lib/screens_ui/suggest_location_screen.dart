@@ -41,62 +41,6 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
   bool secondType = false;
   bool thirdType = false;
 
-  DropdownButtonFormField androidDropDown(int index) {
-    List<DropdownMenuItem<String>> dropdownItems = [];
-
-    for (String typeOfLocation in typesOfLocations) {
-      var newItem = DropdownMenuItem(
-        child: Text(typeOfLocation),
-        value: typeOfLocation,
-      );
-
-      dropdownItems.add(newItem);
-    }
-
-    return DropdownButtonFormField(
-      // decoration: const InputDecoration(
-      //   labelText: '*Type',
-      //   border: OutlineInputBorder(),
-      // ),
-      decoration: AppTheme().getInputDecorationTheme(
-          labelText: "*Type", fillColor: Color(0xFFb5cdfc)),
-      value: selectedType,
-      items: dropdownItems,
-      onChanged: (value) {
-        setState(() {
-          selectedTypeList[index] = value.toString();
-          selectedTypeList.add(value.toString());
-        });
-      },
-    );
-    // return DropdownButton<String>(
-    //   value: selectedType,
-    //   items: dropdownItems,
-    //   onChanged: (value) {
-    //     setState(() {
-    //       selectedType = value.toString();
-    //     });
-    //   },
-    // );
-  }
-
-  CupertinoPicker iOSPicker(int index) {
-    List<Text> pickerItems = [];
-
-    for (String typeOfLocation in typesOfLocations) {
-      pickerItems.add(Text(typeOfLocation));
-    }
-
-    return CupertinoPicker(
-      backgroundColor: Colors.lightBlue,
-      itemExtent: 32,
-      onSelectedItemChanged: (int selectedIndex) {
-        //print(selectedIndex);
-      },
-      children: pickerItems,
-    );
-  }
-
   Map<int, String> types = Map();
   List<String> selectedTypes = [];
 

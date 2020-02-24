@@ -77,7 +77,7 @@ class Store with ChangeNotifier {
   }
 
   Future<void> signOutUserSharedPref() async {
-    final prefs = await SharedPreferences.getInstance();
+    //final prefs = await SharedPreferences.getInstance();
     //await prefs.set
   }
 

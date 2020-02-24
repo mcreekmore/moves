@@ -5,6 +5,7 @@ import 'package:moves/model/location_loaded_model.dart';
 import 'package:moves/themes/location_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:moves/screens_ui/type_screens/bar.dart';
 
 class LocationScreen extends StatefulWidget {
   LocationScreen({@required this.location});
@@ -71,7 +72,6 @@ class _LocationScreenState extends State<LocationScreen>
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        //backgroundColor: Colors.blue[200],
         backgroundColor: LocationTheme.nearlyBlue,
         child: Icon((Icons.add)),
       ),
@@ -83,19 +83,11 @@ class _LocationScreenState extends State<LocationScreen>
             slivers: <Widget>[
               SliverAppBar(
                 brightness: Brightness.light,
-                //stretch: true,
                 pinned: true,
                 expandedHeight: expandedHeight,
                 backgroundColor: AppTheme.nearlyWhite,
-                //backgroundColor: Color(0xFFb5cdfc),
-                //backgroundColor: LocationTheme.nearlyBlue,
                 iconTheme: IconThemeData(color: AppTheme.darkText),
                 flexibleSpace: FlexibleSpaceBar(
-                  //background: Image.asset(
-                  //  'assets/icons/${widget.location.type.toString().toLowerCase()}.png'),
-                  // background: Image.asset(
-                  //     'assets/design_course/webInterFace.png',
-                  //     fit: BoxFit.fitWidth),
                   title: Container(
                     constraints: BoxConstraints(
                       minWidth: 100,
@@ -128,7 +120,6 @@ class _LocationScreenState extends State<LocationScreen>
               ),
               SliverList(
                 delegate: SliverChildBuilderDelegate((_, i) {
-                  //return ListTile(title: Text('Item $i'));
                   return Container(
                     decoration: BoxDecoration(
                       color: AppTheme.nearlyWhite,
@@ -137,31 +128,9 @@ class _LocationScreenState extends State<LocationScreen>
                       padding: const EdgeInsets.only(left: 8, right: 8),
                       child: SingleChildScrollView(
                         child: Container(
-                          // constraints: BoxConstraints(
-                          //   minHeight: infoHeight,
-                          //   maxHeight: tempHeight > infoHeight
-                          //       ? tempHeight
-                          //       : infoHeight,
-                          // ),
                           child: Column(
-                            //mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              // Padding(
-                              //   padding: const EdgeInsets.only(
-                              //       top: 32.0, left: 18, right: 16),
-                              //   child: Text(
-                              //     //'Web Design\nCourse',
-                              //     widget.location.name,
-                              //     textAlign: TextAlign.left,
-                              //     style: TextStyle(
-                              //       fontWeight: FontWeight.w600,
-                              //       fontSize: 22,
-                              //       letterSpacing: 0.27,
-                              //       color: LocationTheme.darkerText,
-                              //     ),
-                              //   ),
-                              // ),
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 16, right: 16, bottom: 8, top: 16),
@@ -169,39 +138,7 @@ class _LocationScreenState extends State<LocationScreen>
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    // Text(
-                                    //   '${widget.location.distance} mi',
-                                    //   textAlign: TextAlign.left,
-                                    //   style: TextStyle(
-                                    //     fontWeight: FontWeight.w200,
-                                    //     fontSize: 22,
-                                    //     letterSpacing: 0.27,
-                                    //     color: LocationTheme.nearlyBlue,
-                                    //   ),
-                                    // ),
-                                    // Container(
-                                    //   child: Row(
-                                    //     children: <Widget>[
-                                    //       Text(
-                                    //         '-',
-                                    //         textAlign: TextAlign.left,
-                                    //         style: TextStyle(
-                                    //           fontWeight: FontWeight.w200,
-                                    //           fontSize: 22,
-                                    //           letterSpacing: 0.27,
-                                    //           color: LocationTheme.grey,
-                                    //         ),
-                                    //       ),
-                                    //       Icon(
-                                    //         Icons.star,
-                                    //         color: LocationTheme.nearlyBlue,
-                                    //         size: 24,
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    // )
-                                  ],
+                                  children: <Widget>[],
                                 ),
                               ),
                               AnimatedOpacity(
@@ -296,23 +233,27 @@ class _LocationScreenState extends State<LocationScreen>
                                   ),
                                 ),
                               ),
+
+                              /* optional pages toggle here based on type */
+                              widget.location.types.contains('Bar')
+                                  ? AnimatedOpacity(
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      opacity: opacity1,
+                                      child: Bar(
+                                        location: widget.location,
+                                      ),
+                                    )
+                                  : Container(),
+
+                              /* basic info */
                               AnimatedOpacity(
                                 duration: const Duration(milliseconds: 500),
                                 opacity: opacity1,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: <Widget>[
-                                        getTimeBoxUI('24', 'Classe'),
-                                        getTimeBoxUI('2hours', 'Time'),
-                                        getTimeBoxUI('24', 'Seat'),
-                                        getTimeBoxUI('24', 'Classe'),
-                                        getTimeBoxUI('2hours', 'Time'),
-                                        getTimeBoxUI('24', 'Seat'),
-                                      ],
-                                    ),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Text('Basic Info'),
                                   ),
                                 ),
                               ),
@@ -351,20 +292,6 @@ class _LocationScreenState extends State<LocationScreen>
                                         padding: const EdgeInsets.all(8.0),
                                         child: ListTile(
                                           leading: Icon(Icons.web),
-                                          // String name;
-                                          // String description;
-                                          // String type;
-                                          // String country;
-                                          // String region;
-                                          // String city;
-                                          // String street;
-                                          // String zip;
-                                          // double lat;
-                                          // double lon;
-                                          // String email;
-                                          // String phone;
-                                          // String website;
-                                          // double distance;
                                           title: Text('Website'),
                                           subtitle: widget.location.website !=
                                                   ""
@@ -419,32 +346,7 @@ class _LocationScreenState extends State<LocationScreen>
                                   ),
                                 ),
                               ),
-
-                              Expanded(
-                                flex: 0,
-                                child: AnimatedOpacity(
-                                  duration: const Duration(milliseconds: 500),
-                                  opacity: opacity2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 16, right: 16, top: 8, bottom: 8),
-                                    child: Text(
-                                      'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
-                                      textAlign: TextAlign.justify,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w200,
-                                        fontSize: 14,
-                                        letterSpacing: 0.27,
-                                        color: LocationTheme.grey,
-                                      ),
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ),
-                              ),
                               SizedBox(
-                                //height: MediaQuery.of(context).padding.bottom,
                                 height: 90,
                               ),
                             ],
@@ -461,129 +363,4 @@ class _LocationScreenState extends State<LocationScreen>
       ),
     );
   }
-
-  // body: SingleChildScrollView(
-  //   child: Padding(
-  //     padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-  //     child: Column(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: <Widget>[
-  //         appBar(),
-  //         Text('hey'),
-  //       ],
-  //     ),
-  //   ),
-  // ),
-
-  Widget getTimeBoxUI(String text1, String txt2) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: LocationTheme.nearlyWhite,
-          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: LocationTheme.grey.withOpacity(0.2),
-                offset: const Offset(1.1, 1.1),
-                blurRadius: 8.0),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-              left: 18.0, right: 18.0, top: 12.0, bottom: 12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                text1,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  letterSpacing: 0.27,
-                  color: LocationTheme.nearlyBlue,
-                ),
-              ),
-              Text(
-                txt2,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w200,
-                  fontSize: 14,
-                  letterSpacing: 0.27,
-                  color: LocationTheme.grey,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }
-
-// Card(
-//   child: Column(
-//     mainAxisSize: MainAxisSize.min,
-//     children: <Widget>[
-//       Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: ListTile(
-//           leading: Image.asset(
-//               'assets/icons/${widget.location.type.toString().toLowerCase()}.png'),
-//           title: Text('${widget.location.name}'),
-//           subtitle: Text(
-//               'Address: ${widget.location.street}, ${widget.location.region}, ${widget.location.country}'),
-//         ),
-//       ),
-//       // ButtonBar(
-//       //   children: <Widget>[
-//       //     FlatButton(
-//       //       child: Text('NAVIGATE'),
-//       //       onPressed: () {/* ... */},
-//       //     ),
-//       //     FlatButton(
-//       //       child: Text('UPDATE'),
-//       //       onPressed: () {/* ... */},
-//       //     ),
-//       //   ],
-//       // ),
-//     ],
-//   ),
-// ),
-
-// Widget appBar() {
-//   return SizedBox(
-//     height: AppBar().preferredSize.height,
-//     child: Row(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: <Widget>[
-//         Padding(
-//           padding: const EdgeInsets.only(top: 8, left: 8),
-//           child: Container(
-//             width: AppBar().preferredSize.height - 8,
-//             height: AppBar().preferredSize.height - 8,
-//           ),
-//         ),
-//         Expanded(
-//           child: Center(
-//             child: Padding(
-//               padding: EdgeInsets.only(top: 4),
-//               child: Text(
-//                 '${widget.location.name}',
-//                 style: TextStyle(
-//                   fontSize: 22,
-//                   color: AppTheme().getTextColor(),
-//                   fontWeight: FontWeight.w700,
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ],
-//     ),
-//   );
-// }
