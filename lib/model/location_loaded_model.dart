@@ -1,4 +1,5 @@
 class LocationLoadedModel {
+  String id;
   String name;
   String description;
   List<dynamic> types;
@@ -15,6 +16,7 @@ class LocationLoadedModel {
   double distance;
 
   LocationLoadedModel({
+    this.id,
     this.name,
     this.description,
     this.types,

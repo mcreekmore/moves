@@ -5,32 +5,22 @@ import 'package:moves/app_theme.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // JSON parser
 import '../model/homelist.dart';
-//import 'package:moves/model/location_post_model.dart';
 import 'package:moves/model/location_loaded_model.dart';
 import 'package:latlong/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:moves/screens_ui/location_screen.dart';
-//import 'package:moves/screens_ui/test_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_maps_webservice/places.dart';
-//import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:moves/screens_ui/google_location_screen.dart';
 import 'package:moves/model/google_home_list.dart';
-
-//import 'dart:collection';
 
 class Store with ChangeNotifier {
   Store() {
     initData();
   }
+
+  /// STATE
   AppTheme appTheme = AppTheme();
-  // development uri
-  var uri = Uri.http('10.0.2.2:3000', '/api/locations/approved');
-
-  // prod uri
-  //var uri = Uri.http('creekmore.io', '/api/locations/approved');
-
-  // state
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseUser signedInUser;
@@ -42,12 +32,23 @@ class Store with ChangeNotifier {
   final GoogleMapsPlaces places =
       GoogleMapsPlaces(apiKey: "AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ");
   List<PlacesSearchResult> googleLocationResults;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // getters
+  /* API */
+  //static String api = 'creekmore.io'; // prod
+  static String api = '10.0.2.2:3000'; // dev
+  var uri = Uri.http(api, '/api');
 
-  // mutators
+  //var uriGet = Uri.https(api, '/api/locations/approved');
 
-  // methods
+  /// GETTERS
+  String getApi() {
+    return api;
+  }
+
+  /// MUTATORS
+
+  /// METHODS
 
   Future initData() async {
     await getCurrentLocation();
@@ -58,13 +59,7 @@ class Store with ChangeNotifier {
   Future<void> getGoogleLocationData() async {
     PlacesSearchResponse response = await places.searchNearbyWithRadius(
         Location(usersLocation.latitude, usersLocation.longitude), 1500);
-    //print(response.results.first.name);
     googleLocationResults = response.results;
-
-    // for (var location in googleLocationResults) {
-    //   print(location.id);
-    //   print(location.name);
-    // }
   }
 
   Future<dynamic> getUserFromSharedPref() async {
@@ -82,23 +77,20 @@ class Store with ChangeNotifier {
   }
 
   Future<List<LocationLoadedModel>> getData() async {
-    http.Response response = await http.get(uri);
+    http.Response response =
+        await http.get(uri.toString() + '/locations/approved');
 
     if (response.statusCode == 200) {
       var data = response.body;
-      //print(data);
-
-      //return jsonDecode(data); // this should ALWAYS be dynamic
-
       locations = [];
 
       List<dynamic> unparsedLocations = jsonDecode(data);
-      //print(locations);
       for (var location in unparsedLocations) {
         double distance = calcDistance(location);
 
         locations.add(
           LocationLoadedModel(
+            id: location["_id"],
             name: location["name"],
             description: location["description"],
             types: location["types"],
@@ -120,7 +112,6 @@ class Store with ChangeNotifier {
       sortLocations(locations);
 
       buildHomeList(locations);
-      //buildGoogleHomeList(googleLocationResults);
 
       notifyListeners();
       return locations;
@@ -138,7 +129,6 @@ class Store with ChangeNotifier {
     try {
       Position position = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      //print(position);
       double _latitude = position.latitude;
       double _longitude = position.longitude;
 
@@ -167,9 +157,6 @@ class Store with ChangeNotifier {
         HomeList(
           imagePath:
               'assets/icons/${location.types[0].toString().toLowerCase()}.png',
-          // navigateScreen: LocationScreen(
-          //   location: location,
-          // ),
           navigateScreen: LocationScreen(
             location: location,
           ),
@@ -177,9 +164,6 @@ class Store with ChangeNotifier {
         ),
       );
     }
-
-    //print(homeList);
-    //return homeList;
   }
 
   void buildGoogleHomeList(locations) {
@@ -188,9 +172,6 @@ class Store with ChangeNotifier {
       googleHomeList.add(
         GoogleHomeList(
           imagePath: 'assets/icons/bar.png',
-          // navigateScreen: LocationScreen(
-          //   location: location,
-          // ),
           navigateScreen: GoogleLocationScreen(
             location: location,
           ),
@@ -199,9 +180,6 @@ class Store with ChangeNotifier {
       );
     }
     print(googleHomeList.length);
-
-    //print(homeList);
-    //return homeList;
   }
 
   Future<String> signInWithEmail({String email, String password}) async {
@@ -243,9 +221,7 @@ class Store with ChangeNotifier {
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.uid == currentUser.uid);
 
-      //print('signInWithGoogle succeeded: ${user.email}');
       signedInUser = user;
-      //print(signedInUser);
       notifyListeners();
 
       return 'signInWithGoogle succeeded: ${user.email}';
@@ -256,12 +232,9 @@ class Store with ChangeNotifier {
   }
 
   void signOutGoogle() async {
-    //print(signedInUser);
     await googleSignIn.signOut(); // signs out both regardless of sign in choice
     await _auth.signOut();
     signedInUser = null;
-    //print(signedInUser);
-    //print("User Sign Out");
     notifyListeners();
   }
 }

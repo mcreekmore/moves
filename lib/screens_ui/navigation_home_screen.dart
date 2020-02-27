@@ -1,6 +1,5 @@
 import 'package:moves/app_theme.dart';
 import 'package:moves/screens/map_screen.dart';
-import 'package:moves/screens_ui/suggest_location_screen.dart';
 import '../widgets/custom_drawer/drawer_user_controller.dart';
 import '../widgets/custom_drawer/home_drawer.dart';
 import 'feedback_screen.dart';
@@ -9,8 +8,8 @@ import 'home_screen.dart';
 import 'invite_friend_screen.dart';
 import 'about_me_screen.dart';
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:moves/store/store.dart';
+import 'package:provider/provider.dart';
+import 'package:moves/store/store.dart';
 // import 'package:moves/model/location_model.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
@@ -21,6 +20,7 @@ class NavigationHomeScreen extends StatefulWidget {
 class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget screenView;
   DrawerIndex drawerIndex;
+
   //AnimationController sliderAnimationController;
 
   @override
@@ -39,12 +39,16 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey =
+        Provider.of<Store>(context).scaffoldKey;
+
     return Container(
       color: AppTheme().getContainerColor(),
       child: SafeArea(
         top: false,
         bottom: false,
         child: Scaffold(
+          key: scaffoldKey,
           backgroundColor: AppTheme().getContainerColor(),
           body: DrawerUserController(
             screenIndex: drawerIndex,
@@ -88,10 +92,6 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       } else if (drawerIndex == DrawerIndex.About) {
         setState(() {
           screenView = AboutMe();
-        });
-      } else if (drawerIndex == DrawerIndex.Suggest) {
-        setState(() {
-          screenView = SuggestLocationScreen();
         });
       } else {
         //do in your way......

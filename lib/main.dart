@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           //textTheme: AppTheme.textTheme,
           textTheme: AppTheme().getTextTheme(),
-          platform: TargetPlatform.iOS,
+          //platform: TargetPlatform.iOS,
         ),
         home: NavigationHomeScreen(),
       ),

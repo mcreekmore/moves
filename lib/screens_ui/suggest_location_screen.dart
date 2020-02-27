@@ -1,16 +1,12 @@
 import '../app_theme.dart';
-//import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-//import 'package:http/http.dart' as http;
 import 'package:geocoder/geocoder.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:moves/widgets/multi_select_dialogue.dart';
 import 'package:dio/dio.dart';
-//import 'dart:convert';
-
-//import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:moves/store/store.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'dart:convert';
 
 class SuggestLocationScreen extends StatefulWidget {
   @override
@@ -23,101 +19,104 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
     super.initState();
   }
 
-  Color textInputColor = Color(0xFFb5cdfc);
-
-  List<String> typesOfLocations = [
-    'Restaurant',
-    'Hotel',
-    'Bar',
-    'Cafe',
-    'Music Venue',
-    'Grocery',
-    'Gas Station',
-    'Bank',
-    'Post Office',
-    'Hospital',
-  ];
-
-  bool secondType = false;
-  bool thirdType = false;
-
-  Map<int, String> types = Map();
-  List<String> selectedTypes = [];
-
-  void _showMultiSelect(BuildContext context) async {
-    final items = <MultiSelectDialogItem<int>>[
-      MultiSelectDialogItem(1, 'Restaurant'),
-      MultiSelectDialogItem(2, 'Hotel'),
-      MultiSelectDialogItem(3, 'Bar'),
-      MultiSelectDialogItem(4, 'Cafe'),
-      MultiSelectDialogItem(5, 'Music Venue'),
-      MultiSelectDialogItem(6, 'Grocery'),
-      MultiSelectDialogItem(7, 'Gas Station'),
-      MultiSelectDialogItem(8, 'Bank'),
-      MultiSelectDialogItem(9, 'Post Office'),
-      MultiSelectDialogItem(10, 'Hospital'),
-    ];
-
-    final selectedValues = await showDialog<Set<int>>(
-      context: context,
-      builder: (BuildContext context) {
-        return MultiSelectDialog(
-          items: items,
-          initialSelectedValues: [1].toSet(),
-        );
-      },
-    );
-
-    List<int> selectedValVarList = selectedValues.toList();
-
-    for (var i = 0; i < selectedValVarList.length; i++) {
-      if (selectedValVarList[i] == 1) {
-        selectedTypes.add('Restaurant');
-      } else if (selectedValVarList[i] == 2) {
-        selectedTypes.add('Hotel');
-      } else if (selectedValVarList[i] == 3) {
-        selectedTypes.add('Bar');
-      } else if (selectedValVarList[i] == 4) {
-        selectedTypes.add('Cafe');
-      } else if (selectedValVarList[i] == 5) {
-        selectedTypes.add('Music Venue');
-      } else if (selectedValVarList[i] == 6) {
-        selectedTypes.add('Grocery');
-      } else if (selectedValVarList[i] == 7) {
-        selectedTypes.add('Gas Station');
-      } else if (selectedValVarList[i] == 8) {
-        selectedTypes.add('Bank');
-      } else if (selectedValVarList[i] == 9) {
-        selectedTypes.add('Post Office');
-      } else if (selectedValVarList[i] == 10) {
-        selectedTypes.add('Hospital');
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(
-    //     SystemUiOverlayStyle(systemNavigationBarColor: Color(0xFFAAC6FC)));
+    final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
+    SnackBar snackBar = SnackBar(
+      content: Text('Location Suggestion Sent Successfully'),
+    );
+
+    dynamic calcLatLon() async {
+      print('street: ' + _fbKey.currentState.value["street"]);
+      String street = _fbKey.currentState.value["street"].toString();
+      String region = _fbKey.currentState.value["region"].toString();
+      String city = _fbKey.currentState.value["city"].toString();
+      final query = "$street, $city $region ";
+      var addresses = await Geocoder.local
+          .findAddressesFromQuery(query); //TODO fix geocoder null error
+      var first = addresses.first;
+      return first.coordinates;
+    }
+
+    Future makePostRequest(dynamic body) async {
+      String url = Provider.of<Store>(context, listen: false).getApi() +
+          '/api/locations';
+
+      Coordinates coordinates = await calcLatLon();
+      print("coordinates: " + coordinates.toString());
+
+      Dio dio = new Dio();
+
+      print(body.toString());
+
+      var response = await dio.post(url, data: jsonEncode(body));
+
+      print(response.statusMessage);
+    }
+
+    void selectedIndex(int index) async {
+      if (index == 0) {
+        // Submit
+        if (_fbKey.currentState.saveAndValidate()) {
+          await makePostRequest(_fbKey.currentState.value);
+
+          Scaffold.of(_fbKey.currentContext).showSnackBar(snackBar);
+        }
+      } else if (index == 1) {
+        // Reset
+        _fbKey.currentState.reset();
+      } else if (index == 2) {
+        // Close
+        Navigator.pop(context);
+      }
+    }
+
     return Container(
       color: AppTheme.nearlyWhite,
       child: SafeArea(
         top: false,
         child: Scaffold(
-          //backgroundColor: AppTheme.nearlyWhite,
-          backgroundColor: Color(0xFFAAC6FC),
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: AppTheme.nearlyWhite,
+            selectedItemColor: Colors.grey.shade800,
+            selectedFontSize: 12,
+            unselectedItemColor: Colors.grey.shade800,
+            unselectedFontSize: 12,
+            currentIndex: 0,
+            onTap: (int index) {
+              selectedIndex(index);
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.send,
+                  color: Colors.blueAccent,
+                ),
+                title: Text(
+                  "Submit",
+                  style: TextStyle(color: Colors.blueAccent),
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.clear_all),
+                title: Text('Reset'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.close, color: Colors.redAccent),
+                title: Text(
+                  'Close',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
+              )
+            ],
+          ),
+          backgroundColor: AppTheme.nearlyWhite,
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top,
-                  ),
-                  child:
-                      Image.asset('assets/images/abstract-location-access.png'),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 8),
+                  padding: const EdgeInsets.only(top: 42),
                   child: Text(
                     'Suggest a New Location',
                     style: TextStyle(
@@ -127,490 +126,175 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                   ),
                 ),
 
-                /* Inputs start here */
-                Container(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: const Text(
-                    'Place',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                // Location Name
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: TextFormField(
-                    controller: _locationController,
-                    onChanged: (String name) {
-                      locationName = name;
-                    },
-                    // decoration: const InputDecoration(
-                    //   labelText: '*Location Name',
-                    //   border: OutlineInputBorder(),
-                    // ),
-                    decoration: AppTheme().getInputDecorationTheme(
-                      labelText: "*Location Name",
-                      fillColor: textInputColor,
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter a';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                // Description
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: TextField(
-                    controller: _descriptionController,
-                    maxLines: null,
-                    onChanged: (String desc) {
-                      description = desc;
-                    },
-                    // decoration: InputDecoration(
-                    //   border: OutlineInputBorder(),
-                    //   labelText: 'Description',
-                    // ),
-                    decoration: AppTheme().getInputDecorationTheme(
-                      labelText: "Description",
-                      fillColor: textInputColor,
-                    ),
-                  ),
-                ),
+                /* FORM */
 
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Container(
-                      width: 120,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4.0)),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.6),
-                              offset: const Offset(4, 4),
-                              blurRadius: 8.0),
-                        ],
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
-                            _showMultiSelect(context);
-                          },
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                // Icon(
-                                //   Icons.share,
-                                //   color: Colors.white,
-                                //   size: 22,
-                                // ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Text(
-                                    'Add Type',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 32),
+                  child: FormBuilder(
+                    key: _fbKey,
+                    autovalidate: true,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: const Text(
+                            'Place Info',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Contact Information
-                Container(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: const Text(
-                    'Location',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                // Country
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: TextFormField(
-                    controller: _countryController,
-                    onChanged: (String countryTyped) {
-                      country = countryTyped;
-                    },
-                    // decoration: const InputDecoration(
-                    //   labelText: '*Country',
-                    //   border: OutlineInputBorder(),
-                    // ),
-                    decoration: AppTheme().getInputDecorationTheme(
-                      labelText: "*Country",
-                      fillColor: textInputColor,
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                // Region
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: TextFormField(
-                    controller: _regionController,
-                    onChanged: (String regionTyped) {
-                      region = regionTyped;
-                    },
-                    // decoration: const InputDecoration(
-                    //   labelText: '*Region (State)',
-                    //   border: OutlineInputBorder(),
-                    // ),
-                    decoration: AppTheme().getInputDecorationTheme(
-                      labelText: "*Region (State)",
-                      fillColor: textInputColor,
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                // city
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: TextFormField(
-                    controller: _cityController,
-                    onChanged: (String cityTyped) {
-                      city = cityTyped;
-                    },
-                    // decoration: const InputDecoration(
-                    //   labelText: '*City',
-                    //   border: OutlineInputBorder(),
-                    // ),
-                    decoration: AppTheme().getInputDecorationTheme(
-                      labelText: "*City",
-                      fillColor: textInputColor,
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                // street
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: TextFormField(
-                    controller: _streetController,
-                    onChanged: (String streetTyped) {
-                      street = streetTyped;
-                    },
-                    // decoration: const InputDecoration(
-                    //   labelText: '*Street',
-                    //   border: OutlineInputBorder(),
-                    // ),
-                    decoration: AppTheme().getInputDecorationTheme(
-                      labelText: "*Street",
-                      fillColor: textInputColor,
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                // zip
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: _zipController,
-                    onChanged: (String zipTyped) {
-                      zip = zipTyped;
-                    },
-                    // decoration: const InputDecoration(
-                    //   labelText: '*Zip',
-                    //   border: OutlineInputBorder(),
-                    // ),
-                    decoration: AppTheme().getInputDecorationTheme(
-                      labelText: "*Zip",
-                      fillColor: textInputColor,
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-
-                // Contact Line
-                Container(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: const Text(
-                    'Contact',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                // E-mail
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailController,
-                    onChanged: (String emailTyped) {
-                      email = emailTyped;
-                    },
-                    // decoration: const InputDecoration(
-                    //   labelText: '*E-mail',
-                    //   border: OutlineInputBorder(),
-                    // ),
-                    decoration: AppTheme().getInputDecorationTheme(
-                      labelText: "*Email",
-                      fillColor: textInputColor,
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                // Phone
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: TextFormField(
-                    keyboardType: TextInputType.phone,
-                    controller: _phoneController,
-                    onChanged: (String phoneTyped) {
-                      phone = phoneTyped;
-                    },
-                    // decoration: const InputDecoration(
-                    //   labelText: '*Phone',
-                    //   border: OutlineInputBorder(),
-                    // ),
-                    decoration: AppTheme().getInputDecorationTheme(
-                      labelText: "*Phone",
-                      fillColor: textInputColor,
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                // Website
-                Container(
-                  padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-                  child: TextFormField(
-                    keyboardType: TextInputType.url,
-                    controller: _websiteController,
-                    onChanged: (String websiteTyped) {
-                      website = websiteTyped;
-                    },
-                    // decoration: const InputDecoration(
-                    //   labelText: 'Website',
-                    //   border: OutlineInputBorder(),
-                    // ),
-                    decoration: AppTheme().getInputDecorationTheme(
-                      labelText: "Website",
-                      fillColor: textInputColor,
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-
-                // Buttons start here
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Container(
-                          width: 120,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(4.0)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.6),
-                                  offset: const Offset(4, 4),
-                                  blurRadius: 8.0),
-                            ],
-                          ),
-                          // suggest button
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () async {
-                                if (locationName == '' ||
-                                    //selectedType == '' ||
-                                    selectedTypeList == [] ||
-                                    country == '' ||
-                                    region == '' ||
-                                    city == '' ||
-                                    street == '' ||
-                                    zip == '' ||
-                                    email == '' ||
-                                    phone == '') {
-                                  setState(() {
-                                    Alert(
-                                      context: context,
-                                      title: "Neccessary Fields Required",
-                                      desc:
-                                          "All fields marked with a * are required",
-                                      image: Image.asset(
-                                          "assets/images/error.png"),
-                                    ).show();
-                                  });
-                                } else {
-                                  //var res = await makePostRequest();
-
-                                  setState(() {
-                                    // cant tell if this works or not
-                                    SpinKitDoubleBounce(
-                                      color: Colors.blue,
-                                      size: 30.0,
-                                    );
-                                  });
-
-                                  await makePostRequest();
-                                  //print(res);
-                                  clearTextFields();
-
-                                  setState(() {
-                                    Alert(
-                                      context: context,
-                                      title: "Thank you!",
-                                      desc:
-                                          "Your suggested place has been successfully sent.",
-                                      image: Image.asset(
-                                          "assets/images/good-job.png"),
-                                    ).show();
-                                  });
-                                }
-                              },
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.send,
-                                      color: Colors.white,
-                                      size: 22,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Text(
-                                        'Suggest',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                        FormBuilderTextField(
+                          attribute: "name",
+                          decoration:
+                              InputDecoration(labelText: "*Location Name"),
+                          validators: [
+                            FormBuilderValidators.maxLength(100),
+                          ],
+                        ),
+                        FormBuilderTextField(
+                          attribute: "description",
+                          decoration: InputDecoration(labelText: "Description"),
+                          validators: [
+                            FormBuilderValidators.maxLength(300),
+                          ],
+                        ),
+                        FormBuilderFilterChip(
+                          decoration:
+                              InputDecoration(labelText: "*Location Type(s)"),
+                          attribute: "types",
+                          options: [
+                            FormBuilderFieldOption(
+                              child: Text("Restaurant"),
+                              value: "Restaurant",
+                            ),
+                            FormBuilderFieldOption(
+                              child: Text("Hotel"),
+                              value: "Hotel",
+                            ),
+                            FormBuilderFieldOption(
+                              child: Text("Bar"),
+                              value: "Bar",
+                            ),
+                            FormBuilderFieldOption(
+                              child: Text("Cafe"),
+                              value: "Cafe",
+                            ),
+                            FormBuilderFieldOption(
+                              child: Text("Music Venue"),
+                              value: "Music Venue",
+                            ),
+                            FormBuilderFieldOption(
+                              child: Text("Grocery"),
+                              value: "Grocery",
+                            ),
+                            FormBuilderFieldOption(
+                              child: Text("Gas Station"),
+                              value: "Gas Station",
+                            ),
+                            FormBuilderFieldOption(
+                              child: Text("Bank"),
+                              value: "Bank",
+                            ),
+                            FormBuilderFieldOption(
+                              child: Text("Post Office"),
+                              value: "Post Office",
+                            ),
+                            FormBuilderFieldOption(
+                              child: Text("Pharmacy"),
+                              value: "Pharmacy",
+                            ),
+                            FormBuilderFieldOption(
+                              child: Text("Retail"),
+                              value: "Retail",
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: const Text(
+                            'Location Info',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Container(
-                          width: 120,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(4.0)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.6),
-                                  offset: const Offset(4, 4),
-                                  blurRadius: 8.0),
-                            ],
-                          ),
-                          // clear button
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  clearTextFields();
-                                });
-                              },
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.cancel,
-                                      color: Colors.white,
-                                      size: 22,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Text(
-                                        'Clear',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                        FormBuilderTextField(
+                          attribute: "country",
+                          decoration: InputDecoration(labelText: "*Country"),
+                          validators: [
+                            FormBuilderValidators.maxLength(50),
+                          ],
+                        ),
+                        FormBuilderTextField(
+                          attribute: "region",
+                          decoration:
+                              InputDecoration(labelText: "*Region (State)"),
+                          validators: [
+                            FormBuilderValidators.maxLength(300),
+                          ],
+                        ),
+                        FormBuilderTextField(
+                          attribute: "city",
+                          decoration: InputDecoration(labelText: "*City"),
+                          validators: [
+                            FormBuilderValidators.maxLength(300),
+                          ],
+                        ),
+                        FormBuilderTextField(
+                          attribute: "street",
+                          decoration: InputDecoration(labelText: "*Street"),
+                          validators: [
+                            FormBuilderValidators.maxLength(300),
+                          ],
+                        ),
+                        FormBuilderTextField(
+                          attribute: "zip",
+                          decoration: InputDecoration(labelText: "*Zipcode"),
+                          validators: [
+                            FormBuilderValidators.maxLength(300),
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: const Text(
+                            'Contact Info',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
                             ),
                           ),
                         ),
-                      ),
+                        FormBuilderTextField(
+                          attribute: "email",
+                          decoration: InputDecoration(labelText: "*Email"),
+                          validators: [
+                            FormBuilderValidators.maxLength(300),
+                          ],
+                        ),
+                        FormBuilderTextField(
+                          attribute: "phone",
+                          decoration: InputDecoration(labelText: "*Phone"),
+                          validators: [
+                            FormBuilderValidators.maxLength(18),
+                          ],
+                        ),
+                        FormBuilderTextField(
+                          attribute: "website",
+                          decoration: InputDecoration(labelText: "Website"),
+                          validators: [
+                            FormBuilderValidators.maxLength(300),
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
-                )
+                  ),
+                ),
+
+                /* END FORM */
               ],
             ),
           ),
@@ -619,105 +303,44 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
     );
   }
 
-  var _locationController = TextEditingController();
-  var _descriptionController = TextEditingController();
-  var _countryController = TextEditingController();
-  var _regionController = TextEditingController();
-  var _cityController = TextEditingController();
-  var _streetController = TextEditingController();
-  var _zipController = TextEditingController();
-  var _emailController = TextEditingController();
-  var _phoneController = TextEditingController();
-  var _websiteController = TextEditingController();
+  // Future makePostRequestOld() async {
+  //   Coordinates coordinates = await calcLatLon();
+  //   // String url = 'https://' +
+  //   //     Provider.of<Store>(context, listen: false).getApi() +
+  //   //     '/api/locations';
 
-  List<String> selectedTypeList = [];
-  Set<int> selectedTypeSetInt = {};
-  String selectedType = "Restaurant";
-  String selectedType2 = '';
-  String selectedType3 = '';
-  String locationName = '';
-  String description = '';
-  String country = '';
-  String region = '';
-  String city = '';
-  String street = '';
-  String zip = '';
-  String email = '';
-  String phone = '';
-  String website = '';
+  //   Dio dio = new Dio();
 
-  void clearTextFields() {
-    _locationController.clear();
-    _descriptionController.clear();
-    _countryController.clear();
-    _regionController.clear();
-    _cityController.clear();
-    _streetController.clear();
-    _zipController.clear();
-    _emailController.clear();
-    _phoneController.clear();
-    _websiteController.clear();
-  }
+  //   // var uri = Uri.http(Provider.of<Store>(context, listen: false).getApi(),
+  //   //         '/api/locations/')
+  //   //     .toString();
 
-  dynamic calcLatLon() async {
-    final query = "$street, $region $city";
-    var addresses = await Geocoder.local.findAddressesFromQuery(query);
-    var first = addresses.first;
-    //print("${first.featureName} : ${first.coordinates}");
-    return first.coordinates;
-  }
+  //   var url = Provider.of<Store>(context, listen: false).uri.toString() +
+  //       '/locations';
 
-  Future makePostRequest() async {
-    Coordinates coordinates = await calcLatLon();
-    //print(coordinates.runtimeType);
+  //   print(url);
+  //   //print(selectedTypeSetInt.toList());
 
-    //var typesJson = json.encode({"types:", types});
+  //   await dio.post(url, data: {
+  //     'name': locationName,
+  //     'description': description,
+  //     'types': selectedTypes,
+  //     'country': country,
+  //     'region': region,
+  //     'city': city,
+  //     'street': street,
+  //     'zip': zip,
+  //     'lat': coordinates.latitude.toString(),
+  //     'lon': coordinates.longitude.toString(),
+  //     'email': email,
+  //     'phone': phone,
+  //     'website': website,
+  //   });
 
-    //var url = 'https://creekmore.io/api/locations';
-    var url = 'http://10.0.2.2:3000/api/locations';
-    // var response = await http.post(url, body: {
-    //   'name': locationName,
-    //   'description': description,
-    //   //'types': types.toString(),
-    //   'types': selectedTypeSetInt.toList(),
-    //   'country': country,
-    //   'region': region,
-    //   'city': city,
-    //   'street': street,
-    //   'zip': zip,
-    //   'lat': coordinates.latitude.toString(),
-    //   'lon': coordinates.longitude.toString(),
-    //   'email': email,
-    //   'phone': phone,
-    //   'website': website,
-    // });
-
-    Dio dio = new Dio();
-
-    print(selectedTypeSetInt.toList());
-
-    await dio.post(url, data: {
-      'name': locationName,
-      'description': description,
-      //'types': types.toString(),
-      //'types': selectedTypeSetInt.toList(),
-      'types': selectedTypes,
-      'country': country,
-      'region': region,
-      'city': city,
-      'street': street,
-      'zip': zip,
-      'lat': coordinates.latitude.toString(),
-      'lon': coordinates.longitude.toString(),
-      'email': email,
-      'phone': phone,
-      'website': website,
-    });
-
-    //print(response.statusMessage);
-    // if you want to print, add 'var response =' before the await
-    // print('Response status: ${response.statusCode}');
-    // print('Response body: ${response.body}');
-    // print(await http.read('https://creekmore.io/api/locations'));
-  }
+  //   //print(response.statusMessage);
+  //   // if you want to print, add 'var response =' before the await
+  //   // print('Response status: ${response.statusCode}');
+  //   // print('Response body: ${response.body}');
+  //   // print(await http.read('https://creekmore.io/api/locations'));
+  // }
 }

@@ -42,13 +42,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           //isAssetsImage: true,
           //imageName: 'assets/images/supportIcon.png',
           icon: Icon(Icons.map)),
-      DrawerList(
-        index: DrawerIndex.Suggest,
-        labelName: 'Suggest Location',
-        // isAssetsImage: true,
-        // imageName: 'assets/images/supportIcon.png',
-        icon: Icon(Icons.explore),
-      ),
+
       DrawerList(
         index: DrawerIndex.FeedBack,
         labelName: 'FeedBack',
@@ -404,7 +398,6 @@ enum DrawerIndex {
   About,
   Invite,
   Testing,
-  Suggest,
 }
 
 class DrawerList {
