@@ -80,7 +80,8 @@ class _LocationScreenState extends State<LocationScreen>
                     return BottomSheetWidget(location: widget.location);
                   });
             },
-            backgroundColor: LocationTheme.nearlyBlue,
+            //backgroundColor: LocationTheme.nearlyBlue,
+            backgroundColor: Colors.blue,
             child: Icon((Icons.add)),
           );
         },
@@ -181,7 +182,9 @@ class _LocationScreenState extends State<LocationScreen>
                                               ),
                                               Icon(
                                                 Icons.star,
-                                                color: LocationTheme.nearlyBlue,
+                                                //color: LocationTheme.nearlyBlue,
+                                                color: Colors.blue,
+
                                                 size: 24,
                                               ),
                                               Padding(
@@ -194,8 +197,9 @@ class _LocationScreenState extends State<LocationScreen>
                                                     fontWeight: FontWeight.w200,
                                                     fontSize: 22,
                                                     letterSpacing: 0.27,
-                                                    color: LocationTheme
-                                                        .nearlyBlue,
+                                                    // color: LocationTheme
+                                                    //     .nearlyBlue,
+                                                    color: Colors.blue,
                                                   ),
                                                 ),
                                               ),
@@ -216,7 +220,8 @@ class _LocationScreenState extends State<LocationScreen>
                                                     ),
                                                   ),
                                                 ),
-                                                color: LocationTheme.nearlyBlue,
+                                                //color: LocationTheme.nearlyBlue,
+                                                color: Colors.blue,
                                                 splashColor: Colors.white
                                                     .withOpacity(0.3),
                                                 onPressed: () {

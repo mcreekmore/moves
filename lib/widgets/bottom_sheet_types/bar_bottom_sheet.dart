@@ -19,15 +19,13 @@ class BarBottomSheet extends StatelessWidget {
             FormBuilderValidators.numeric(),
           ],
         ),
-        FormBuilderCheckbox(
-          attribute: 'bar_cover_bool',
-          label: Text(
-            "Is there a cover?",
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey.shade600,
-            ),
-          ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Is there a cover?"),
+          attribute: "bar_cover_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
         ),
         FormBuilderTextField(
           attribute: "bar_cover_charge",
@@ -51,31 +49,31 @@ class BarBottomSheet extends StatelessWidget {
           options: [
             FormBuilderFieldOption(
               child: Text("College Bar"),
-              value: "college_bar",
+              value: "College Bar",
             ),
             FormBuilderFieldOption(
               child: Text("Sports Bar"),
-              value: "sports_bar",
+              value: "Sports Bar",
             ),
             FormBuilderFieldOption(
               child: Text("Dive Bar"),
-              value: "dive_bar",
+              value: "Dive Bar",
             ),
             FormBuilderFieldOption(
               child: Text("Cigar Bar"),
-              value: "cigar_bar",
+              value: "Cigar Bar",
             ),
             FormBuilderFieldOption(
               child: Text("Wine Bar"),
-              value: "wine_bar",
+              value: "Wine Bar",
             ),
             FormBuilderFieldOption(
               child: Text("Cocktail Bar"),
-              value: "cocktail_bar",
+              value: "Cocktail Bar",
             ),
             FormBuilderFieldOption(
               child: Text("Irish Pub"),
-              value: "irish_pub",
+              value: "Irish Pub",
             ),
           ],
         ),

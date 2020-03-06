@@ -14,6 +14,8 @@ class LocationLoadedModel {
   String phone;
   String website;
   double distance;
+  //update info
+  dynamic updateInfo;
 
   LocationLoadedModel({
     this.id,
@@ -31,5 +33,6 @@ class LocationLoadedModel {
     this.phone,
     this.website,
     this.distance,
+    this.updateInfo,
   });
 }

@@ -139,34 +139,34 @@ class BottomSheetWidget extends StatelessWidget {
                         // types
                         location.types.contains('Bar')
                             ? BarBottomSheet()
-                            : null,
+                            : Container(),
                         location.types.contains('Restaurant')
                             ? RestaurantBottomSheet()
-                            : null,
+                            : Container(),
                         location.types.contains('Cafe')
                             ? CafeBottomSheet()
-                            : null,
+                            : Container(),
                         location.types.contains('Music Venue')
                             ? MusicVenueBottomSheet()
-                            : null,
+                            : Container(),
                         location.types.contains('Hotel')
                             ? HotelBottomSheet()
-                            : null,
+                            : Container(),
                         location.types.contains('Grocery')
                             ? GroceryBottomSheet()
-                            : null,
+                            : Container(),
                         location.types.contains('Gas Station')
                             ? GasStationBottomSheet()
-                            : null,
+                            : Container(),
                         location.types.contains('Bank')
                             ? BankBottomSheet()
-                            : null,
+                            : Container(),
                         location.types.contains('Post Office')
                             ? PostOfficeBottomSheet()
-                            : null,
+                            : Container(),
                         location.types.contains('Hospital')
                             ? HospitalBottomSheet()
-                            : null,
+                            : Container(),
 
                         // basic location info
                         LocationBottomSheet(),

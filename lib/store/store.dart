@@ -90,22 +90,22 @@ class Store with ChangeNotifier {
 
         locations.add(
           LocationLoadedModel(
-            id: location["_id"],
-            name: location["name"],
-            description: location["description"],
-            types: location["types"],
-            country: location["country"],
-            region: location["region"],
-            city: location["city"],
-            street: location["street"],
-            zip: location["zip"],
-            lat: location["lat"],
-            lon: location["lon"],
-            email: location["email"],
-            phone: location["phone"],
-            website: location["website"],
-            distance: distance.toDouble(),
-          ),
+              id: location["_id"],
+              name: location["name"],
+              description: location["description"],
+              types: location["types"],
+              country: location["country"],
+              region: location["region"],
+              city: location["city"],
+              street: location["street"],
+              zip: location["zip"],
+              lat: location["lat"],
+              lon: location["lon"],
+              email: location["email"],
+              phone: location["phone"],
+              website: location["website"],
+              distance: distance.toDouble(),
+              updateInfo: location["update_info"]),
         );
       }
 
