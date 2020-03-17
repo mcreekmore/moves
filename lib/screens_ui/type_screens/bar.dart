@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:moves/model/location_loaded_model.dart';
-import 'package:moves/widgets/charts/bar_wait_chart.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:convert';
 
 class Bar extends StatefulWidget {

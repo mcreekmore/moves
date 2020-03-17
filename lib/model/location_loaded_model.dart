@@ -14,6 +14,7 @@ class LocationLoadedModel {
   String phone;
   String website;
   double distance;
+  double openPercent;
   //update info
   dynamic updateInfo;
 
@@ -33,6 +34,7 @@ class LocationLoadedModel {
     this.phone,
     this.website,
     this.distance,
+    this.openPercent,
     this.updateInfo,
   });
 }

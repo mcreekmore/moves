@@ -353,6 +353,29 @@ class _LocationScreenState extends State<LocationScreen>
                                       padding: const EdgeInsets.all(8.0),
                                       child: ListTile(
                                         leading: Icon(Icons.description),
+                                        title: Text('Open'),
+                                        subtitle: widget.location.description !=
+                                                ""
+                                            ? Text(
+                                                '${widget.location.openPercent}')
+                                            : Text('No Description'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            AnimatedOpacity(
+                              duration: const Duration(milliseconds: 500),
+                              opacity: opacity1,
+                              child: Card(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ListTile(
+                                        leading: Icon(Icons.description),
                                         title: Text('Description'),
                                         subtitle: widget.location.description !=
                                                 ""
