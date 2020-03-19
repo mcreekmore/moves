@@ -13,6 +13,14 @@ class LocationBottomSheet extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Is this location open?"),
+          attribute: "location_open_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
         FormBuilderSegmentedControl(
           decoration: InputDecoration(labelText: "Location Rating"),
           attribute: "location_rating",

@@ -14,14 +14,53 @@ class GroceryBottomSheet extends StatelessWidget {
           ),
         ),
         FormBuilderChoiceChip(
-          decoration: InputDecoration(labelText: "Occupancy"),
-          attribute: "location_occupancy_chip",
+          decoration: InputDecoration(labelText: "Water in stock?"),
+          attribute: "grocery_water_bool",
           options: [
-            FormBuilderFieldOption(child: Text("Empty"), value: "empty"),
-            FormBuilderFieldOption(child: Text("Low"), value: "low"),
-            FormBuilderFieldOption(child: Text("Medium"), value: "medium"),
-            FormBuilderFieldOption(child: Text("High"), value: "high"),
-            FormBuilderFieldOption(child: Text("Max"), value: "max"),
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Perishable foods in stock?"),
+          attribute: "grocery_perishable_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration:
+              InputDecoration(labelText: "Non-Perishable foods in stock?"),
+          attribute: "grocery_non_perishable_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Toilet paper in stock?"),
+          attribute: "grocery_toilet_paper_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Disinfectants in stock?"),
+          attribute: "grocery_disinfectants_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration:
+              InputDecoration(labelText: "Feminine hygiene products in stock?"),
+          attribute: "grocery_feminine_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
           ],
         ),
       ],
