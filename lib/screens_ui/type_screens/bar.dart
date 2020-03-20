@@ -12,9 +12,6 @@ class Bar extends StatefulWidget {
 }
 
 class _BarState extends State<Bar> {
-  double opacity1 = 0.0;
-  double opacity2 = 0.0;
-  double opacity3 = 0.0;
   JsonEncoder encoder = new JsonEncoder.withIndent('  ');
 
   void createSpecialsList() {
@@ -75,9 +72,6 @@ class _BarState extends State<Bar> {
             leading: Icon(Icons.local_bar),
             title: Text('Specials (Last 24 Hours)'),
             subtitle: Text('sup'),
-            // subtitle: Column(
-            //   children: specialsTextList,
-            // ),
           ),
           Divider(),
           ListTile(
@@ -86,40 +80,6 @@ class _BarState extends State<Bar> {
             subtitle: Text("College Bar, Irish Pub"),
           ),
           Divider(),
-          //Card(
-          //   child: Column(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: <Widget>[
-          //       Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: ListTile(
-          //           leading: Icon(Icons.local_bar),
-          //           title: Text('Specials'),
-          //           subtitle: widget.location.description != ""
-          //               ? Text('${widget.location.description}')
-          //               : Text('No Specials'),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // Card(
-          //   child: Column(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: <Widget>[
-          //       Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: ListTile(
-          //           leading: Icon(Icons.loop),
-          //           title: Text('Wait'),
-          //           subtitle: widget.location.description != ""
-          //               ? Text('Currently there is a 30 min wait')
-          //               : Text('Currently no wait'),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );

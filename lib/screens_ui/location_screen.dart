@@ -5,6 +5,7 @@ import 'package:moves/themes/location_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:moves/screens_ui/type_screens/bar.dart';
+import 'package:moves/screens_ui/type_screens/grocery.dart';
 import 'package:moves/widgets/bottom_sheet.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -171,11 +172,11 @@ class _LocationScreenState extends State<LocationScreen>
                                           child: Row(
                                             children: <Widget>[
                                               Text(
-                                                '-',
+                                                'coming soon',
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w200,
-                                                  fontSize: 22,
+                                                  fontSize: 12,
                                                   letterSpacing: 0.27,
                                                   color: LocationTheme.grey,
                                                 ),
@@ -238,6 +239,20 @@ class _LocationScreenState extends State<LocationScreen>
                                 ),
                               ),
                             ),
+                            ListTile(
+                              subtitle: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                        "${widget.location.updateInfo["location_update_info"]["update_count_hour"]} user updates in the last hour"),
+                                    Text(
+                                        "${widget.location.updateInfo["location_update_info"]["update_count_day"]} user updates in the last day")
+                                  ],
+                                ),
+                              ),
+                            ),
 
                             /* optional pages toggle here based on type */
                             widget.location.types.contains('Bar')
@@ -289,7 +304,7 @@ class _LocationScreenState extends State<LocationScreen>
                                 ? AnimatedOpacity(
                                     duration: const Duration(milliseconds: 500),
                                     opacity: opacity1,
-                                    child: Bar(
+                                    child: Grocery(
                                       location: widget.location,
                                     ),
                                   )
@@ -352,7 +367,7 @@ class _LocationScreenState extends State<LocationScreen>
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: ListTile(
-                                        leading: Icon(Icons.description),
+                                        leading: Icon(Icons.event_available),
                                         title: Text('Open'),
                                         subtitle: widget.location.description !=
                                                 ""
