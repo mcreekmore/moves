@@ -240,15 +240,16 @@ class _LocationScreenState extends State<LocationScreen>
                               ),
                             ),
                             ListTile(
+                              leading: Icon(Icons.people),
                               subtitle: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                        "${widget.location.updateInfo["location_update_info"]["update_count_hour"]} user updates in the last hour"),
+                                        "${widget.location.updateInfo["location_update_info"]["update_count_hour"] ?? 0} user updates in the last hour"),
                                     Text(
-                                        "${widget.location.updateInfo["location_update_info"]["update_count_day"]} user updates in the last day")
+                                        "${widget.location.updateInfo["location_update_info"]["update_count_day"] ?? 0} user updates in the last day")
                                   ],
                                 ),
                               ),
