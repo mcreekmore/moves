@@ -72,12 +72,12 @@ class _BarState extends State<Bar> {
                   )
                 : Text('No reports (Last Day)'),
           ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.local_bar),
-            title: Text('Specials (Last 24 Hours)'),
-            subtitle: Text('sup'),
-          ),
+          // Divider(),
+          // ListTile(
+          //   leading: Icon(Icons.local_bar),
+          //   title: Text('Specials (Last 24 Hours)'),
+          //   subtitle: Text('sup'),
+          // ),
           Divider(),
           ListTile(
             leading: Icon(Icons.store_mall_directory),

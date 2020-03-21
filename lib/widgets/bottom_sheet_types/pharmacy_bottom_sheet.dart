@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-class GasStationBottomSheet extends StatelessWidget {
+class PharmacyBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -9,45 +9,40 @@ class GasStationBottomSheet extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Text(
-            'Gas Station Info',
+            'Pharmacy Info',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         FormBuilderChoiceChip(
-          decoration: InputDecoration(labelText: "Regular Gas (87) in stock?"),
-          attribute: "gas_regular_bool",
+          decoration:
+              InputDecoration(labelText: "Currently filling prescriptions?"),
+          attribute: "pharmacy_prescription_fill_bool",
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
           ],
         ),
         FormBuilderChoiceChip(
-          decoration: InputDecoration(labelText: "Plus Gas (89) in stock?"),
-          attribute: "gas_plus_bool",
+          decoration: InputDecoration(labelText: "Vaccinations available?"),
+          attribute: "pharmacy_vaccinations_bool",
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
           ],
         ),
         FormBuilderChoiceChip(
-          decoration: InputDecoration(labelText: "Premium Gas (89) in stock?"),
-          attribute: "gas_premium_bool",
+          decoration:
+              InputDecoration(labelText: "Is there a drive through pick up?"),
+          attribute: "pharmacy_drive_through_bool",
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
           ],
         ),
         FormBuilderChoiceChip(
-          decoration: InputDecoration(labelText: "Diesel in stock?"),
-          attribute: "gas_diesel_bool",
-          options: [
-            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
-            FormBuilderFieldOption(child: Text("No"), value: "false"),
-          ],
-        ),
-        FormBuilderChoiceChip(
-          decoration: InputDecoration(labelText: "Is there an air-pump?"),
-          attribute: "gas_air_bool",
+          decoration:
+              InputDecoration(labelText: "Is pharmacy counseling available?"),
+          attribute: "pharmacy_counseling_bool",
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),

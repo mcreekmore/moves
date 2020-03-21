@@ -274,6 +274,8 @@ class HomeListView extends StatelessWidget {
       return Icon(Icons.local_post_office);
     } else if (type == 'Hospital') {
       return Icon(Icons.local_hospital);
+    } else if (type == 'Pharmacy') {
+      return Icon(Icons.local_pharmacy);
     } else {
       return Icon(Icons.location_on);
     }

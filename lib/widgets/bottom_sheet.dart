@@ -19,6 +19,7 @@ import 'package:moves/widgets/bottom_sheet_types/hotel_bottom_sheet.dart';
 import 'package:moves/widgets/bottom_sheet_types/music_venue_bottom_sheet.dart';
 import 'package:moves/widgets/bottom_sheet_types/post_office_bottom_sheet.dart';
 import 'package:moves/widgets/bottom_sheet_types/restaurant_bottom_sheet.dart';
+import 'package:moves/widgets/bottom_sheet_types/pharmacy_bottom_sheet.dart';
 
 class BottomSheetWidget extends StatelessWidget {
   BottomSheetWidget({this.location});
@@ -168,6 +169,9 @@ class BottomSheetWidget extends StatelessWidget {
                             : Container(),
                         location.types.contains('Hospital')
                             ? HospitalBottomSheet()
+                            : Container(),
+                        location.types.contains('Pharmacy')
+                            ? PharmacyBottomSheet()
                             : Container(),
 
                         // basic location info

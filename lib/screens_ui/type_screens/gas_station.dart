@@ -33,17 +33,17 @@ class _GasStationState extends State<GasStation> {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                widget.location.updateInfo["grocery_update_info"]
-                            ["grocery_water_percent_hour"] !=
+                widget.location.updateInfo["gas_update_info"]
+                            ["gas_regular_percent_hour"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["grocery_update_info"]["grocery_water_percent_hour"]}% reported Yes (Last Hour)')
+                        '${widget.location.updateInfo["gas_update_info"]["gas_regular_percent_hour"]}% reported Yes (Last Hour)')
                     : Text('No users reported in last hour'),
-                widget.location.updateInfo["grocery_update_info"]
-                            ["grocery_water_percent_day"] !=
+                widget.location.updateInfo["gas_update_info"]
+                            ["gas_regular_percent_day"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["grocery_update_info"]["grocery_water_percent_day"]}% reported Yes (Last Day)')
+                        '${widget.location.updateInfo["gas_update_info"]["gas_regular_percent_day"]}% reported Yes (Last Day)')
                     : Text('No users reported in last day'),
               ],
             ),
@@ -55,17 +55,17 @@ class _GasStationState extends State<GasStation> {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                widget.location.updateInfo["grocery_update_info"]
-                            ["grocery_water_percent_hour"] !=
+                widget.location.updateInfo["gas_update_info"]
+                            ["gas_plus_percent_hour"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["grocery_update_info"]["grocery_water_percent_hour"]}% reported Yes (Last Hour)')
+                        '${widget.location.updateInfo["gas_update_info"]["gas_plus_percent_hour"]}% reported Yes (Last Hour)')
                     : Text('No users reported in last hour'),
-                widget.location.updateInfo["grocery_update_info"]
-                            ["grocery_water_percent_day"] !=
+                widget.location.updateInfo["gas_update_info"]
+                            ["gas_plus_percent_day"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["grocery_update_info"]["grocery_water_percent_day"]}% reported Yes (Last Day)')
+                        '${widget.location.updateInfo["gas_update_info"]["gas_plus_percent_day"]}% reported Yes (Last Day)')
                     : Text('No users reported in last day'),
               ],
             ),
@@ -77,18 +77,56 @@ class _GasStationState extends State<GasStation> {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                widget.location.updateInfo["grocery_update_info"]
-                            ["grocery_water_percent_hour"] !=
+                widget.location.updateInfo["gas_update_info"]
+                            ["gas_premium_percent_hour"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["grocery_update_info"]["grocery_water_percent_hour"]}% reported Yes (Last Hour)')
+                        '${widget.location.updateInfo["gas_update_info"]["gas_premium_percent_hour"]}% reported Yes (Last Hour)')
                     : Text('No users reported in last hour'),
-                widget.location.updateInfo["grocery_update_info"]
-                            ["grocery_water_percent_day"] !=
+                widget.location.updateInfo["gas_update_info"]
+                            ["gas_premium_percent_day"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["grocery_update_info"]["grocery_water_percent_day"]}% reported Yes (Last Day)')
+                        '${widget.location.updateInfo["gas_update_info"]["gas_premium_percent_day"]}% reported Yes (Last Day)')
                     : Text('No users reported in last day'),
+              ],
+            ),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.local_gas_station),
+            title: Text('Diesel in stock'),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                widget.location.updateInfo["gas_update_info"]
+                            ["gas_diesel_percent_hour"] !=
+                        null
+                    ? Text(
+                        '${widget.location.updateInfo["gas_update_info"]["gas_diesel_percent_hour"]}% reported Yes (Last Hour)')
+                    : Text('No users reported in last hour'),
+                widget.location.updateInfo["gas_update_info"]
+                            ["gas_diesel_percent_day"] !=
+                        null
+                    ? Text(
+                        '${widget.location.updateInfo["gas_update_info"]["gas_diesel_percent_day"]}% reported Yes (Last Day)')
+                    : Text('No users reported in last day'),
+              ],
+            ),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.bubble_chart),
+            title: Text('Air Pump'),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                widget.location.updateInfo["gas_update_info"]
+                            ["gas_air_percent"] !=
+                        null
+                    ? Text(
+                        '${widget.location.updateInfo["gas_update_info"]["gas_air_percent"]}% reported Yes')
+                    : Text('No users reported'),
               ],
             ),
           ),

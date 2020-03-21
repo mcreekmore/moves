@@ -36,13 +36,13 @@ class BarBottomSheet extends StatelessWidget {
             FormBuilderValidators.numeric(),
           ],
         ),
-        FormBuilderTextField(
-          attribute: "bar_specials",
-          decoration: InputDecoration(labelText: "Specials / Discounts"),
-          validators: [
-            FormBuilderValidators.maxLength(300),
-          ],
-        ),
+        // FormBuilderTextField(
+        //   attribute: "bar_specials",
+        //   decoration: InputDecoration(labelText: "Specials / Discounts"),
+        //   validators: [
+        //     FormBuilderValidators.maxLength(300),
+        //   ],
+        // ),
         FormBuilderFilterChip(
           decoration: InputDecoration(labelText: "Bar Styles"),
           attribute: "bar_styles",

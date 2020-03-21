@@ -7,6 +7,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:moves/screens_ui/type_screens/bar.dart';
 import 'package:moves/screens_ui/type_screens/grocery.dart';
 import 'package:moves/screens_ui/type_screens/gas_station.dart';
+import 'package:moves/screens_ui/type_screens/pharmacy.dart';
+import 'package:moves/screens_ui/type_screens/restaurant.dart';
+
 import 'package:moves/widgets/bottom_sheet.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -249,7 +252,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                   )
                                 : Container(),
                             widget.location.types.contains('Restaurant')
-                                ? Bar(
+                                ? Restaurant(
                                     location: widget.location,
                                   )
                                 : Container(),
@@ -293,6 +296,11 @@ class _LocationScreenState extends State<LocationScreen> {
                                     location: widget.location,
                                   )
                                 : Container(),
+                            widget.location.types.contains('Pharmacy')
+                                ? Pharmacy(
+                                    location: widget.location,
+                                  )
+                                : Container(),
 
                             /* basic info */
                             Padding(
@@ -306,25 +314,43 @@ class _LocationScreenState extends State<LocationScreen> {
                             ListTile(
                               leading: Icon(Icons.event_available),
                               title: Text('Open'),
-                              subtitle: widget.location.description != ""
-                                  ? Text('${widget.location.openPercent}')
-                                  : Text('No Description'),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  widget.location.updateInfo[
+                                                  "location_update_info"]
+                                              ["open_hour_percent"] !=
+                                          null
+                                      ? Text(
+                                          '${widget.location.updateInfo["location_update_info"]["open_hour_percent"]}% reported Yes (Last Hour)')
+                                      : Text('No users reported in last hour'),
+                                  widget.location.updateInfo[
+                                                  "location_update_info"]
+                                              ["open_day_percent"] !=
+                                          null
+                                      ? Text(
+                                          '${widget.location.updateInfo["location_update_info"]["open_day_percent"]}% reported Yes (Last Day)')
+                                      : Text('No users reported in last day'),
+                                ],
+                              ),
                             ),
                             Divider(),
                             ListTile(
                               leading: Icon(Icons.description),
                               title: Text('Description'),
-                              subtitle: widget.location.description != ""
+                              subtitle: widget.location.description != null
                                   ? Text('${widget.location.description}')
-                                  : Text('No Description'),
+                                  : Text('No description'),
                             ),
                             Divider(),
                             ListTile(
                               leading: Icon(Icons.web),
                               title: Text('Website'),
-                              onTap: () => launch(
-                                  '${widget.location.website}'), // TODO fix uri parsing when not entered with http://
-                              subtitle: widget.location.website != ""
+                              onTap: () => {
+                                if (widget.location.website != null)
+                                  {launch('${widget.location.website}')}
+                              },
+                              subtitle: widget.location.website != null
                                   ? Text('${widget.location.website}')
                                   : Text('No Website Added'),
                             ),
@@ -334,7 +360,7 @@ class _LocationScreenState extends State<LocationScreen> {
                               title: Text('Phone'),
                               onTap: () =>
                                   launch('tel:${widget.location.phone}'),
-                              subtitle: widget.location.phone != ""
+                              subtitle: widget.location.phone != null
                                   ? Text('${widget.location.phone}')
                                   : Text('No Phone Added'),
                             ),
