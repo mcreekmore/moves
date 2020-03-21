@@ -50,22 +50,27 @@ class _BarState extends State<Bar> {
           //BarWaitChart(),
           ListTile(
             leading: Icon(Icons.loop),
-            title: Text('Wait (Last Hour):'),
-            subtitle: Text(
-                '${barUpdate["bar_wait_average"]} minute wait reported (average)'),
+            title: Text('Wait'),
+            subtitle: barUpdate["bar_wait_average"] != null
+                ? Text(
+                    '${barUpdate["bar_wait_average"]} minute wait reported (average)')
+                : Text('No reported wait times (Last Hour)'),
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.attach_money),
-            title: Text('Cover (Last 24 Hours): '),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text('${barUpdate["bar_cover_charge_percent"]}% reported Yes'),
-                Text(
-                    "${barUpdate["bar_cover_charge_average"]} USD Reported Cover Average"),
-              ],
-            ),
+            title: Text('Cover'),
+            subtitle: barUpdate["bar_cover_charge_percent"] != null
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                          '${barUpdate["bar_cover_charge_percent"]}% reported Yes (Last 24 Hours)'),
+                      Text(
+                          "${barUpdate["bar_cover_charge_average"]} USD Reported Cover Average"),
+                    ],
+                  )
+                : Text('No reports (Last Day)'),
           ),
           Divider(),
           ListTile(
@@ -76,7 +81,7 @@ class _BarState extends State<Bar> {
           Divider(),
           ListTile(
             leading: Icon(Icons.store_mall_directory),
-            title: Text('Bar Style(s)'),
+            title: Text('Bar Styles'),
             subtitle: Text("College Bar, Irish Pub"),
           ),
           Divider(),

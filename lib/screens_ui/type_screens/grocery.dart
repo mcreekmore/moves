@@ -29,7 +29,7 @@ class _GroceryState extends State<Grocery> {
           Divider(),
           ListTile(
             leading: Icon(Icons.local_drink),
-            title: Text('Water in stock:'),
+            title: Text('Water in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -39,19 +39,69 @@ class _GroceryState extends State<Grocery> {
                     ? Text(
                         '${widget.location.updateInfo["grocery_update_info"]["grocery_water_percent_hour"]}% reported Yes (Last Hour)')
                     : Text('No users reported in last hour'),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(vertical: 4.0),
+                //   child: Row(
+                //     children: <Widget>[
+                //       Flexible(
+                //         flex: widget.location.updateInfo["grocery_update_info"]
+                //             ["grocery_water_percent_hour"],
+                //         child: Container(
+                //           height: 6,
+                //           //width: double.infinity,
+                //           color: Colors.greenAccent,
+                //         ),
+                //       ),
+                //       Flexible(
+                //         flex: 100 -
+                //             widget.location.updateInfo["grocery_update_info"]
+                //                 ["grocery_water_percent_hour"],
+                //         child: Container(
+                //           height: 6,
+                //           color: Colors.redAccent,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 widget.location.updateInfo["grocery_update_info"]
                             ["grocery_water_percent_day"] !=
                         null
                     ? Text(
                         '${widget.location.updateInfo["grocery_update_info"]["grocery_water_percent_day"]}% reported Yes (Last Day)')
-                    : Text('No users reported in last day')
+                    : Text('No users reported in last day'),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(vertical: 4.0),
+                //   child: Row(
+                //     children: <Widget>[
+                //       Flexible(
+                //         flex: widget.location.updateInfo["grocery_update_info"]
+                //             ["grocery_water_percent_day"],
+                //         child: Container(
+                //           height: 6,
+                //           //width: double.infinity,
+                //           color: Colors.greenAccent,
+                //         ),
+                //       ),
+                //       Flexible(
+                //         flex: 100 -
+                //             widget.location.updateInfo["grocery_update_info"]
+                //                 ["grocery_water_percent_day"],
+                //         child: Container(
+                //           height: 6,
+                //           color: Colors.redAccent,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.fastfood),
-            title: Text('Perishable foods in stock:'),
+            title: Text('Perishable foods in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -73,7 +123,7 @@ class _GroceryState extends State<Grocery> {
           Divider(),
           ListTile(
             leading: Icon(Icons.schedule),
-            title: Text('Non-perishable foods in stock:'),
+            title: Text('Non-perishable foods in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -95,7 +145,7 @@ class _GroceryState extends State<Grocery> {
           Divider(),
           ListTile(
             leading: Icon(Icons.wc),
-            title: Text('Toilet paper in stock:'),
+            title: Text('Toilet paper in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -117,7 +167,7 @@ class _GroceryState extends State<Grocery> {
           Divider(),
           ListTile(
             leading: Icon(Icons.bubble_chart),
-            title: Text('Disinfectants in stock:'),
+            title: Text('Disinfectants in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -139,7 +189,7 @@ class _GroceryState extends State<Grocery> {
           Divider(),
           ListTile(
             leading: Icon(Icons.pregnant_woman),
-            title: Text('Feminine hygiene products in stock:'),
+            title: Text('Feminine hygiene products in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

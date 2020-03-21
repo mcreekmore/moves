@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:moves/screens_ui/type_screens/bar.dart';
 import 'package:moves/screens_ui/type_screens/grocery.dart';
+import 'package:moves/screens_ui/type_screens/gas_station.dart';
 import 'package:moves/widgets/bottom_sheet.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -17,28 +18,19 @@ class LocationScreen extends StatefulWidget {
   _LocationScreenState createState() => _LocationScreenState();
 }
 
-class _LocationScreenState extends State<LocationScreen>
-    with TickerProviderStateMixin {
-  //final double infoHeight = 800;
-  AnimationController animationController;
-  Animation<double> animation;
+class _LocationScreenState extends State<LocationScreen> {
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;
   @override
   void initState() {
     SystemChrome.setSystemUIOverlayStyle(AppTheme().getSystemOverlayStyle());
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
-    animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-        parent: animationController,
-        curve: Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
+
     setData();
     super.initState();
   }
 
   Future<void> setData() async {
-    animationController.forward();
     await Future<dynamic>.delayed(const Duration(milliseconds: 200));
     setState(() {
       opacity1 = 1.0;
@@ -150,93 +142,88 @@ class _LocationScreenState extends State<LocationScreen>
                                 children: <Widget>[],
                               ),
                             ),
-                            AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity1,
-                              child: Card(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ListTile(
-                                        leading: Icon(Icons.my_location),
-                                        title: Text('${widget.location.name}'),
-                                        subtitle: Text(
-                                            '${widget.location.street}, ${widget.location.region}, ${widget.location.country}, ${widget.location.zip}'),
-                                      ),
+                            Card(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListTile(
+                                      leading: Icon(Icons.my_location),
+                                      title: Text('${widget.location.name}'),
+                                      subtitle: Text(
+                                          '${widget.location.street}, ${widget.location.region}, ${widget.location.country}, ${widget.location.zip}'),
                                     ),
-                                    ButtonBar(
-                                      children: <Widget>[
-                                        Container(
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                'coming soon',
+                                  ),
+                                  ButtonBar(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text(
+                                              'coming soon',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w200,
+                                                fontSize: 12,
+                                                letterSpacing: 0.27,
+                                                color: LocationTheme.grey,
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.star,
+                                              //color: LocationTheme.nearlyBlue,
+                                              color: Colors.blue,
+
+                                              size: 24,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 20, left: 20),
+                                              child: Text(
+                                                '${widget.location.distance} mi',
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w200,
-                                                  fontSize: 12,
+                                                  fontSize: 22,
                                                   letterSpacing: 0.27,
-                                                  color: LocationTheme.grey,
+                                                  // color: LocationTheme
+                                                  //     .nearlyBlue,
+                                                  color: Colors.blue,
                                                 ),
                                               ),
-                                              Icon(
-                                                Icons.star,
-                                                //color: LocationTheme.nearlyBlue,
-                                                color: Colors.blue,
-
-                                                size: 24,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 20, left: 20),
+                                            ),
+                                            FlatButton(
+                                              shape: new RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      new BorderRadius.circular(
+                                                          30.0)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5),
                                                 child: Text(
-                                                  '${widget.location.distance} mi',
-                                                  textAlign: TextAlign.left,
+                                                  'NAVIGATE',
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.w200,
-                                                    fontSize: 22,
-                                                    letterSpacing: 0.27,
-                                                    // color: LocationTheme
-                                                    //     .nearlyBlue,
-                                                    color: Colors.blue,
+                                                    color: Colors.white,
                                                   ),
                                                 ),
                                               ),
-                                              FlatButton(
-                                                shape:
-                                                    new RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            new BorderRadius
-                                                                    .circular(
-                                                                30.0)),
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(horizontal: 5),
-                                                  child: Text(
-                                                    'NAVIGATE',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                                //color: LocationTheme.nearlyBlue,
-                                                color: Colors.blue,
-                                                splashColor: Colors.white
-                                                    .withOpacity(0.3),
-                                                onPressed: () {
-                                                  openMap(widget.location.lat,
-                                                      widget.location.lon);
-                                                },
-                                              ),
-                                            ],
-                                          ),
+                                              //color: LocationTheme.nearlyBlue,
+                                              color: Colors.blue,
+                                              splashColor:
+                                                  Colors.white.withOpacity(0.3),
+                                              onPressed: () {
+                                                openMap(widget.location.lat,
+                                                    widget.location.lon);
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                             ListTile(
@@ -257,218 +244,113 @@ class _LocationScreenState extends State<LocationScreen>
 
                             /* optional pages toggle here based on type */
                             widget.location.types.contains('Bar')
-                                ? AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Bar(
-                                      location: widget.location,
-                                    ),
+                                ? Bar(
+                                    location: widget.location,
                                   )
                                 : Container(),
                             widget.location.types.contains('Restaurant')
-                                ? AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Bar(
-                                      location: widget.location,
-                                    ),
+                                ? Bar(
+                                    location: widget.location,
                                   )
                                 : Container(),
                             widget.location.types.contains('Cafe')
-                                ? AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Bar(
-                                      location: widget.location,
-                                    ),
+                                ? Bar(
+                                    location: widget.location,
                                   )
                                 : Container(),
                             widget.location.types.contains('Hotel')
-                                ? AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Bar(
-                                      location: widget.location,
-                                    ),
+                                ? Bar(
+                                    location: widget.location,
                                   )
                                 : Container(),
                             widget.location.types.contains('Music Venue')
-                                ? AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Bar(
-                                      location: widget.location,
-                                    ),
+                                ? Bar(
+                                    location: widget.location,
                                   )
                                 : Container(),
                             widget.location.types.contains('Grocery')
-                                ? AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Grocery(
-                                      location: widget.location,
-                                    ),
+                                ? Grocery(
+                                    location: widget.location,
                                   )
                                 : Container(),
                             widget.location.types.contains('Gas Station')
-                                ? AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Bar(
-                                      location: widget.location,
-                                    ),
+                                ? GasStation(
+                                    location: widget.location,
                                   )
                                 : Container(),
                             widget.location.types.contains('Bank')
-                                ? AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Bar(
-                                      location: widget.location,
-                                    ),
+                                ? Bar(
+                                    location: widget.location,
                                   )
                                 : Container(),
                             widget.location.types.contains('Post Office')
-                                ? AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Bar(
-                                      location: widget.location,
-                                    ),
+                                ? Bar(
+                                    location: widget.location,
                                   )
                                 : Container(),
                             widget.location.types.contains('Hospital')
-                                ? AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Bar(
-                                      location: widget.location,
-                                    ),
+                                ? Bar(
+                                    location: widget.location,
                                   )
                                 : Container(),
 
                             /* basic info */
-                            AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(
-                                  child: Text('Basic Info'),
-                                ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 16.0, bottom: 8),
+                              child: Center(
+                                child: Text('Basic Info'),
                               ),
                             ),
-                            AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity1,
-                              child: Card(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ListTile(
-                                        leading: Icon(Icons.event_available),
-                                        title: Text('Open'),
-                                        subtitle: widget.location.description !=
-                                                ""
-                                            ? Text(
-                                                '${widget.location.openPercent}')
-                                            : Text('No Description'),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Divider(),
+                            ListTile(
+                              leading: Icon(Icons.event_available),
+                              title: Text('Open'),
+                              subtitle: widget.location.description != ""
+                                  ? Text('${widget.location.openPercent}')
+                                  : Text('No Description'),
                             ),
-                            AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity1,
-                              child: Card(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ListTile(
-                                        leading: Icon(Icons.description),
-                                        title: Text('Description'),
-                                        subtitle: widget.location.description !=
-                                                ""
-                                            ? Text(
-                                                '${widget.location.description}')
-                                            : Text('No Description'),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Divider(),
+                            ListTile(
+                              leading: Icon(Icons.description),
+                              title: Text('Description'),
+                              subtitle: widget.location.description != ""
+                                  ? Text('${widget.location.description}')
+                                  : Text('No Description'),
                             ),
-                            AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity1,
-                              child: Card(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ListTile(
-                                        leading: Icon(Icons.web),
-                                        title: Text('Website'),
-                                        subtitle: widget.location.website != ""
-                                            ? Text('${widget.location.website}')
-                                            : Text('No Website Added'),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Divider(),
+                            ListTile(
+                              leading: Icon(Icons.web),
+                              title: Text('Website'),
+                              onTap: () => launch(
+                                  '${widget.location.website}'), // TODO fix uri parsing when not entered with http://
+                              subtitle: widget.location.website != ""
+                                  ? Text('${widget.location.website}')
+                                  : Text('No Website Added'),
                             ),
-                            AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity1,
-                              child: Card(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ListTile(
-                                        leading: Icon(Icons.phone),
-                                        title: Text('Phone'),
-                                        subtitle: widget.location.phone != ""
-                                            ? Text('${widget.location.phone}')
-                                            : Text('No Phone Added'),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Divider(),
+                            ListTile(
+                              leading: Icon(Icons.phone),
+                              title: Text('Phone'),
+                              onTap: () =>
+                                  launch('tel:${widget.location.phone}'),
+                              subtitle: widget.location.phone != ""
+                                  ? Text('${widget.location.phone}')
+                                  : Text('No Phone Added'),
                             ),
-                            AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity1,
-                              child: Card(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ListTile(
-                                        leading: Icon(Icons.email),
-                                        title: Text('Email'),
-                                        subtitle: widget.location.email != ""
-                                            ? Text('${widget.location.email}')
-                                            : Text('No Email Added'),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Divider(),
+                            ListTile(
+                              leading: Icon(Icons.email),
+                              onTap: () => launch(
+                                  'mailto:${widget.location.email}?subject=Email From Moves App&body='),
+                              title: Text('Email'),
+                              subtitle: widget.location.email != ""
+                                  ? Text('${widget.location.email}')
+                                  : Text('No Email Added'),
                             ),
+                            Divider(),
                             SizedBox(
-                              height: 90,
+                              height: 75,
                             ),
                           ],
                         ),
