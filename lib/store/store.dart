@@ -34,6 +34,35 @@ class Store with ChangeNotifier {
       GoogleMapsPlaces(apiKey: "AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ");
   List<PlacesSearchResult> googleLocationResults;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  List<String> types = [
+    "Restaurant",
+    "Hotel",
+    "Bar",
+    "Cafe",
+    "Music Venue",
+    "Grocery",
+    "Gas Station",
+    "Bank",
+    "Post Office",
+    "Hospital",
+    "Pharmacy",
+    "Retail"
+  ];
+
+  List<String> filteredTypes = [
+    "Restaurant",
+    "Hotel",
+    "Bar",
+    "Cafe",
+    "Music Venue",
+    "Grocery",
+    "Gas Station",
+    "Bank",
+    "Post Office",
+    "Hospital",
+    "Pharmacy",
+    "Retail"
+  ];
 
   /* API */
   //static String api = 'creekmore.io'; // prod
@@ -247,6 +276,22 @@ class Store with ChangeNotifier {
         .toList();
     //print(filteredLocations[0].location.name.toString());
 
+    notifyListeners();
+  }
+
+  void filterTypes(type) {
+    //filteredTypes = types;
+    for (var i = 0; i < filteredLocations.length; i++) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains(type))
+          .toList();
+    }
+
+    notifyListeners();
+  }
+
+  void resetFilterTypes() {
+    filteredLocations = homeList;
     notifyListeners();
   }
 }

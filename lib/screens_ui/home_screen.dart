@@ -38,19 +38,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  List<String> typeList = [
-    "Restaurant",
-    "Hotel",
-    "Bar",
-    "Cafe",
-    "Music Venue",
-    "Grocery",
-    "Gas Station",
-    "Bank",
-    "Post Office",
-    "Hospital",
-    "Pharmacy"
-  ];
   List<String> selectedCountList = [];
   int bottomNavBarIndex = 0;
 
@@ -105,11 +92,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ),
                   )
                 ]),
-            //
             floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.filter_list),
                 onPressed: () {
                   setState(() {
+                    FocusScope.of(context).requestFocus(new FocusNode());
                     showModalBottomSheet(
                         context: context,
                         builder: (BuildContext context) {
@@ -187,6 +174,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   listData: Provider.of<Store>(context)
                                       .filteredLocations[index],
                                   callBack: () {
+                                    setState(() {
+                                      FocusScope.of(context)
+                                          .requestFocus(new FocusNode());
+                                    });
+
                                     Navigator.push<dynamic>(
                                       context,
                                       MaterialPageRoute<dynamic>(
