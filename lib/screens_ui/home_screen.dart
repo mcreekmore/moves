@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:moves/screens_ui/suggest_location_screen.dart';
-import 'package:filter_list/filter_list.dart';
+import 'package:moves/widgets/home_filter_bottom_sheet.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
@@ -52,26 +52,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     "Pharmacy"
   ];
   List<String> selectedCountList = [];
+  int bottomNavBarIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    void _openFilterList() async {
-      var list = await FilterList.showFilterList(
-        context,
-        allTextList: typeList,
-        height: 450,
-        borderRadius: 20,
-        headlineText: "Filter",
-        searchFieldHintText: "Search for types",
-        selectedTextList: selectedCountList,
-        hideSearchField: true,
-        hidecloseIcon: true,
-      );
-
-      if (list != null) {
-        setState(() {
-          selectedCountList = List.from(list);
-        });
+    void selectedIndex(int index) async {
+      if (index == 0) {
+        bottomNavBarIndex = 0;
+      } else if (index == 1) {
+        bottomNavBarIndex = 1;
+      } else if (index == 2) {
+        bottomNavBarIndex = 2;
       }
     }
 
@@ -82,11 +73,49 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           return const SizedBox();
         } else {
           return Scaffold(
-            // search / filter
+            bottomNavigationBar: BottomNavigationBar(
+                backgroundColor: AppTheme.nearlyWhite,
+                selectedItemColor: Colors.blueAccent,
+                selectedFontSize: 14,
+                unselectedItemColor: Colors.grey.shade800,
+                unselectedFontSize: 12,
+                currentIndex: bottomNavBarIndex,
+                onTap: (int index) {
+                  setState(() {
+                    selectedIndex(index);
+                  });
+                },
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.list,
+                    ),
+                    title: Text(
+                      "List",
+                    ),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.map),
+                    title: Text('Map'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.person),
+                    title: Text(
+                      'Profile',
+                    ),
+                  )
+                ]),
+            //
             floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.filter_list),
                 onPressed: () {
-                  _openFilterList();
+                  setState(() {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return HomeFilterBottomSheet();
+                        });
+                  });
                 }),
             body: Padding(
               padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
@@ -97,7 +126,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   appBar(),
                   // search bar
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding:
+                        const EdgeInsets.only(bottom: 16.0, left: 8, right: 8),
                     child: TextField(
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(15),
@@ -174,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               //crossAxisCount: multiple ? 2 : 1,
                               crossAxisCount: 1,
-                              mainAxisSpacing: 12.0,
+                              //mainAxisSpacing: 12.0,
                               crossAxisSpacing: 12.0,
                               childAspectRatio: 5, // this changes the card size
                             ),
@@ -318,29 +348,32 @@ class HomeListView extends StatelessWidget {
 
   Icon iconTypeGetter(String type) {
     if (type == 'Restaurant') {
-      return Icon(Icons.local_dining);
+      return Icon(
+        Icons.local_dining,
+        color: Colors.blueAccent,
+      );
     } else if (type == 'Hotel') {
-      return Icon(Icons.local_hotel);
+      return Icon(Icons.local_hotel, color: Colors.blueAccent);
     } else if (type == 'Bar') {
-      return Icon(Icons.local_bar);
+      return Icon(Icons.local_bar, color: Colors.blueAccent);
     } else if (type == 'Cafe') {
-      return Icon(Icons.local_cafe);
+      return Icon(Icons.local_cafe, color: Colors.blueAccent);
     } else if (type == 'Music Venue') {
-      return Icon(Icons.music_note);
+      return Icon(Icons.music_note, color: Colors.blueAccent);
     } else if (type == 'Grocery') {
-      return Icon(Icons.local_grocery_store);
+      return Icon(Icons.local_grocery_store, color: Colors.blueAccent);
     } else if (type == 'Gas Station') {
-      return Icon(Icons.local_gas_station);
+      return Icon(Icons.local_gas_station, color: Colors.blueAccent);
     } else if (type == 'Bank') {
-      return Icon(Icons.attach_money);
+      return Icon(Icons.attach_money, color: Colors.blueAccent);
     } else if (type == 'Post Office') {
-      return Icon(Icons.local_post_office);
+      return Icon(Icons.local_post_office, color: Colors.blueAccent);
     } else if (type == 'Hospital') {
-      return Icon(Icons.local_hospital);
+      return Icon(Icons.local_hospital, color: Colors.blueAccent);
     } else if (type == 'Pharmacy') {
-      return Icon(Icons.local_pharmacy);
+      return Icon(Icons.local_pharmacy, color: Colors.blueAccent);
     } else {
-      return Icon(Icons.location_on);
+      return Icon(Icons.location_on, color: Colors.blueAccent);
     }
   }
 
@@ -354,54 +387,34 @@ class HomeListView extends StatelessWidget {
           child: Transform(
             transform: Matrix4.translationValues(
                 0.0, 50 * (1.0 - animation.value), 0.0),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-              child: Container(
-                color: Colors.blue[50],
-                child: Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: <Widget>[
-                    Positioned(
-                      left: 20,
-                      child: iconTypeGetter(listData.location.types[0]),
-                    ),
-                    Positioned(
-                      left: 65,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('${listData.location.name}'),
-                          Text(
-                            //TODO add country selector
-                            '${listData.location.street}, ${listData.location.region}, ${listData.location.country}',
-                            style: TextStyle(
-                                color: Colors.black.withOpacity(.4),
-                                fontSize: 13),
-                          ),
-                          Text(
-                            '${listData.location.distance} mi',
-                            style: TextStyle(
-                                color: Colors.black.withOpacity(.4),
-                                fontSize: 13),
-                          ),
-                        ],
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  onTap: callBack,
+                  leading: iconTypeGetter(
+                    listData.location.types[0],
+                  ),
+                  title: Text("${listData.location.name}"),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        //TODO add country selector
+                        '${listData.location.street}, ${listData.location.region}, ${listData.location.country}',
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(.4), fontSize: 13),
+                        maxLines: 1,
                       ),
-                    ),
-                    Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        splashColor: Colors.blue.withOpacity(0.2),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4.0)),
-                        onTap: () {
-                          callBack();
-                        },
+                      Text(
+                        '${listData.location.distance} mi',
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(.4), fontSize: 13),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+                Divider(),
+              ],
             ),
           ),
         );

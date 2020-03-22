@@ -245,7 +245,7 @@ class Store with ChangeNotifier {
         .where(
             (i) => i.location.name.toLowerCase().contains(string.toLowerCase()))
         .toList();
-    print(filteredLocations[0].location.name.toString());
+    //print(filteredLocations[0].location.name.toString());
 
     notifyListeners();
   }

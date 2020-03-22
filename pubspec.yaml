@@ -33,8 +33,7 @@ dependencies:
   flutter_google_places: ^0.2.3
   dio: ^3.0.8 # for post requests with arrays
   flutter_form_builder: ^3.7.3
-  charts_flutter: ^0.8.1
-  filter_list: ^0.0.4 #  filter widget
+  #charts_flutter: ^0.8.1
 
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0
