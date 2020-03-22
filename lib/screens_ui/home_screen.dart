@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:moves/screens_ui/suggest_location_screen.dart';
+import 'package:filter_list/filter_list.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
@@ -37,85 +38,153 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  List<String> typeList = [
+    "Restaurant",
+    "Hotel",
+    "Bar",
+    "Cafe",
+    "Music Venue",
+    "Grocery",
+    "Gas Station",
+    "Bank",
+    "Post Office",
+    "Hospital",
+    "Pharmacy"
+  ];
+  List<String> selectedCountList = [];
+
   @override
   Widget build(BuildContext context) {
+    void _openFilterList() async {
+      var list = await FilterList.showFilterList(
+        context,
+        allTextList: typeList,
+        height: 450,
+        borderRadius: 20,
+        headlineText: "Filter",
+        searchFieldHintText: "Search for types",
+        selectedTextList: selectedCountList,
+        hideSearchField: true,
+        hidecloseIcon: true,
+      );
+
+      if (list != null) {
+        setState(() {
+          selectedCountList = List.from(list);
+        });
+      }
+    }
+
     return FutureBuilder<bool>(
       future: getData(),
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         if (!snapshot.hasData) {
           return const SizedBox();
         } else {
-          return Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                appBar(),
-                Expanded(
-                  child: FutureBuilder<bool>(
-                    future: getData(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                      if (!snapshot.hasData ||
-                          Provider.of<Store>(context).homeList.length == 0) {
-                        return SpinKitDoubleBounce(
-                          color: Colors.blue,
-                          size: 30.0,
-                        );
-                      } else {
-                        return GridView(
-                          padding: const EdgeInsets.only(
-                              top: 0, left: 12, right: 12),
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          children: List<Widget>.generate(
-                            Provider.of<Store>(context).homeList.length,
-                            (int index) {
-                              final int count =
-                                  Provider.of<Store>(context).homeList.length;
-                              final Animation<double> animation =
-                                  Tween<double>(begin: 0.0, end: 1.0).animate(
-                                CurvedAnimation(
-                                  parent: animationController,
-                                  curve: Interval((1 / count) * index, 1.0,
-                                      curve: Curves.fastOutSlowIn),
-                                ),
-                              );
-                              animationController.forward();
-                              return HomeListView(
-                                animation: animation,
-                                animationController: animationController,
-                                listData:
-                                    Provider.of<Store>(context).homeList[index],
-                                callBack: () {
-                                  Navigator.push<dynamic>(
-                                    context,
-                                    MaterialPageRoute<dynamic>(
-                                      builder: (BuildContext context) =>
-                                          Provider.of<Store>(context)
-                                              .homeList[index]
-                                              .navigateScreen,
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            //crossAxisCount: multiple ? 2 : 1,
-                            crossAxisCount: 1,
-                            mainAxisSpacing: 12.0,
-                            crossAxisSpacing: 12.0,
-                            childAspectRatio: 5, // this changes the card size
-                          ),
-                        );
-                      }
-                    },
+          return Scaffold(
+            // search / filter
+            floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.filter_list),
+                onPressed: () {
+                  _openFilterList();
+                }),
+            body: Padding(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  appBar(),
+                  // search bar
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(15),
+                          hintText: 'Search'),
+                      onChanged: (string) {
+                        try {
+                          setState(() {
+                            Provider.of<Store>(context, listen: false)
+                                .filterLocations(string);
+                          });
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
+                    ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: FutureBuilder<bool>(
+                      future: getData(),
+                      builder:
+                          (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                        if (!snapshot.hasData ||
+                            Provider.of<Store>(context)
+                                    .filteredLocations
+                                    .length ==
+                                0) {
+                          return SpinKitDoubleBounce(
+                            color: Colors.blue,
+                            size: 30.0,
+                          );
+                        } else {
+                          return GridView(
+                            padding: const EdgeInsets.only(
+                                top: 0, left: 12, right: 12),
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            children: List<Widget>.generate(
+                              Provider.of<Store>(context)
+                                  .filteredLocations
+                                  .length,
+                              (int index) {
+                                final int count = Provider.of<Store>(context)
+                                    .filteredLocations
+                                    .length;
+                                final Animation<double> animation =
+                                    Tween<double>(begin: 0.0, end: 1.0).animate(
+                                  CurvedAnimation(
+                                    parent: animationController,
+                                    curve: Interval((1 / count) * index, 1.0,
+                                        curve: Curves.fastOutSlowIn),
+                                  ),
+                                );
+                                animationController.forward();
+                                return HomeListView(
+                                  animation: animation,
+                                  animationController: animationController,
+                                  listData: Provider.of<Store>(context)
+                                      .filteredLocations[index],
+                                  callBack: () {
+                                    Navigator.push<dynamic>(
+                                      context,
+                                      MaterialPageRoute<dynamic>(
+                                        builder: (BuildContext context) =>
+                                            Provider.of<Store>(context)
+                                                .filteredLocations[index]
+                                                .navigateScreen,
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              //crossAxisCount: multiple ? 2 : 1,
+                              crossAxisCount: 1,
+                              mainAxisSpacing: 12.0,
+                              crossAxisSpacing: 12.0,
+                              childAspectRatio: 5, // this changes the card size
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }
@@ -138,16 +207,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             ),
           ),
           Expanded(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  'Moves',
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: AppTheme().getTextColor(),
-                    fontWeight: FontWeight.w700,
-                  ),
+            child: Padding(
+              // add center here to return to original
+              padding: const EdgeInsets.only(top: 8, left: 16),
+              child: Text(
+                'Moves',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: AppTheme().getTextColor(),
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
@@ -162,7 +230,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 children: <Widget>[
                   // favorites
                   Material(
-                    color: Colors.transparent,
                     child: InkWell(
                       borderRadius:
                           BorderRadius.circular(AppBar().preferredSize.height),
@@ -177,8 +244,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         onPressed: () {
                           setState(() {
                             favoriteSelected = !favoriteSelected;
-                            // Provider.of<Store>(context, listen: false)
-                            //     .getData();
                           });
                         },
                         tooltip: 'Favorites',
@@ -187,7 +252,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                   // refresh
                   Material(
-                    color: Colors.transparent,
                     child: InkWell(
                       borderRadius:
                           BorderRadius.circular(AppBar().preferredSize.height),
@@ -208,7 +272,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                   // add
                   Material(
-                    color: Colors.transparent,
                     child: InkWell(
                       borderRadius:
                           BorderRadius.circular(AppBar().preferredSize.height),
@@ -248,7 +311,7 @@ class HomeListView extends StatelessWidget {
       this.animation})
       : super(key: key);
 
-  final HomeList listData;
+  final HomeListItem listData;
   final VoidCallback callBack;
   final AnimationController animationController;
   final Animation<dynamic> animation;

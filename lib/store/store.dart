@@ -24,7 +24,8 @@ class Store with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseUser signedInUser;
-  List<HomeList> homeList = [];
+  List<HomeListItem> homeList = [];
+  List<HomeListItem> filteredLocations = [];
   List<GoogleHomeList> googleHomeList = [];
   List<LocationLoadedModel> locations = [];
   LatLng usersLocation = LatLng(0, 0);
@@ -154,7 +155,7 @@ class Store with ChangeNotifier {
     homeList = [];
     for (var location in locations) {
       homeList.add(
-        HomeList(
+        HomeListItem(
           imagePath:
               'assets/icons/${location.types[0].toString().toLowerCase()}.png',
           navigateScreen: LocationScreen(
@@ -164,6 +165,7 @@ class Store with ChangeNotifier {
         ),
       );
     }
+    filteredLocations = homeList;
   }
 
   void buildGoogleHomeList(locations) {
@@ -235,6 +237,16 @@ class Store with ChangeNotifier {
     await googleSignIn.signOut(); // signs out both regardless of sign in choice
     await _auth.signOut();
     signedInUser = null;
+    notifyListeners();
+  }
+
+  void filterLocations(string) {
+    filteredLocations = homeList
+        .where(
+            (i) => i.location.name.toLowerCase().contains(string.toLowerCase()))
+        .toList();
+    print(filteredLocations[0].location.name.toString());
+
     notifyListeners();
   }
 }
