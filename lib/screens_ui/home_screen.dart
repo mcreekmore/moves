@@ -146,59 +146,69 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             size: 30.0,
                           );
                         } else {
-                          return GridView(
-                            padding: const EdgeInsets.only(
-                                top: 0, left: 12, right: 12),
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            children: List<Widget>.generate(
-                              Provider.of<Store>(context)
-                                  .filteredLocations
-                                  .length,
-                              (int index) {
-                                final int count = Provider.of<Store>(context)
+                          return RefreshIndicator(
+                            onRefresh: () async {
+                              setState(() {
+                                Provider.of<Store>(context, listen: false)
+                                    .getData();
+                              });
+                            },
+                            child: GridView(
+                              padding: const EdgeInsets.only(
+                                  top: 0, left: 12, right: 12),
+                              //physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              children: List<Widget>.generate(
+                                Provider.of<Store>(context)
                                     .filteredLocations
-                                    .length;
-                                final Animation<double> animation =
-                                    Tween<double>(begin: 0.0, end: 1.0).animate(
-                                  CurvedAnimation(
-                                    parent: animationController,
-                                    curve: Interval((1 / count) * index, 1.0,
-                                        curve: Curves.fastOutSlowIn),
-                                  ),
-                                );
-                                animationController.forward();
-                                return HomeListView(
-                                  animation: animation,
-                                  animationController: animationController,
-                                  listData: Provider.of<Store>(context)
-                                      .filteredLocations[index],
-                                  callBack: () {
-                                    setState(() {
-                                      FocusScope.of(context)
-                                          .requestFocus(new FocusNode());
-                                    });
+                                    .length,
+                                (int index) {
+                                  final int count = Provider.of<Store>(context)
+                                      .filteredLocations
+                                      .length;
+                                  final Animation<double> animation =
+                                      Tween<double>(begin: 0.0, end: 1.0)
+                                          .animate(
+                                    CurvedAnimation(
+                                      parent: animationController,
+                                      curve: Interval((1 / count) * index, 1.0,
+                                          curve: Curves.fastOutSlowIn),
+                                    ),
+                                  );
+                                  animationController.forward();
+                                  return HomeListView(
+                                    animation: animation,
+                                    animationController: animationController,
+                                    listData: Provider.of<Store>(context)
+                                        .filteredLocations[index],
+                                    callBack: () {
+                                      setState(() {
+                                        FocusScope.of(context)
+                                            .requestFocus(new FocusNode());
+                                      });
 
-                                    Navigator.push<dynamic>(
-                                      context,
-                                      MaterialPageRoute<dynamic>(
-                                        builder: (BuildContext context) =>
-                                            Provider.of<Store>(context)
-                                                .filteredLocations[index]
-                                                .navigateScreen,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              //crossAxisCount: multiple ? 2 : 1,
-                              crossAxisCount: 1,
-                              //mainAxisSpacing: 12.0,
-                              crossAxisSpacing: 12.0,
-                              childAspectRatio: 5, // this changes the card size
+                                      Navigator.push<dynamic>(
+                                        context,
+                                        MaterialPageRoute<dynamic>(
+                                          builder: (BuildContext context) =>
+                                              Provider.of<Store>(context)
+                                                  .filteredLocations[index]
+                                                  .navigateScreen,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                //crossAxisCount: multiple ? 2 : 1,
+                                crossAxisCount: 1,
+                                //mainAxisSpacing: 12.0,
+                                crossAxisSpacing: 12.0,
+                                childAspectRatio:
+                                    5, // this changes the card size
+                              ),
                             ),
                           );
                         }
@@ -273,25 +283,25 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ),
                   ),
                   // refresh
-                  Material(
-                    child: InkWell(
-                      borderRadius:
-                          BorderRadius.circular(AppBar().preferredSize.height),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.refresh,
-                          color: AppTheme().getIconColor(),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            Provider.of<Store>(context, listen: false)
-                                .getData();
-                          });
-                        },
-                        tooltip: 'Refresh',
-                      ),
-                    ),
-                  ),
+                  // Material(
+                  //   child: InkWell(
+                  //     borderRadius:
+                  //         BorderRadius.circular(AppBar().preferredSize.height),
+                  //     child: IconButton(
+                  //       icon: Icon(
+                  //         Icons.refresh,
+                  //         color: AppTheme().getIconColor(),
+                  //       ),
+                  //       onPressed: () {
+                  //         setState(() {
+                  //           Provider.of<Store>(context, listen: false)
+                  //               .getData();
+                  //         });
+                  //       },
+                  //       tooltip: 'Refresh',
+                  //     ),
+                  //   ),
+                  // ),
                   // add
                   Material(
                     child: InkWell(
