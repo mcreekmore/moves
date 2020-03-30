@@ -280,12 +280,12 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                       ),
                     ),
                     FormBuilderTextField(
-                      //TODO add email validation
                       attribute: "email",
                       decoration: InputDecoration(labelText: "*Email"),
                       validators: [
                         FormBuilderValidators.maxLength(300),
                         FormBuilderValidators.required(),
+                        FormBuilderValidators.email(),
                       ],
                     ),
                     FormBuilderTextField(
