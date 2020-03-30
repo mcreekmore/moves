@@ -62,6 +62,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
     void selectedIndex(int index) async {
       print("index: " + index.toString());
       if (index == 0) {
+        print(_suggestKey.currentState.value);
         // Submit
         if (_suggestKey.currentState.saveAndValidate()) {
           await makePostRequest(_suggestKey.currentState.value);

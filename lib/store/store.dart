@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:moves/screens_ui/google_location_screen.dart';
 import 'package:moves/model/google_home_list.dart';
+import 'package:moves/model/types_model.dart';
 
 class Store with ChangeNotifier {
   Store() {
@@ -279,11 +280,51 @@ class Store with ChangeNotifier {
     notifyListeners();
   }
 
-  void filterTypes(type) {
-    //filteredTypes = types;
-    for (var i = 0; i < filteredLocations.length; i++) {
+  void filterTypes(LocationType type) {
+    filteredLocations = homeList;
+    if (type == LocationType.restaurant) {
       filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains(type))
+          .where((i) => i.location.types.contains('Restaurant'))
+          .toList();
+    } else if (type == LocationType.hotel) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Hotel'))
+          .toList();
+    } else if (type == LocationType.bar) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Bar'))
+          .toList();
+    } else if (type == LocationType.cafe) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Cafe'))
+          .toList();
+    } else if (type == LocationType.music_venue) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Music Venue'))
+          .toList();
+    } else if (type == LocationType.grocery) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Grocery'))
+          .toList();
+    } else if (type == LocationType.gas_station) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Gas Station'))
+          .toList();
+    } else if (type == LocationType.bank) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Bank'))
+          .toList();
+    } else if (type == LocationType.post_office) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Post Office'))
+          .toList();
+    } else if (type == LocationType.pharmacy) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Pharmacy'))
+          .toList();
+    } else if (type == LocationType.retail) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Retail'))
           .toList();
     }
 

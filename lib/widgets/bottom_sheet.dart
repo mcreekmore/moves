@@ -43,7 +43,7 @@ class BottomSheetWidget extends StatelessWidget {
 
       var response = await dio.post(url, data: jsonEncode(body));
 
-      print(response.statusMessage);
+      //print(response.statusMessage);
       // if you want to print, add 'var response =' before the await
       // print('Response status: ${response.statusCode}');
       // print('Response body: ${response.body}');

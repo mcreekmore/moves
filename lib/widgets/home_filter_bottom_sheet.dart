@@ -3,113 +3,202 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/app_theme.dart';
 import 'package:moves/store/store.dart';
+import 'package:moves/model/types_model.dart';
 
-class HomeFilterBottomSheet extends StatelessWidget {
-  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+class HomeFilterBottomSheet extends StatefulWidget {
+  @override
+  _HomeFilterBottomSheetState createState() => _HomeFilterBottomSheetState();
+}
+
+class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
+  //final GlobalKey<FormBuilderState> _fbFilterKey =
+  //  GlobalKey<FormBuilderState>();
+
+  LocationType _typeFilter = LocationType.bar;
 
   @override
   Widget build(BuildContext context) {
     // List<String> initialValues =
     //     Provider.of<Store>(context, listen: false).filteredTypes;
-
     void selectedIndex(int index) async {
       if (index == 0) {
         // Submit
-        print(_fbKey.currentState.value);
-        if (_fbKey.currentState.value["type"] != null) {
-          // Provider.of<Store>(context, listen: false)
-          //     .filterTypes(_fbKey.currentState.value["type"]);
-          Navigator.pop(context);
-        } else {
-          //Provider.of<Store>(context, listen: false).resetFilterTypes();
-          Navigator.pop(context);
-        }
+
+        Provider.of<Store>(context, listen: false).filterTypes(_typeFilter);
+        Navigator.pop(context);
       } else if (index == 1) {
         // Cancel
         Navigator.pop(context);
       }
     }
 
-    return Scaffold(
-      body: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
           child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Text("Filter"),
-              FormBuilder(
-                key: _fbKey,
-                autovalidate: true,
-                initialValue: {"type": "Bar"},
-                child: Column(
-                  children: <Widget>[
-                    // types
-                    FormBuilderChoiceChip(
-                      attribute: "type",
-                      options: [
-                        FormBuilderFieldOption(
-                          child: Text("Restaurant"),
-                          value: "Restaurant",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Hotel"),
-                          value: "Hotel",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Bar"),
-                          value: "Bar",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Cafe"),
-                          value: "Cafe",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Music Venue"),
-                          value: "Music Venue",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Grocery"),
-                          value: "Grocery",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Gas Station"),
-                          value: "Gas Station",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Bank"),
-                          value: "Bank",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Post Office"),
-                          value: "Post Office",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Pharmacy"),
-                          value: "Pharmacy",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Retail"),
-                          value: "Retail",
-                        ),
-                        FormBuilderFieldOption(
-                          child: Text("Hospital"),
-                          value: "Hospital",
-                        ),
-                      ],
+            padding: const EdgeInsets.only(
+                bottom: 16.0, left: 16, right: 16, top: 40),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Filter Type',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Bank'),
+                    leading: Radio(
+                      value: LocationType.bank,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Bar'),
+                    leading: Radio(
+                      value: LocationType.bar,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Cafe'),
+                    leading: Radio(
+                      value: LocationType.cafe,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Gas Station'),
+                    leading: Radio(
+                      value: LocationType.gas_station,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Grocery'),
+                    leading: Radio(
+                      value: LocationType.grocery,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Hotel'),
+                    leading: Radio(
+                      value: LocationType.hotel,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Music Venue'),
+                    leading: Radio(
+                      value: LocationType.music_venue,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Pharmacy'),
+                    leading: Radio(
+                      value: LocationType.pharmacy,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Post Office'),
+                    leading: Radio(
+                      value: LocationType.post_office,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Restaurant'),
+                    leading: Radio(
+                      value: LocationType.restaurant,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('Retail'),
+                    leading: Radio(
+                      value: LocationType.retail,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
-      )),
-      bottomNavigationBar: BottomNavigationBar(
+        bottomNavigationBar: BottomNavigationBar(
           backgroundColor: AppTheme.nearlyWhite,
-          selectedItemColor: Colors.grey.shade800,
           selectedFontSize: 12,
-          unselectedItemColor: Colors.grey.shade800,
           unselectedFontSize: 12,
           currentIndex: 0,
           onTap: (int index) {
@@ -133,7 +222,74 @@ class HomeFilterBottomSheet extends StatelessWidget {
                 style: TextStyle(color: Colors.redAccent),
               ),
             )
-          ]),
+          ],
+        ),
+      ),
     );
   }
 }
+
+// FormBuilder(
+//             key: _fbFilterKey,
+//             autovalidate: true,
+//             //initialValue: {"type": "Bar"},
+//             child: Column(
+//               children: <Widget>[
+//                 // types
+//                 FormBuilderChoiceChip(
+//                   attribute: "type",
+//                   decoration: InputDecoration(labelText: "Filter by type"),
+//                   options: [
+//                     FormBuilderFieldOption(
+//                       child: Text("Restaurant"),
+//                       value: "Restaurant",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Hotel"),
+//                       value: "Hotel",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Bar"),
+//                       value: "Bar",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Cafe"),
+//                       value: "Cafe",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Music Venue"),
+//                       value: "Music Venue",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Grocery"),
+//                       value: "Grocery",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Gas Station"),
+//                       value: "Gas Station",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Bank"),
+//                       value: "Bank",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Post Office"),
+//                       value: "Post Office",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Pharmacy"),
+//                       value: "Pharmacy",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Retail"),
+//                       value: "Retail",
+//                     ),
+//                     FormBuilderFieldOption(
+//                       child: Text("Hospital"),
+//                       value: "Hospital",
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ),

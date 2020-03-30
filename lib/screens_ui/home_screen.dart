@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 onPressed: () {
                   setState(() {
                     FocusScope.of(context).requestFocus(new FocusNode());
-                    showModalBottomSheet(
+                    showBottomSheet(
                         context: context,
                         builder: (BuildContext context) {
                           return HomeFilterBottomSheet();
