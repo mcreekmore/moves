@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
+//import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/app_theme.dart';
 import 'package:moves/store/store.dart';
@@ -46,6 +46,19 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    title: const Text('All'),
+                    leading: Radio(
+                      value: LocationType.all,
+                      groupValue: _typeFilter,
+                      onChanged: (LocationType value) {
+                        setState(() {
+                          _typeFilter = value;
+                        });
+                      },
                     ),
                   ),
                   ListTile(

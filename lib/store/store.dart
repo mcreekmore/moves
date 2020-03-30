@@ -326,6 +326,8 @@ class Store with ChangeNotifier {
       filteredLocations = filteredLocations
           .where((i) => i.location.types.contains('Retail'))
           .toList();
+    } else if (type == LocationType.all) {
+      filteredLocations = homeList;
     }
 
     notifyListeners();
