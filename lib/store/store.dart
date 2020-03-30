@@ -35,6 +35,7 @@ class Store with ChangeNotifier {
       GoogleMapsPlaces(apiKey: "AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ");
   List<PlacesSearchResult> googleLocationResults;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  LocationType typeFilter = LocationType.all;
   List<String> types = [
     "Restaurant",
     "Hotel",
@@ -50,24 +51,11 @@ class Store with ChangeNotifier {
     "Retail"
   ];
 
-  List<String> filteredTypes = [
-    "Restaurant",
-    "Hotel",
-    "Bar",
-    "Cafe",
-    "Music Venue",
-    "Grocery",
-    "Gas Station",
-    "Bank",
-    "Post Office",
-    "Hospital",
-    "Pharmacy",
-    "Retail"
-  ];
+  List<String> filteredTypes = [];
 
   /* API */
-  //static String api = 'creekmore.io'; // prod
-  static String api = '10.0.2.2:3000'; // dev
+  static String api = 'creekmore.io'; // prod
+  //static String api = '10.0.2.2:3000'; // dev
   var uri = Uri.http(api, '/api');
 
   //var uriGet = Uri.https(api, '/api/locations/approved');
@@ -85,6 +73,7 @@ class Store with ChangeNotifier {
     await getCurrentLocation();
     await getGoogleLocationData();
     await getData();
+    filteredTypes = types;
   }
 
   Future<void> getGoogleLocationData() async {
@@ -336,5 +325,9 @@ class Store with ChangeNotifier {
   void resetFilterTypes() {
     filteredLocations = homeList;
     notifyListeners();
+  }
+
+  void changeTypeFilter(type) {
+    typeFilter = type;
   }
 }

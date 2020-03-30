@@ -64,7 +64,9 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
         //   center.longitude + cos(_markerIdCounter * pi / 6.0) / 20.0,
         // ),
         position: LatLng(place.location.lat, place.location.lon),
-        infoWindow: InfoWindow(title: place.location.name, snippet: '*'),
+        infoWindow: InfoWindow(
+          title: place.location.name,
+        ),
         onTap: () {
           _onMarkerTapped(markerId);
         },
@@ -171,7 +173,7 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
           child: SizedBox(
             //width: 300.0,'
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height - 100.0,
+            height: MediaQuery.of(context).size.height,
             child: GoogleMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(
@@ -184,22 +186,22 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
             ),
           ),
         ),
-        SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  FlatButton(
-                    child: const Text('add'),
-                    onPressed: _add,
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
+        // SingleChildScrollView(
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //     children: <Widget>[
+        //       Column(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: <Widget>[
+        //           FlatButton(
+        //             child: const Text('add'),
+        //             onPressed: _add,
+        //           ),
+        //         ],
+        //       )
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }

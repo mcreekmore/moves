@@ -14,10 +14,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
   //final GlobalKey<FormBuilderState> _fbFilterKey =
   //  GlobalKey<FormBuilderState>();
 
-  LocationType _typeFilter = LocationType.bar;
-
   @override
   Widget build(BuildContext context) {
+    LocationType _typeFilter = Provider.of<Store>(context).typeFilter;
     // List<String> initialValues =
     //     Provider.of<Store>(context, listen: false).filteredTypes;
     void selectedIndex(int index) async {
@@ -56,7 +55,8 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
@@ -69,7 +69,8 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
@@ -82,7 +83,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          //_typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
@@ -95,7 +98,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          //_typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
@@ -108,7 +113,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          //_typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
@@ -121,7 +128,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
+                          //_typeFilter = value;
                         });
                       },
                     ),
@@ -134,7 +143,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          //_typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
@@ -147,7 +158,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          //_typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
@@ -160,7 +173,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          //_typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
@@ -173,7 +188,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          //_typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
@@ -186,7 +203,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          //_typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
@@ -199,7 +218,9 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                       groupValue: _typeFilter,
                       onChanged: (LocationType value) {
                         setState(() {
-                          _typeFilter = value;
+                          //_typeFilter = value;
+                          Provider.of<Store>(context, listen: false)
+                              .changeTypeFilter(value);
                         });
                       },
                     ),
