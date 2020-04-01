@@ -86,7 +86,7 @@ class BottomSheetWidget extends StatelessWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: AppTheme.nearlyWhite,
+          //backgroundColor: AppTheme.nearlyWhite,
           selectedItemColor: Colors.grey.shade800,
           selectedFontSize: 12,
           unselectedItemColor: Colors.grey.shade800,
@@ -120,7 +120,7 @@ class BottomSheetWidget extends StatelessWidget {
           ]),
       body: SingleChildScrollView(
         child: Container(
-          color: AppTheme.nearlyWhite,
+          //color: AppTheme.nearlyWhite,
           child: Container(
             child: Padding(
               padding: const EdgeInsets.all(32.0),

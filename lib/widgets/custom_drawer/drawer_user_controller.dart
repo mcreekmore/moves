@@ -187,11 +187,11 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                             : SizedBox(),
                         Padding(
                           padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).padding.top + 8,
+                              top: MediaQuery.of(context).padding.top + 5,
                               left: 8),
                           child: SizedBox(
-                            width: AppBar().preferredSize.height - 8,
-                            height: AppBar().preferredSize.height - 8,
+                            width: AppBar().preferredSize.height - 9,
+                            height: AppBar().preferredSize.height - 9,
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(

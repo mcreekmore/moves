@@ -118,7 +118,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppTheme.nearlyWhite,
+        //backgroundColor: AppTheme.nearlyWhite,
         selectedItemColor: Colors.grey.shade800,
         selectedFontSize: 12,
         unselectedItemColor: Colors.grey.shade800,
@@ -151,7 +151,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
           )
         ],
       ),
-      backgroundColor: AppTheme.nearlyWhite,
+      //backgroundColor: AppTheme.nearlyWhite,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

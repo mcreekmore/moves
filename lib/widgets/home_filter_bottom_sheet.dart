@@ -34,199 +34,198 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          child: Padding(
-            padding: const EdgeInsets.only(
-                bottom: 16.0, left: 16, right: 16, top: 40),
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    'Filter Type',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Filter Type',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('All'),
-                    leading: Radio(
-                      value: LocationType.all,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('All'),
+                  leading: Radio(
+                    value: LocationType.all,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Bank'),
-                    leading: Radio(
-                      value: LocationType.bank,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Bank'),
+                  leading: Radio(
+                    value: LocationType.bank,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Bar'),
-                    leading: Radio(
-                      value: LocationType.bar,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          //_typeFilter = value;
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Bar'),
+                  leading: Radio(
+                    value: LocationType.bar,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        //_typeFilter = value;
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Cafe'),
-                    leading: Radio(
-                      value: LocationType.cafe,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          //_typeFilter = value;
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Cafe'),
+                  leading: Radio(
+                    value: LocationType.cafe,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        //_typeFilter = value;
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Gas Station'),
-                    leading: Radio(
-                      value: LocationType.gas_station,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          //_typeFilter = value;
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Gas Station'),
+                  leading: Radio(
+                    value: LocationType.gas_station,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        //_typeFilter = value;
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Grocery'),
-                    leading: Radio(
-                      value: LocationType.grocery,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                          //_typeFilter = value;
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Grocery'),
+                  leading: Radio(
+                    value: LocationType.grocery,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                        //_typeFilter = value;
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Hotel'),
-                    leading: Radio(
-                      value: LocationType.hotel,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          //_typeFilter = value;
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Hotel'),
+                  leading: Radio(
+                    value: LocationType.hotel,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        //_typeFilter = value;
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Music Venue'),
-                    leading: Radio(
-                      value: LocationType.music_venue,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          //_typeFilter = value;
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Music Venue'),
+                  leading: Radio(
+                    value: LocationType.music_venue,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        //_typeFilter = value;
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Pharmacy'),
-                    leading: Radio(
-                      value: LocationType.pharmacy,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          //_typeFilter = value;
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Pharmacy'),
+                  leading: Radio(
+                    value: LocationType.pharmacy,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        //_typeFilter = value;
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Post Office'),
-                    leading: Radio(
-                      value: LocationType.post_office,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          //_typeFilter = value;
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Post Office'),
+                  leading: Radio(
+                    value: LocationType.post_office,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        //_typeFilter = value;
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Restaurant'),
-                    leading: Radio(
-                      value: LocationType.restaurant,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          //_typeFilter = value;
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Restaurant'),
+                  leading: Radio(
+                    value: LocationType.restaurant,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        //_typeFilter = value;
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                  ListTile(
-                    dense: true,
-                    title: const Text('Retail'),
-                    leading: Radio(
-                      value: LocationType.retail,
-                      groupValue: _typeFilter,
-                      onChanged: (LocationType value) {
-                        setState(() {
-                          //_typeFilter = value;
-                          Provider.of<Store>(context, listen: false)
-                              .changeTypeFilter(value);
-                        });
-                      },
-                    ),
+                ),
+                ListTile(
+                  dense: true,
+                  title: const Text('Retail'),
+                  leading: Radio(
+                    value: LocationType.retail,
+                    groupValue: _typeFilter,
+                    onChanged: (LocationType value) {
+                      setState(() {
+                        //_typeFilter = value;
+                        Provider.of<Store>(context, listen: false)
+                            .changeTypeFilter(value);
+                      });
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

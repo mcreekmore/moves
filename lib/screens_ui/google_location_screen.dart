@@ -42,7 +42,7 @@ class _GoogleLocationScreenState extends State<GoogleLocationScreen>
   double opacity3 = 0.0;
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(AppTheme().getSystemOverlayStyle());
+    //SystemChrome.setSystemUIOverlayStyle(AppTheme().getSystemOverlayStyle());
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(

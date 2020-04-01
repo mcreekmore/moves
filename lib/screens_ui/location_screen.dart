@@ -29,7 +29,7 @@ class _LocationScreenState extends State<LocationScreen> {
   double opacity3 = 0.0;
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(AppTheme().getSystemOverlayStyle());
+    //SystemChrome.setSystemUIOverlayStyle(AppTheme().getSystemOverlayStyle());
 
     setData();
     super.initState();
@@ -96,8 +96,8 @@ class _LocationScreenState extends State<LocationScreen> {
               brightness: Brightness.light,
               pinned: true,
               expandedHeight: expandedHeight,
-              backgroundColor: AppTheme.nearlyWhite,
-              iconTheme: IconThemeData(color: AppTheme.darkText),
+              //backgroundColor: AppTheme.nearlyWhite,
+              //iconTheme: IconThemeData(color: AppTheme.darkText),
               flexibleSpace: FlexibleSpaceBar(
                 title: Container(
                   constraints: BoxConstraints(
@@ -110,7 +110,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       '${widget.location.name}',
                       style: TextStyle(
                         //fontSize: 22,
-                        color: AppTheme.darkText,
+                        //color: AppTheme.darkText,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -121,7 +121,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 IconButton(
                   icon: Icon(Icons.favorite_border),
                   tooltip: 'Add to favorites',
-                  color: AppTheme.darkText,
+                  //color: AppTheme.darkText,
                   onPressed: () {/* ... */},
                 ),
               ],
@@ -131,8 +131,8 @@ class _LocationScreenState extends State<LocationScreen> {
                 (_, i) {
                   return Container(
                     decoration: BoxDecoration(
-                      color: AppTheme.nearlyWhite,
-                    ),
+                        //color: AppTheme.nearlyWhite,
+                        ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8, right: 8),
                       child: SingleChildScrollView(
@@ -217,14 +217,14 @@ class _LocationScreenState extends State<LocationScreen> {
                                                   child: Text(
                                                     'NAVIGATE',
                                                     style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
+                                                        //color: Colors.white,
+                                                        ),
                                                   ),
                                                 ),
                                                 //color: LocationTheme.nearlyBlue,
                                                 color: Colors.blueAccent,
-                                                splashColor: Colors.white
-                                                    .withOpacity(0.3),
+                                                // splashColor: Colors.white
+                                                //     .withOpacity(0.3),
                                                 onPressed: () {
                                                   openMap(widget.location.lat,
                                                       widget.location.lon);
@@ -241,7 +241,7 @@ class _LocationScreenState extends State<LocationScreen> {
                               ListTile(
                                 leading: Icon(
                                   Icons.people,
-                                  color: Colors.blueGrey,
+                                  //color: Colors.blueGrey,
                                 ),
                                 subtitle: Padding(
                                   padding: const EdgeInsets.all(8.0),

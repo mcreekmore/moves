@@ -10,24 +10,31 @@ void main() async {
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(MyApp()));
+  ]).then((_) => runApp(
+        ChangeNotifierProvider<ThemeNotifier>(
+          create: (_) => ThemeNotifier(lightTheme),
+          child: MyApp(),
+        ),
+      ));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(AppTheme().getSystemOverlayStyle());
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return ChangeNotifierProvider<Store>(
       create: (context) => Store(),
       child: MaterialApp(
         title: 'Flutter UI',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          //textTheme: AppTheme.textTheme,
-          textTheme: AppTheme().getTextTheme(),
-          //platform: TargetPlatform.iOS,
-        ),
+        theme: themeNotifier.getTheme(),
+        // theme: ThemeData(
+        //   primarySwatch: Colors.blue,
+        //   //textTheme: AppTheme.textTheme,
+        //   textTheme: AppTheme().getTextTheme(),
+        //   //platform: TargetPlatform.iOS,
+        // ),
         home: NavigationHomeScreen(),
       ),
     );

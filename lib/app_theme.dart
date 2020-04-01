@@ -6,7 +6,7 @@ import 'dart:io';
 class AppTheme {
   AppTheme();
 
-  bool darkThemeSelected = false;
+  bool darkThemeSelected = true;
 
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFEFEFE);
@@ -194,30 +194,6 @@ class AppTheme {
     );
   }
 
-  SystemUiOverlayStyle getSystemOverlayStyle() {
-    if (darkThemeSelected) {
-      return SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness:
-            Platform.isAndroid ? Brightness.light : Brightness.dark,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarDividerColor: Colors.grey,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      );
-    } else {
-      return SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness:
-            Platform.isAndroid ? Brightness.dark : Brightness.light,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarDividerColor: Colors.grey,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      );
-    }
-  }
-
   void toggleTheme() {
     darkThemeSelected = !darkThemeSelected;
   }
@@ -308,5 +284,67 @@ class AppTheme {
     } else {
       return grey.withOpacity(0.6);
     }
+  }
+
+  SystemUiOverlayStyle getSystemOverlayStyle() {
+    if (darkThemeSelected) {
+      return SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness:
+            Platform.isAndroid ? Brightness.light : Brightness.dark,
+        systemNavigationBarColor: Colors.black,
+        systemNavigationBarDividerColor: Colors.grey,
+        systemNavigationBarIconBrightness: Brightness.light,
+      );
+    } else {
+      return SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness:
+            Platform.isAndroid ? Brightness.dark : Brightness.light,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarDividerColor: Colors.grey,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      );
+    }
+  }
+}
+
+final darkTheme = ThemeData(
+  primarySwatch: Colors.grey,
+  scaffoldBackgroundColor: Colors.black,
+  cardColor: Colors.grey.withOpacity(.1),
+  primaryColor: Colors.black,
+  brightness: Brightness.dark,
+  backgroundColor: Colors.black,
+  accentColor: Color(0xFFFEFEFE),
+  accentIconTheme: IconThemeData(color: Colors.black),
+  dividerColor: Colors.black12,
+  bottomAppBarColor: Colors.black,
+);
+
+final lightTheme = ThemeData(
+  primarySwatch: Colors.grey,
+  primaryColor: Color(0xFFFEFEFE),
+  brightness: Brightness.light,
+  backgroundColor: Colors.black,
+  accentColor: Colors.blueAccent,
+  accentIconTheme: IconThemeData(color: Colors.white),
+  dividerColor: Colors.white54,
+);
+
+class ThemeNotifier with ChangeNotifier {
+  ThemeData _themeData;
+
+  ThemeNotifier(this._themeData);
+
+  getTheme() {
+    return _themeData;
+  }
+
+  setTheme(ThemeData themeData) async {
+    _themeData = themeData;
+    notifyListeners();
   }
 }
