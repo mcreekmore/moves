@@ -352,30 +352,63 @@ class HomeListView extends StatelessWidget {
     if (type == 'Restaurant') {
       return Icon(
         Icons.local_dining,
-        color: Colors.blueAccent,
+        color: Colors.blue,
       );
     } else if (type == 'Hotel') {
-      return Icon(Icons.local_hotel, color: Colors.blueAccent);
+      return Icon(
+        Icons.local_hotel,
+        color: Colors.blueAccent,
+      );
     } else if (type == 'Bar') {
-      return Icon(Icons.local_bar, color: Colors.blueAccent);
+      return Icon(
+        Icons.local_bar,
+        color: Colors.orange,
+      ); // orange
     } else if (type == 'Cafe') {
-      return Icon(Icons.local_cafe, color: Colors.blueAccent);
+      return Icon(
+        Icons.local_cafe,
+        color: Colors.teal,
+      );
     } else if (type == 'Music Venue') {
-      return Icon(Icons.music_note, color: Colors.blueAccent);
+      return Icon(
+        Icons.music_note,
+        color: Colors.purple,
+      );
     } else if (type == 'Grocery') {
-      return Icon(Icons.local_grocery_store, color: Colors.blueAccent);
+      return Icon(
+        Icons.local_grocery_store,
+        color: Colors.green,
+      );
     } else if (type == 'Gas Station') {
-      return Icon(Icons.local_gas_station, color: Colors.blueAccent);
+      return Icon(
+        Icons.local_gas_station,
+        color: Colors.brown,
+      ); // brown
     } else if (type == 'Bank') {
-      return Icon(Icons.attach_money, color: Colors.blueAccent);
+      return Icon(
+        Icons.attach_money,
+        color: Colors.grey,
+      );
     } else if (type == 'Post Office') {
-      return Icon(Icons.local_post_office, color: Colors.blueAccent);
+      return Icon(
+        Icons.local_post_office,
+        color: Colors.blueAccent,
+      );
     } else if (type == 'Hospital') {
-      return Icon(Icons.local_hospital, color: Colors.blueAccent);
+      return Icon(
+        Icons.local_hospital,
+        color: Colors.redAccent,
+      );
     } else if (type == 'Pharmacy') {
-      return Icon(Icons.local_pharmacy, color: Colors.blueAccent);
+      return Icon(
+        Icons.local_pharmacy,
+        color: Colors.redAccent,
+      ); // red
     } else {
-      return Icon(Icons.location_on, color: Colors.blueAccent);
+      return Icon(
+        Icons.location_on,
+        color: Colors.blueAccent,
+      );
     }
   }
 

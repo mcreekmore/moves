@@ -28,7 +28,10 @@ class _GasStationState extends State<GasStation> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.local_gas_station),
+            leading: Icon(
+              Icons.local_gas_station,
+              color: Colors.blueGrey,
+            ),
             title: Text('Regular Gas (87) in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +53,10 @@ class _GasStationState extends State<GasStation> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.local_gas_station),
+            leading: Icon(
+              Icons.local_gas_station,
+              color: Colors.blueAccent,
+            ),
             title: Text('Plus Gas (89) in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +78,10 @@ class _GasStationState extends State<GasStation> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.local_gas_station),
+            leading: Icon(
+              Icons.local_gas_station,
+              color: Colors.redAccent,
+            ),
             title: Text('Premium Gas (91) in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +103,10 @@ class _GasStationState extends State<GasStation> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.local_gas_station),
+            leading: Icon(
+              Icons.local_gas_station,
+              color: Colors.green,
+            ),
             title: Text('Diesel in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +128,10 @@ class _GasStationState extends State<GasStation> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.bubble_chart),
+            leading: Icon(
+              Icons.bubble_chart,
+              color: Colors.blueGrey,
+            ),
             title: Text('Air Pump'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -28,7 +28,10 @@ class _GroceryState extends State<Grocery> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.local_drink),
+            leading: Icon(
+              Icons.local_drink,
+              color: Colors.blueAccent,
+            ),
             title: Text('Water in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +103,10 @@ class _GroceryState extends State<Grocery> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.fastfood),
+            leading: Icon(
+              Icons.fastfood,
+              color: Colors.amber,
+            ),
             title: Text('Perishable foods in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +128,10 @@ class _GroceryState extends State<Grocery> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.schedule),
+            leading: Icon(
+              Icons.schedule,
+              color: Colors.blueGrey,
+            ),
             title: Text('Non-perishable foods in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,7 +153,10 @@ class _GroceryState extends State<Grocery> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.wc),
+            leading: Icon(
+              Icons.wc,
+              color: Colors.deepOrangeAccent,
+            ),
             title: Text('Toilet paper in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +178,10 @@ class _GroceryState extends State<Grocery> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.bubble_chart),
+            leading: Icon(
+              Icons.bubble_chart,
+              color: Colors.tealAccent,
+            ),
             title: Text('Disinfectants in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,7 +203,10 @@ class _GroceryState extends State<Grocery> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.pregnant_woman),
+            leading: Icon(
+              Icons.pregnant_woman,
+              color: Colors.pinkAccent,
+            ),
             title: Text('Feminine hygiene products in stock'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

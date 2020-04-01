@@ -49,7 +49,10 @@ class _BarState extends State<Bar> {
           Divider(),
           //BarWaitChart(),
           ListTile(
-            leading: Icon(Icons.loop),
+            leading: Icon(
+              Icons.loop,
+              color: Colors.blue,
+            ),
             title: Text('Wait'),
             subtitle: barUpdate["bar_wait_average"] != null
                 ? Text(
@@ -58,7 +61,10 @@ class _BarState extends State<Bar> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.attach_money),
+            leading: Icon(
+              Icons.attach_money,
+              color: Colors.green,
+            ),
             title: Text('Cover'),
             subtitle: barUpdate["bar_cover_charge_percent"] != null
                 ? Column(
@@ -80,7 +86,10 @@ class _BarState extends State<Bar> {
           // ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.store_mall_directory),
+            leading: Icon(
+              Icons.store_mall_directory,
+              color: Colors.deepPurpleAccent,
+            ),
             title: Text('Bar Styles'),
             subtitle: Text("College Bar, Irish Pub"),
           ),

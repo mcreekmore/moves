@@ -22,7 +22,7 @@ class Store with ChangeNotifier {
 
   /// STATE
   AppTheme appTheme = AppTheme();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance; // user info
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseUser signedInUser;
   List<HomeListItem> homeList = [];

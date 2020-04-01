@@ -104,23 +104,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 child: Container(
                                   height: 120,
                                   width: 120,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: <BoxShadow>[
-                                      BoxShadow(
-                                          //color: AppTheme.grey.withOpacity(0.6),
-                                          color:
-                                              AppTheme().getDrawerIconShadow(),
-                                          offset: const Offset(2.0, 4.0),
-                                          blurRadius: 8),
-                                    ],
-                                  ),
                                   child: ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(60.0)),
-                                    child:
-                                        Image.asset('assets/images/matt.jpg'),
-                                  ),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(60.0)),
+                                      // child:
+                                      //     Image.asset('assets/images/matt.jpg'),
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 100,
+                                        color: Colors.blueAccent,
+                                      )),
                                 ),
                               ),
                             );
@@ -144,17 +137,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 child: Container(
                                   height: 120,
                                   width: 120,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: <BoxShadow>[
-                                      BoxShadow(
-                                          color: AppTheme.grey.withOpacity(0.2),
-                                          // color:
-                                          //     AppTheme().getDrawerIconShadow(),
-                                          offset: const Offset(2.0, 4.0),
-                                          blurRadius: 8),
-                                    ],
-                                  ),
                                   child: ClipRRect(
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(60.0)),
@@ -172,12 +154,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ? Padding(
                           padding: const EdgeInsets.only(top: 8, left: 4),
                           child: Text(
-                            '${Provider.of<Store>(context).signedInUser.displayName}',
+                            '${Provider.of<Store>(context).signedInUser.email}',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               //color: AppTheme.grey,
                               color: AppTheme().getDrawerTextColor(),
-                              fontSize: 18,
+                              fontSize: 14,
                             ),
                           ),
                         )
@@ -237,12 +219,32 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ),
                       trailing: Icon(
                         Icons.power_settings_new,
-                        color: Colors.red,
+                        color: Colors.redAccent,
                       ),
                       onTap: () {
                         setState(() {
-                          Provider.of<Store>(context, listen: false)
-                              .signOutGoogle();
+                          showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                    title: Text('Sign Out'),
+                                    content:
+                                        Text('Would you like to sign out?'),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('No')),
+                                      FlatButton(
+                                          onPressed: () {
+                                            Provider.of<Store>(context,
+                                                    listen: false)
+                                                .signOutGoogle();
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('Yes'))
+                                    ],
+                                  ));
                         });
                       },
                     )
@@ -260,7 +262,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ),
                       trailing: Icon(
                         Icons.power_settings_new,
-                        color: Colors.blue,
+                        color: Colors.blueAccent,
                       ),
                       onTap: () {
                         Navigator.push(
@@ -364,7 +366,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 MediaQuery.of(context).size.width * 0.75 - 64,
                             height: 46,
                             decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.2),
+                              color: Colors.blueAccent.withOpacity(0.2),
                               borderRadius: new BorderRadius.only(
                                 topLeft: Radius.circular(0),
                                 topRight: Radius.circular(28),

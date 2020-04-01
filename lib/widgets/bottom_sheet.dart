@@ -31,7 +31,7 @@ class BottomSheetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future makePostRequest(dynamic body) async {
-      String url = 'http://' +
+      String url = 'https://' +
           Provider.of<Store>(context, listen: false).getApi() +
           '/api/locations/update';
 
@@ -57,10 +57,16 @@ class BottomSheetWidget extends StatelessWidget {
           //print(_fbKey.currentState.value);
           await makePostRequest(_fbKey.currentState.value);
           SnackBar snackBar = SnackBar(
-            content: Text('Location Update was sent successfully'),
+            content: Row(
+              children: <Widget>[
+                Text('SUCCESS: ', style: TextStyle(color: Colors.greenAccent)),
+                Text('Update was sent'),
+              ],
+            ),
           );
 
           Scaffold.of(_fbKey.currentContext).showSnackBar(snackBar);
+          _fbKey.currentState.reset();
           // Alert(
           //   context: context,
           //   title: "Thank you!",

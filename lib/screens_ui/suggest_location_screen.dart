@@ -37,10 +37,10 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
     }
 
     Future makePostRequest(dynamic body) async {
-      String url = Provider.of<Store>(context, listen: false).getApi() +
+      String url = 'https://' +
+          Provider.of<Store>(context, listen: false).getApi() +
           '/api/locations';
-
-      url = 'http://' + url;
+      //TODO http for dev and https for server
 
       Coordinates coordinates = await calcLatLon();
       print("coordinates: " + coordinates.toString());
@@ -54,9 +54,49 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
 
       print(body.toString());
 
-      var response = await dio.post(url, data: jsonEncode(body));
+      try {
+        var response = await dio.post(
+          url,
+          data: jsonEncode(body),
+          options: Options(
+            followRedirects: false,
+            validateStatus: (status) {
+              return status < 500;
+            },
+          ),
+        );
+        if (response.statusCode == 400) {
+          SnackBar snackBar = SnackBar(
+            content: Row(
+              children: <Widget>[
+                Text(
+                  'ERROR: ',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
+                Text('Location Already Registered'),
+              ],
+            ),
+          );
 
-      print(response.statusMessage);
+          Scaffold.of(_suggestKey.currentContext).showSnackBar(snackBar);
+          return;
+        }
+        SnackBar snackBar = SnackBar(
+          content: Row(
+            children: <Widget>[
+              Text(
+                'SUCCESS: ',
+                style: TextStyle(color: Colors.greenAccent),
+              ),
+              Text('Location Suggestion Sent'),
+            ],
+          ),
+        );
+
+        Scaffold.of(_suggestKey.currentContext).showSnackBar(snackBar);
+      } catch (e) {
+        print(e);
+      }
     }
 
     void selectedIndex(int index) async {
@@ -66,12 +106,6 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
         // Submit
         if (_suggestKey.currentState.saveAndValidate()) {
           await makePostRequest(_suggestKey.currentState.value);
-
-          SnackBar snackBar = SnackBar(
-            content: Text('Location Suggestion Sent Successfully'),
-          );
-
-          Scaffold.of(_suggestKey.currentContext).showSnackBar(snackBar);
         }
       } else if (index == 1) {
         // Reset

@@ -28,7 +28,10 @@ class _PharmacyState extends State<Pharmacy> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.local_pharmacy),
+            leading: Icon(
+              Icons.local_pharmacy,
+              color: Colors.redAccent,
+            ),
             title: Text('Filling Perscriptions'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +53,10 @@ class _PharmacyState extends State<Pharmacy> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.arrow_downward),
+            leading: Icon(
+              Icons.arrow_downward,
+              color: Colors.deepPurpleAccent,
+            ),
             title: Text('Administering vaccinations'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +78,10 @@ class _PharmacyState extends State<Pharmacy> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.people),
+            leading: Icon(
+              Icons.people,
+              color: Colors.blueGrey,
+            ),
             title: Text('Providing pharmaceutical counseling'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +103,10 @@ class _PharmacyState extends State<Pharmacy> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.drive_eta),
+            leading: Icon(
+              Icons.drive_eta,
+              color: Colors.blueAccent,
+            ),
             title: Text('Drive-through pharmacy pick-up'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -101,20 +101,17 @@ class _LocationScreenState extends State<LocationScreen> {
               flexibleSpace: FlexibleSpaceBar(
                 title: Container(
                   constraints: BoxConstraints(
-                    minWidth: 100,
+                    //minWidth: 100,
                     maxWidth: MediaQuery.of(context).size.width * .85,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        '${widget.location.name}',
-                        style: TextStyle(
-                          //fontSize: 22,
-                          color: AppTheme.darkText,
-                          fontWeight: FontWeight.w700,
-                        ),
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      '${widget.location.name}',
+                      style: TextStyle(
+                        //fontSize: 22,
+                        color: AppTheme.darkText,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
@@ -160,7 +157,10 @@ class _LocationScreenState extends State<LocationScreen> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: ListTile(
-                                        leading: Icon(Icons.my_location),
+                                        leading: Icon(
+                                          Icons.my_location,
+                                          color: Colors.blueAccent,
+                                        ),
                                         title: Text('${widget.location.name}'),
                                         subtitle: Text(
                                             '${widget.location.street}, ${widget.location.region}, ${widget.location.country}, ${widget.location.zip}'),
@@ -239,7 +239,10 @@ class _LocationScreenState extends State<LocationScreen> {
                                 ),
                               ),
                               ListTile(
-                                leading: Icon(Icons.people),
+                                leading: Icon(
+                                  Icons.people,
+                                  color: Colors.blueGrey,
+                                ),
                                 subtitle: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
@@ -322,7 +325,10 @@ class _LocationScreenState extends State<LocationScreen> {
                               ),
                               Divider(),
                               ListTile(
-                                leading: Icon(Icons.event_available),
+                                leading: Icon(
+                                  Icons.event_available,
+                                  color: Colors.green,
+                                ),
                                 title: Text('Open'),
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,7 +353,10 @@ class _LocationScreenState extends State<LocationScreen> {
                               ),
                               Divider(),
                               ListTile(
-                                leading: Icon(Icons.description),
+                                leading: Icon(
+                                  Icons.description,
+                                  color: Colors.indigoAccent,
+                                ),
                                 title: Text('Description'),
                                 subtitle: widget.location.description != null
                                     ? Text('${widget.location.description}')
@@ -355,7 +364,10 @@ class _LocationScreenState extends State<LocationScreen> {
                               ),
                               Divider(),
                               ListTile(
-                                leading: Icon(Icons.web),
+                                leading: Icon(
+                                  Icons.web,
+                                  color: Colors.redAccent,
+                                ),
                                 title: Text('Website'),
                                 onTap: () => {
                                   if (widget.location.website != null)
@@ -367,7 +379,10 @@ class _LocationScreenState extends State<LocationScreen> {
                               ),
                               Divider(),
                               ListTile(
-                                leading: Icon(Icons.phone),
+                                leading: Icon(
+                                  Icons.phone,
+                                  color: Colors.blue,
+                                ),
                                 title: Text('Phone'),
                                 onTap: () =>
                                     launch('tel:${widget.location.phone}'),
@@ -377,7 +392,10 @@ class _LocationScreenState extends State<LocationScreen> {
                               ),
                               Divider(),
                               ListTile(
-                                leading: Icon(Icons.email),
+                                leading: Icon(
+                                  Icons.email,
+                                  color: Colors.amber,
+                                ),
                                 onTap: () => launch(
                                     'mailto:${widget.location.email}?subject=Email From Moves App&body='),
                                 title: Text('Email'),

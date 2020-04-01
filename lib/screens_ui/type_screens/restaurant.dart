@@ -27,7 +27,10 @@ class _RestaurantState extends State<Restaurant> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.restaurant),
+            leading: Icon(
+              Icons.loop,
+              color: Colors.blue,
+            ),
             title: Text('Wait'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +46,10 @@ class _RestaurantState extends State<Restaurant> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.restaurant),
+            leading: Icon(
+              Icons.store_mall_directory,
+              color: Colors.deepPurpleAccent,
+            ),
             title: Text('Inside seating'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +71,10 @@ class _RestaurantState extends State<Restaurant> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.restaurant),
+            leading: Icon(
+              Icons.outlined_flag,
+              color: Colors.redAccent,
+            ),
             title: Text('Outside seating'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +96,10 @@ class _RestaurantState extends State<Restaurant> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.restaurant),
+            leading: Icon(
+              Icons.drive_eta,
+              color: Colors.amber,
+            ),
             title: Text('Take-out available'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +121,10 @@ class _RestaurantState extends State<Restaurant> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.restaurant),
+            leading: Icon(
+              Icons.restaurant,
+              color: Colors.teal,
+            ),
             title: Text('Curb-side pickup available'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
