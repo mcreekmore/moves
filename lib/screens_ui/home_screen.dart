@@ -93,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   )
                 ]),
             floatingActionButton: FloatingActionButton(
+                backgroundColor: Colors.blueAccent,
                 child: Icon(Icons.filter_list),
                 onPressed: () {
                   setState(() {
@@ -348,66 +349,102 @@ class HomeListView extends StatelessWidget {
   final AnimationController animationController;
   final Animation<dynamic> animation;
 
-  Icon iconTypeGetter(String type) {
+  Widget iconTypeGetter(String type) {
     if (type == 'Restaurant') {
-      return Icon(
-        Icons.local_dining,
-        color: Colors.blue,
+      return CircleAvatar(
+        backgroundColor: Colors.blueAccent,
+        child: Icon(
+          Icons.local_dining,
+          color: Colors.white,
+        ),
       );
     } else if (type == 'Hotel') {
-      return Icon(
-        Icons.local_hotel,
-        color: Colors.blueAccent,
+      return CircleAvatar(
+        backgroundColor: Colors.blueAccent,
+        child: Icon(
+          Icons.local_hotel,
+          color: Colors.white,
+        ),
       );
     } else if (type == 'Bar') {
-      return Icon(
-        Icons.local_bar,
-        color: Colors.orange,
+      return CircleAvatar(
+        backgroundColor: Colors.orange,
+        child: Icon(
+          Icons.local_bar,
+          color: Colors.white,
+        ),
       ); // orange
     } else if (type == 'Cafe') {
-      return Icon(
-        Icons.local_cafe,
-        color: Colors.teal,
+      return CircleAvatar(
+        backgroundColor: Colors.teal,
+        child: Icon(
+          Icons.local_cafe,
+          color: Colors.white,
+        ),
       );
     } else if (type == 'Music Venue') {
-      return Icon(
-        Icons.music_note,
-        color: Colors.purple,
+      return CircleAvatar(
+        backgroundColor: Colors.purple,
+        child: Icon(
+          Icons.music_note,
+          color: Colors.white,
+        ),
       );
     } else if (type == 'Grocery') {
-      return Icon(
-        Icons.local_grocery_store,
-        color: Colors.green,
+      return CircleAvatar(
+        backgroundColor: Colors.green,
+        child: Icon(
+          Icons.local_grocery_store,
+          color: Colors.white,
+        ),
       );
     } else if (type == 'Gas Station') {
-      return Icon(
-        Icons.local_gas_station,
-        color: Colors.brown,
+      return CircleAvatar(
+        backgroundColor: Colors.brown,
+        child: Icon(
+          Icons.local_gas_station,
+          color: Colors.white,
+        ),
       ); // brown
     } else if (type == 'Bank') {
-      return Icon(
-        Icons.attach_money,
-        color: Colors.grey,
+      return CircleAvatar(
+        backgroundColor: Colors.grey,
+        child: Icon(
+          Icons.attach_money,
+          color: Colors.white,
+        ),
       );
     } else if (type == 'Post Office') {
-      return Icon(
-        Icons.local_post_office,
-        color: Colors.blueAccent,
+      return CircleAvatar(
+        backgroundColor: Colors.blueAccent,
+        child: Icon(
+          Icons.local_post_office,
+          color: Colors.white,
+        ),
       );
     } else if (type == 'Hospital') {
-      return Icon(
-        Icons.local_hospital,
-        color: Colors.redAccent,
+      return CircleAvatar(
+        backgroundColor: Colors.redAccent,
+        child: Icon(
+          Icons.local_hospital,
+          color: Colors.white,
+        ),
       );
     } else if (type == 'Pharmacy') {
-      return Icon(
-        Icons.local_pharmacy,
-        color: Colors.redAccent,
+      return CircleAvatar(
+        backgroundColor: Colors.redAccent,
+        child: Icon(
+          Icons.local_pharmacy,
+          color: Colors.white,
+        ),
       ); // red
     } else {
-      return Icon(
-        Icons.location_on,
-        color: Colors.blueAccent,
+      return CircleAvatar(
+        backgroundColor: Colors.blueAccent,
+        child: Icon(
+          Icons.location_on,
+          color: Colors.white,
+        ),
       );
     }
   }

@@ -79,7 +79,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   });
             },
             //backgroundColor: LocationTheme.nearlyBlue,
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.blueAccent,
             child: Icon((Icons.add)),
           );
         },
@@ -184,7 +184,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                               Icon(
                                                 Icons.star,
                                                 //color: LocationTheme.nearlyBlue,
-                                                color: Colors.blue,
+                                                color: Colors.blueAccent,
 
                                                 size: 24,
                                               ),
@@ -200,7 +200,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                                     letterSpacing: 0.27,
                                                     // color: LocationTheme
                                                     //     .nearlyBlue,
-                                                    color: Colors.blue,
+                                                    color: Colors.blueAccent,
                                                   ),
                                                 ),
                                               ),
@@ -222,7 +222,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                                   ),
                                                 ),
                                                 //color: LocationTheme.nearlyBlue,
-                                                color: Colors.blue,
+                                                color: Colors.blueAccent,
                                                 splashColor: Colors.white
                                                     .withOpacity(0.3),
                                                 onPressed: () {
