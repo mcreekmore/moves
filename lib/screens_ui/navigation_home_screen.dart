@@ -10,6 +10,7 @@ import 'about_me_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
+import 'package:moves/screens_ui/settings_screen.dart';
 // import 'package:moves/model/location_model.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
@@ -43,13 +44,13 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         Provider.of<Store>(context).scaffoldKey;
 
     return Container(
-      color: AppTheme().getContainerColor(),
+      //color: AppTheme().getContainerColor(),
       child: SafeArea(
         top: false,
         bottom: false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: AppTheme().getContainerColor(),
+          // backgroundColor: AppTheme().getContainerColor(),
           body: DrawerUserController(
             screenIndex: drawerIndex,
             drawerWidth: MediaQuery.of(context).size.width * 0.75,
@@ -92,6 +93,10 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       } else if (drawerIndex == DrawerIndex.About) {
         setState(() {
           screenView = AboutMe();
+        });
+      } else if (drawerIndex == DrawerIndex.Settings) {
+        setState(() {
+          screenView = Settings();
         });
       } else {
         //do in your way......

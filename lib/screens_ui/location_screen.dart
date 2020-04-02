@@ -11,7 +11,6 @@ import 'package:moves/screens_ui/type_screens/pharmacy.dart';
 import 'package:moves/screens_ui/type_screens/restaurant.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
-
 import 'package:moves/widgets/bottom_sheet.dart';
 
 class LocationScreen extends StatefulWidget {

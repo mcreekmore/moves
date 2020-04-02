@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:moves/screens_ui/navigation_home_screen.dart';
 import 'package:provider/provider.dart';
 import 'store/store.dart';
+import 'theme_notifier.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +13,7 @@ void main() async {
     DeviceOrientation.portraitDown
   ]).then((_) => runApp(
         ChangeNotifierProvider<ThemeNotifier>(
-          create: (_) => ThemeNotifier(lightTheme),
+          create: (_) => ThemeNotifier(darkTheme),
           child: MyApp(),
         ),
       ));

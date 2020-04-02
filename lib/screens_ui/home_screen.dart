@@ -6,6 +6,7 @@ import 'package:moves/store/store.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:moves/screens_ui/suggest_location_screen.dart';
 import 'package:moves/widgets/home_filter_bottom_sheet.dart';
+import 'package:moves/theme_notifier.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
@@ -109,40 +110,48 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
               ],
             ),
-            bottomNavigationBar: BottomNavigationBar(
-                //backgroundColor: AppTheme.nearlyWhite,
-                selectedItemColor: Colors.blueAccent,
-                selectedFontSize: 14,
-                //unselectedItemColor: Colors.grey.shade800,
-                unselectedFontSize: 12,
-                currentIndex: bottomNavBarIndex,
-                onTap: (int index) {
-                  setState(() {
-                    selectedIndex(index);
-                  });
-                },
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.list,
+            bottomNavigationBar: Theme(
+              data: Theme.of(context).copyWith(
+                canvasColor:
+                    Provider.of<ThemeNotifier>(context).getTheme() == darkTheme
+                        ? Colors.black
+                        : Colors.white,
+              ),
+              child: BottomNavigationBar(
+                  //backgroundColor: AppTheme.nearlyWhite,
+                  selectedItemColor: Colors.blueAccent,
+                  selectedFontSize: 14,
+                  //unselectedItemColor: Colors.grey.shade800,
+                  unselectedFontSize: 12,
+                  currentIndex: bottomNavBarIndex,
+                  onTap: (int index) {
+                    setState(() {
+                      selectedIndex(index);
+                    });
+                  },
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.list,
+                      ),
+                      title: Text(
+                        "List",
+                      ),
                     ),
-                    title: Text(
-                      "List",
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.map),
+                      title: Text('Map'),
                     ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.map),
-                    title: Text('Map'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    title: Text(
-                      'Profile',
-                    ),
-                  )
-                ]),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.person),
+                      title: Text(
+                        'Profile',
+                      ),
+                    )
+                  ]),
+            ),
             floatingActionButton: FloatingActionButton(
-                //backgroundColor: Colors.blueAccent,
+                backgroundColor: Colors.blueAccent,
                 child: Icon(Icons.filter_list),
                 onPressed: () {
                   setState(() {

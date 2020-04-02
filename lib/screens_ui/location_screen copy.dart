@@ -797,7 +797,7 @@ class _LocationScreenState extends State<LocationScreen>
                   '${widget.location.name}',
                   style: TextStyle(
                     fontSize: 22,
-                    color: AppTheme().getTextColor(),
+                    // color: AppTheme().getTextColor(),
                     fontWeight: FontWeight.w700,
                   ),
                 ),

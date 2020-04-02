@@ -37,22 +37,24 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.home),
       ),
       DrawerList(
-          index: DrawerIndex.Map,
-          labelName: 'Map',
-          //isAssetsImage: true,
-          //imageName: 'assets/images/supportIcon.png',
-          icon: Icon(Icons.map)),
+        index: DrawerIndex.Map,
+        labelName: 'Map',
+        //isAssetsImage: true,
+        //imageName: 'assets/images/supportIcon.png',
+        icon: Icon(Icons.map),
+      ),
 
-      DrawerList(
-        index: DrawerIndex.FeedBack,
-        labelName: 'FeedBack',
-        icon: Icon(Icons.help),
-      ),
-      DrawerList(
-        index: DrawerIndex.Invite,
-        labelName: 'Invite Friend',
-        icon: Icon(Icons.group),
-      ),
+      // DrawerList(
+      //   index: DrawerIndex.FeedBack,
+      //   labelName: 'FeedBack',
+      //   icon: Icon(Icons.help),
+      // ),
+      // DrawerList(
+      //   index: DrawerIndex.Invite,
+      //   labelName: 'Invite Friend',
+      //   icon: Icon(Icons.group),
+      // ),
+
       // DrawerList(
       //   index: DrawerIndex.Share,
       //   labelName: 'Rate the app',
@@ -63,6 +65,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'About',
         icon: Icon(Icons.info),
       ),
+      DrawerList(
+        index: DrawerIndex.Settings,
+        labelName: 'Settings',
+        icon: Icon(Icons.settings),
+      ),
     ];
   }
 
@@ -70,8 +77,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
   Widget build(BuildContext context) {
     bool signedIn = Provider.of<Store>(context).signedInUser != null;
     return Scaffold(
-      //backgroundColor: AppTheme.notWhite.withOpacity(0.5),
-      backgroundColor: AppTheme().getDrawerColor(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -157,8 +162,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             '${Provider.of<Store>(context).signedInUser.email}',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              //color: AppTheme.grey,
-                              color: AppTheme().getDrawerTextColor(),
                               fontSize: 14,
                             ),
                           ),
@@ -169,8 +172,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             'Sign In',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              //color: AppTheme.grey,
-                              color: AppTheme().getDrawerTextColor(),
                               fontSize: 18,
                             ),
                           ),
@@ -184,8 +185,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ),
           Divider(
             height: 1,
-            //color: AppTheme.grey.withOpacity(0.6),
-            color: AppTheme().getDrawerDividerColor(),
           ),
           Expanded(
             child: ListView.builder(
@@ -199,8 +198,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ),
           Divider(
             height: 1,
-            //color: AppTheme.grey.withOpacity(0.6),
-            color: AppTheme().getDrawerDividerColor(),
           ),
           Column(
             children: <Widget>[
@@ -212,8 +209,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           fontFamily: AppTheme.fontName,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
-                          //color: AppTheme.darkText,
-                          color: AppTheme().getDrawerBodyTextColor(),
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -255,8 +250,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           fontFamily: AppTheme.fontName,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
-                          //color: AppTheme.darkText,
-                          color: AppTheme().getDrawerBodyTextColor(),
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -299,17 +292,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Container(
                     width: 6.0,
                     height: 46.0,
-                    // decoration: BoxDecoration(
-                    //   color: widget.screenIndex == listData.index
-                    //       ? Colors.blue
-                    //       : Colors.transparent,
-                    //   borderRadius: new BorderRadius.only(
-                    //     topLeft: Radius.circular(0),
-                    //     topRight: Radius.circular(16),
-                    //     bottomLeft: Radius.circular(0),
-                    //     bottomRight: Radius.circular(16),
-                    //   ),
-                    // ),
                   ),
                   const Padding(
                     padding: EdgeInsets.all(4.0),
@@ -318,17 +300,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ? Container(
                           width: 24,
                           height: 24,
-                          child: Image.asset(listData.imageName,
-                              color: widget.screenIndex == listData.index
-                                  //? Colors.blue
-                                  ? AppTheme().getDrawerListItemColor()
-                                  : AppTheme.nearlyBlack),
+                          child: Image.asset(
+                            listData.imageName,
+                          ),
                         )
-                      : Icon(listData.icon.icon,
-                          color: widget.screenIndex == listData.index
-                              //? Colors.blue
-                              ? AppTheme().getDrawerListItemColor()
-                              : AppTheme.nearlyBlack),
+                      : Icon(
+                          listData.icon.icon,
+                        ),
                   const Padding(
                     padding: EdgeInsets.all(4.0),
                   ),
@@ -337,10 +315,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
-                      color: widget.screenIndex == listData.index
-                          //? Colors.blue
-                          ? AppTheme().getDrawerListItemColor()
-                          : AppTheme.nearlyBlack,
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -398,6 +372,7 @@ enum DrawerIndex {
   Help,
   Share,
   About,
+  Settings,
   Invite,
   Testing,
 }

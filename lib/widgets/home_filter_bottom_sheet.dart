@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:moves/app_theme.dart';
 import 'package:moves/store/store.dart';
 import 'package:moves/model/types_model.dart';
+import 'package:moves/theme_notifier.dart';
 
 class HomeFilterBottomSheet extends StatefulWidget {
   @override
@@ -229,33 +230,41 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: AppTheme.nearlyWhite,
-          selectedFontSize: 12,
-          unselectedFontSize: 12,
-          currentIndex: 0,
-          onTap: (int index) {
-            selectedIndex(index);
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.check_circle,
-                color: Colors.blueAccent,
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor:
+                Provider.of<ThemeNotifier>(context).getTheme() == darkTheme
+                    ? Colors.black
+                    : Colors.white,
+          ),
+          child: BottomNavigationBar(
+            //backgroundColor: AppTheme.nearlyWhite,
+            selectedFontSize: 12,
+            unselectedFontSize: 12,
+            currentIndex: 0,
+            onTap: (int index) {
+              selectedIndex(index);
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.check_circle,
+                  color: Colors.blueAccent,
+                ),
+                title: Text(
+                  "Accept",
+                  style: TextStyle(color: Colors.blueAccent),
+                ),
               ),
-              title: Text(
-                "Accept",
-                style: TextStyle(color: Colors.blueAccent),
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.cancel, color: Colors.redAccent),
-              title: Text(
-                'Cancel',
-                style: TextStyle(color: Colors.redAccent),
-              ),
-            )
-          ],
+              BottomNavigationBarItem(
+                icon: Icon(Icons.cancel, color: Colors.redAccent),
+                title: Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

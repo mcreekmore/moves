@@ -22,7 +22,7 @@ class _BarState extends State<Bar> {
             widget.location.updateInfo["bar_update_info"]["bar_specials_list"])
         : null;
 
-    print(specialsList);
+    //print(specialsList);
 
     var specialsTextList = List<Text>();
 
