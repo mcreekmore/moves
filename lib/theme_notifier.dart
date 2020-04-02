@@ -11,7 +11,7 @@ final darkTheme = ThemeData(
   brightness: Brightness.dark,
   backgroundColor: Colors.black,
   accentColor: Color(0xFFFEFEFE),
-  accentIconTheme: IconThemeData(color: Colors.black),
+  accentIconTheme: IconThemeData(color: Colors.white),
   dividerColor: Colors.grey,
   bottomAppBarColor: Colors.black,
 );
@@ -20,18 +20,18 @@ final lightTheme = ThemeData(
   primarySwatch: Colors.grey,
   primaryColor: Color(0xFFFEFEFE),
   brightness: Brightness.light,
-  backgroundColor: Colors.black,
+  backgroundColor: Colors.white,
   accentColor: Colors.blueAccent,
   accentIconTheme: IconThemeData(color: Colors.white),
   dividerColor: Colors.grey,
 );
 
-bool darkThemeSelected = true;
-
 class ThemeNotifier with ChangeNotifier {
   ThemeData _themeData;
 
   ThemeNotifier(this._themeData);
+
+  bool darkThemeSelected = false;
 
   getTheme() {
     return _themeData;
@@ -40,5 +40,34 @@ class ThemeNotifier with ChangeNotifier {
   setTheme(ThemeData themeData) async {
     _themeData = themeData;
     notifyListeners();
+  }
+
+  toggleTheme(bool val) {
+    darkThemeSelected = val;
+    notifyListeners();
+  }
+
+  SystemUiOverlayStyle getSystemOverlayStyle() {
+    if (darkThemeSelected) {
+      return SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness:
+            Platform.isAndroid ? Brightness.dark : Brightness.dark,
+        systemNavigationBarColor: Colors.black,
+        systemNavigationBarDividerColor: Colors.grey,
+        systemNavigationBarIconBrightness: Brightness.light,
+      );
+    } else {
+      return SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness:
+            Platform.isAndroid ? Brightness.dark : Brightness.light,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarDividerColor: Colors.grey,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      );
+    }
   }
 }

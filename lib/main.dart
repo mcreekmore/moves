@@ -13,7 +13,7 @@ void main() async {
     DeviceOrientation.portraitDown
   ]).then((_) => runApp(
         ChangeNotifierProvider<ThemeNotifier>(
-          create: (_) => ThemeNotifier(darkTheme),
+          create: (_) => ThemeNotifier(lightTheme),
           child: MyApp(),
         ),
       ));
@@ -22,8 +22,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(AppTheme().getSystemOverlayStyle());
     final themeNotifier = Provider.of<ThemeNotifier>(context);
+    SystemChrome.setSystemUIOverlayStyle(themeNotifier.getSystemOverlayStyle());
     return ChangeNotifierProvider<Store>(
       create: (context) => Store(),
       child: MaterialApp(
