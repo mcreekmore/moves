@@ -25,7 +25,7 @@ class _SettingsState extends State<Settings> {
             ListTile(
               title: Text('Dark Theme'),
               trailing: Switch(
-                value: themeNotifier.darkThemeSelected,
+                value: themeNotifier.getThemeBool(),
                 onChanged: (val) {
                   if (val) {
                     themeNotifier.setTheme(darkTheme);

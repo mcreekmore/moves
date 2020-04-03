@@ -5,18 +5,26 @@ import 'package:moves/screens_ui/navigation_home_screen.dart';
 import 'package:provider/provider.dart';
 import 'store/store.dart';
 import 'theme_notifier.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(
-        ChangeNotifierProvider<ThemeNotifier>(
-          create: (_) => ThemeNotifier(lightTheme),
-          child: MyApp(),
-        ),
-      ));
+  ]).then(
+    (_) {
+      SharedPreferences.getInstance().then((prefs) {
+        var darkModeOn = prefs.getBool('darkMode') ?? true;
+        runApp(
+          ChangeNotifierProvider<ThemeNotifier>(
+            create: (_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
+            child: MyApp(),
+          ),
+        );
+      });
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
