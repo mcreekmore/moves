@@ -43,21 +43,21 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void createMarkers() {
     List<HomeListItem> locations =
         Provider.of<Store>(context, listen: false).filteredLocations;
 
     for (var place in locations) {
       final String markerIdVal = place.location.id;
-      //_markerIdCounter++;
       final MarkerId markerId = MarkerId(markerIdVal);
 
       final Marker marker = Marker(
         markerId: markerId,
-        // position: LatLng(
-        //   center.latitude + sin(_markerIdCounter * pi / 6.0) / 20.0,
-        //   center.longitude + cos(_markerIdCounter * pi / 6.0) / 20.0,
-        // ),
         position: LatLng(place.location.lat, place.location.lon),
         infoWindow: InfoWindow(
           onTap: () {
@@ -74,11 +74,6 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
         markers[markerId] = marker;
       });
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   // highlight and move camera on tap
@@ -98,12 +93,6 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
           ),
         );
         markers[markerId] = newMarker;
-
-        // showModalBottomSheet(
-        //     context: context,
-        //     builder: (BuildContext context) {
-        //       return Container();
-        //     });
       });
     }
   }
@@ -114,10 +103,13 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
       List<HomeListItem> locations =
           Provider.of<Store>(context, listen: false).filteredLocations;
 
+      print('hey');
+
       for (var place in locations) {
         if (place.location.id.toString() == markerId.value.toString()) {
-          // print(place.location.id.toString());
-          // print(markerId.value);
+          print(place.location.id.toString());
+          print(markerId.value);
+          print('match!');
           Navigator.push<dynamic>(
             context,
             MaterialPageRoute<dynamic>(
@@ -132,45 +124,22 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Center(
-          child: SizedBox(
-            //width: 300.0,'
-            //width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: GoogleMap(
-              myLocationEnabled: true,
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(
-                    Provider.of<Store>(context).usersLocation.latitude,
-                    Provider.of<Store>(context).usersLocation.longitude),
-                zoom: 14.0,
-              ),
-              markers: Set<Marker>.of(markers.values),
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: GoogleMap(
+            mapToolbarEnabled: false,
+            myLocationEnabled: true,
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(Provider.of<Store>(context).usersLocation.latitude,
+                  Provider.of<Store>(context).usersLocation.longitude),
+              zoom: 14.0,
             ),
+            markers: Set<Marker>.of(markers.values),
           ),
         ),
-        // SingleChildScrollView(
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: <Widget>[
-        //       Column(
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: <Widget>[
-        //           FlatButton(
-        //             child: const Text('add'),
-        //             onPressed: _add,
-        //           ),
-        //         ],
-        //       )
-        //     ],
-        //   ),
-        // ),
-      ],
+      ),
     );
   }
 }

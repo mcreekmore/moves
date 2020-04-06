@@ -14,7 +14,29 @@ class Bar extends StatefulWidget {
 class _BarState extends State<Bar> {
   JsonEncoder encoder = new JsonEncoder.withIndent('  ');
 
-  void createSpecialsList() {
+  List<Widget> _getBarStyles() {
+    List<Widget> stylesList = List();
+    List<dynamic> stylesJSON = List.from(
+        widget.location.updateInfo["bar_update_info"]["bar_styles_list"]);
+
+    stylesJSON.sort((a, b) => b["percent"].compareTo(a["percent"]));
+
+    //TODO finish bar styles
+
+    for (var styleType in stylesJSON) {
+      if (double.parse(styleType["percent"]) != 0.0) {
+        styleType["percent"] = (double.parse(styleType["percent"])).toString();
+        stylesList.add(
+          Text(
+            '${styleType["percent"]}%: ${styleType["style"]}',
+          ),
+        );
+      }
+    }
+    return stylesList;
+  }
+
+  List<Widget> _createSpecialsList() {
     List<String> specialsList = widget.location.updateInfo["bar_update_info"]
                 ["bar_specials_list"] !=
             null
@@ -22,19 +44,19 @@ class _BarState extends State<Bar> {
             widget.location.updateInfo["bar_update_info"]["bar_specials_list"])
         : null;
 
-    //print(specialsList);
-
-    var specialsTextList = List<Text>();
+    var specialsTextList = List<Widget>();
 
     for (var special in specialsList) {
       specialsTextList.add(Text(special.toString()));
     }
+
+    return specialsTextList;
   }
 
   @override
   Widget build(BuildContext context) {
     dynamic barUpdate = widget.location.updateInfo["bar_update_info"];
-    createSpecialsList();
+    //createSpecialsList();
 
     return Container(
       child: Column(
@@ -90,8 +112,23 @@ class _BarState extends State<Bar> {
               Icons.store_mall_directory,
               color: Colors.deepPurpleAccent,
             ),
+            title: Text('Specials'),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: _createSpecialsList(),
+            ),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(
+              Icons.store_mall_directory,
+              color: Colors.deepPurpleAccent,
+            ),
             title: Text('Bar Styles'),
-            subtitle: Text("College Bar, Irish Pub"),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: _getBarStyles(),
+            ),
           ),
           Divider(),
         ],

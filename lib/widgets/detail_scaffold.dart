@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:moves/app_theme.dart';
 
 class DetailScaffold extends StatefulWidget {
   final ScrollController controller;
@@ -98,7 +97,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
       child: Container(
         height: edgeSize,
         decoration: BoxDecoration(
-          color: AppTheme.nearlyWhite,
+          //color: AppTheme.nearlyWhite,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(12),
           ),

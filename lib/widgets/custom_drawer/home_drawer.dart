@@ -1,6 +1,5 @@
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
-import '../../app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:moves/screens/sign_in.dart';
 
@@ -36,19 +35,19 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Home',
         icon: Icon(Icons.home),
       ),
-      DrawerList(
-        index: DrawerIndex.Map,
-        labelName: 'Map',
-        //isAssetsImage: true,
-        //imageName: 'assets/images/supportIcon.png',
-        icon: Icon(Icons.map),
-      ),
-
       // DrawerList(
-      //   index: DrawerIndex.FeedBack,
-      //   labelName: 'FeedBack',
-      //   icon: Icon(Icons.help),
+      //   index: DrawerIndex.Map,
+      //   labelName: 'Map',
+      //   //isAssetsImage: true,
+      //   //imageName: 'assets/images/supportIcon.png',
+      //   icon: Icon(Icons.map),
       // ),
+
+      DrawerList(
+        index: DrawerIndex.FeedBack,
+        labelName: 'FeedBack',
+        icon: Icon(Icons.help),
+      ),
       // DrawerList(
       //   index: DrawerIndex.Invite,
       //   labelName: 'Invite Friend',
@@ -206,7 +205,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       title: Text(
                         'Sign Out',
                         style: TextStyle(
-                          fontFamily: AppTheme.fontName,
+                          //fontFamily: AppTheme.fontName,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                         ),
@@ -247,7 +246,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       title: Text(
                         'Sign In',
                         style: TextStyle(
-                          fontFamily: AppTheme.fontName,
+                          //fontFamily: AppTheme.fontName,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                         ),

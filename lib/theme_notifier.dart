@@ -75,8 +75,14 @@ final darkTheme = ThemeData(
   backgroundColor: Colors.black,
   accentColor: Color(0xFFFEFEFE),
   accentIconTheme: IconThemeData(color: Colors.white),
-  dividerColor: Colors.grey,
+  dividerColor: Colors.grey[700],
   bottomAppBarColor: Colors.black,
+  snackBarTheme: SnackBarThemeData(
+    backgroundColor: Colors.grey.shade800,
+    contentTextStyle: TextStyle(
+      color: Colors.white,
+    ),
+  ),
 );
 
 final lightTheme = ThemeData(

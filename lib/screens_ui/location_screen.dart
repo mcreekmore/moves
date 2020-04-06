@@ -1,7 +1,5 @@
-import 'package:moves/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:moves/model/location_loaded_model.dart';
-import 'package:moves/theme_notifier.dart';
 import 'package:moves/themes/location_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';

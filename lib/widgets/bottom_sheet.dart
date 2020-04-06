@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:moves/app_theme.dart';
 import 'package:moves/model/location_loaded_model.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
@@ -38,8 +37,6 @@ class BottomSheetWidget extends StatelessWidget {
 
       Dio dio = new Dio();
 
-      //print(jsonEncode(body).toString());
-
       print(jsonEncode(body));
 
       await dio.post(url, data: jsonEncode(body));
@@ -55,7 +52,6 @@ class BottomSheetWidget extends StatelessWidget {
       if (index == 0) {
         // Submit
         if (_fbKey.currentState.saveAndValidate()) {
-          //print(_fbKey.currentState.value);
           await makePostRequest(_fbKey.currentState.value);
           SnackBar snackBar = SnackBar(
             content: Row(

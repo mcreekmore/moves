@@ -1,4 +1,3 @@
-import 'package:moves/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../model/homelist.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:moves/screens_ui/suggest_location_screen.dart';
 import 'package:moves/widgets/home_filter_bottom_sheet.dart';
 import 'package:moves/theme_notifier.dart';
+import 'package:moves/screens/map_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
@@ -46,11 +46,18 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     void selectedIndex(int index) async {
       if (index == 0) {
+        setState(() {
+          bottomNavBarIndex = 0;
+        });
         bottomNavBarIndex = 0;
       } else if (index == 1) {
-        bottomNavBarIndex = 1;
+        setState(() {
+          bottomNavBarIndex = 1;
+        });
       } else if (index == 2) {
-        bottomNavBarIndex = 2;
+        setState(() {
+          bottomNavBarIndex = 2;
+        });
       }
     }
 
@@ -77,8 +84,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   child: IconButton(
                     icon: Icon(
                       favoriteSelected ? Icons.favorite : Icons.favorite_border,
-                      //Icons.favorite_border,
-                      // color: AppTheme().getIconColor(),
                     ),
                     onPressed: () {
                       setState(() {
@@ -163,207 +168,133 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         });
                   });
                 }),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                //appBar(),
-                // search bar
-                Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 16.0, left: 8, right: 8),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(15), hintText: 'Search'),
-                    onChanged: (string) {
-                      try {
-                        setState(() {
-                          Provider.of<Store>(context, listen: false)
-                              .filterLocations(string);
-                        });
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: FutureBuilder<bool>(
-                    future: getData(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                      if (!snapshot.hasData ||
-                          Provider.of<Store>(context)
-                                  .filteredLocations
-                                  .length ==
-                              0) {
-                        return SpinKitDoubleBounce(
-                          color: Colors.blue,
-                          size: 30.0,
-                        );
-                      } else {
-                        return RefreshIndicator(
-                          onRefresh: () async {
-                            setState(() {
-                              Provider.of<Store>(context, listen: false)
-                                  .getData();
-                            });
+            body: bottomNavBarIndex == 0
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      //appBar(),
+                      // search bar
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 16.0, left: 8, right: 8),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(15),
+                              hintText: 'Search'),
+                          onChanged: (string) {
+                            try {
+                              setState(() {
+                                Provider.of<Store>(context, listen: false)
+                                    .filterLocations(string);
+                              });
+                            } catch (e) {
+                              print(e);
+                            }
                           },
-                          child: GridView(
-                            padding: const EdgeInsets.only(
-                                top: 0, left: 12, right: 12),
-                            //physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            children: List<Widget>.generate(
-                              Provider.of<Store>(context)
-                                  .filteredLocations
-                                  .length,
-                              (int index) {
-                                final int count = Provider.of<Store>(context)
-                                    .filteredLocations
-                                    .length;
-                                final Animation<double> animation =
-                                    Tween<double>(begin: 0.0, end: 1.0).animate(
-                                  CurvedAnimation(
-                                    parent: animationController,
-                                    curve: Interval((1 / count) * index, 1.0,
-                                        curve: Curves.fastOutSlowIn),
-                                  ),
-                                );
-                                animationController.forward();
-                                return HomeListView(
-                                  animation: animation,
-                                  animationController: animationController,
-                                  listData: Provider.of<Store>(context)
-                                      .filteredLocations[index],
-                                  callBack: () {
-                                    setState(() {
-                                      FocusScope.of(context)
-                                          .requestFocus(new FocusNode());
-                                    });
+                        ),
+                      ),
+                      Expanded(
+                        child: FutureBuilder<bool>(
+                          future: getData(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<bool> snapshot) {
+                            if (!snapshot.hasData ||
+                                Provider.of<Store>(context)
+                                        .filteredLocations
+                                        .length ==
+                                    0) {
+                              return SpinKitDoubleBounce(
+                                color: Colors.blue,
+                                size: 30.0,
+                              );
+                            } else {
+                              return RefreshIndicator(
+                                onRefresh: () async {
+                                  setState(() {
+                                    Provider.of<Store>(context, listen: false)
+                                        .getData();
+                                  });
+                                },
+                                child: GridView(
+                                  padding: const EdgeInsets.only(
+                                      top: 0, left: 12, right: 12),
+                                  //physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  children: List<Widget>.generate(
+                                    Provider.of<Store>(context)
+                                        .filteredLocations
+                                        .length,
+                                    (int index) {
+                                      final int count =
+                                          Provider.of<Store>(context)
+                                              .filteredLocations
+                                              .length;
+                                      final Animation<double> animation =
+                                          Tween<double>(begin: 0.0, end: 1.0)
+                                              .animate(
+                                        CurvedAnimation(
+                                          parent: animationController,
+                                          curve: Interval(
+                                              (1 / count) * index, 1.0,
+                                              curve: Curves.fastOutSlowIn),
+                                        ),
+                                      );
+                                      animationController.forward();
+                                      return HomeListView(
+                                        animation: animation,
+                                        animationController:
+                                            animationController,
+                                        listData: Provider.of<Store>(context)
+                                            .filteredLocations[index],
+                                        callBack: () {
+                                          setState(() {
+                                            FocusScope.of(context)
+                                                .requestFocus(new FocusNode());
+                                          });
 
-                                    Navigator.push<dynamic>(
-                                      context,
-                                      MaterialPageRoute<dynamic>(
-                                        builder: (BuildContext context) =>
-                                            Provider.of<Store>(context)
-                                                .filteredLocations[index]
-                                                .navigateScreen,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              //crossAxisCount: multiple ? 2 : 1,
-                              crossAxisCount: 1,
-                              //mainAxisSpacing: 12.0,
-                              crossAxisSpacing: 12.0,
-                              childAspectRatio: 5, // this changes the card size
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
+                                          Navigator.push<dynamic>(
+                                            context,
+                                            MaterialPageRoute<dynamic>(
+                                              builder: (BuildContext context) =>
+                                                  Provider.of<Store>(context)
+                                                      .filteredLocations[index]
+                                                      .navigateScreen,
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    //crossAxisCount: multiple ? 2 : 1,
+                                    crossAxisCount: 1,
+                                    //mainAxisSpacing: 12.0,
+                                    crossAxisSpacing: 12.0,
+                                    childAspectRatio:
+                                        5, // this changes the card size
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                : bottomNavBarIndex == 1
+                    ? MapScreen()
+                    : Container(
+                        child: Center(
+                          child: Text('Profile Coming Soon'),
+                        ),
+                      ),
           );
         }
       },
     );
     //);
-  }
-
-  Widget appBar() {
-    return SizedBox(
-      height: AppBar().preferredSize.height,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 8, left: 8),
-            child: Container(
-              width: AppBar().preferredSize.height - 8,
-              height: AppBar().preferredSize.height - 8,
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              // add center here to return to original
-              padding: const EdgeInsets.only(top: 8, left: 16),
-              child: Text(
-                'Moves',
-                style: TextStyle(
-                  fontSize: 22,
-                  //color: AppTheme().getTextColor(),
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8, right: 8),
-            child: Container(
-              //width: AppBar().preferredSize.height - 8,
-              height: AppBar().preferredSize.height - 8,
-              //color: Colors.white,
-              child: Row(
-                children: <Widget>[
-                  // favorites
-                  Material(
-                    child: InkWell(
-                      borderRadius:
-                          BorderRadius.circular(AppBar().preferredSize.height),
-                      child: IconButton(
-                        icon: Icon(
-                          favoriteSelected
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          //Icons.favorite_border,
-                          // color: AppTheme().getIconColor(),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            favoriteSelected = !favoriteSelected;
-                          });
-                        },
-                        tooltip: 'Favorites',
-                      ),
-                    ),
-                  ),
-                  // add
-                  Material(
-                    child: InkWell(
-                      borderRadius:
-                          BorderRadius.circular(AppBar().preferredSize.height),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.add_circle_outline,
-                          //color: AppTheme().getIconColor(),
-                        ),
-                        onPressed: () {
-                          Navigator.push<dynamic>(
-                            context,
-                            MaterialPageRoute<dynamic>(
-                                builder: (BuildContext context) =>
-                                    SuggestLocationScreen()),
-                          );
-                        },
-                        tooltip: 'Add New Location',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
 

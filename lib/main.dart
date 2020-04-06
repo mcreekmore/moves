@@ -1,4 +1,3 @@
-import 'app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moves/screens_ui/navigation_home_screen.dart';
@@ -15,7 +14,7 @@ void main() async {
   ]).then(
     (_) {
       SharedPreferences.getInstance().then((prefs) {
-        var darkModeOn = prefs.getBool('darkMode') ?? true;
+        var darkModeOn = prefs.getBool('darkMode') ?? false;
         runApp(
           ChangeNotifierProvider<ThemeNotifier>(
             create: (_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),

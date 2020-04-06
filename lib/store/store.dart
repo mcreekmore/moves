@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:moves/app_theme.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // JSON parser
 import '../model/homelist.dart';
@@ -11,7 +10,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:moves/screens_ui/location_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:moves/screens_ui/google_location_screen.dart';
 import 'package:moves/model/google_home_list.dart';
 import 'package:moves/model/types_model.dart';
 
@@ -21,7 +19,7 @@ class Store with ChangeNotifier {
   }
 
   /// STATE
-  AppTheme appTheme = AppTheme();
+  //AppTheme appTheme = AppTheme();
   final FirebaseAuth _auth = FirebaseAuth.instance; // user info
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseUser signedInUser;
@@ -187,21 +185,21 @@ class Store with ChangeNotifier {
     filteredLocations = homeList;
   }
 
-  void buildGoogleHomeList(locations) {
-    googleHomeList = [];
-    for (var location in locations) {
-      googleHomeList.add(
-        GoogleHomeList(
-          imagePath: 'assets/icons/bar.png',
-          navigateScreen: GoogleLocationScreen(
-            location: location,
-          ),
-          location: location,
-        ),
-      );
-    }
-    print(googleHomeList.length);
-  }
+  // void buildGoogleHomeList(locations) {
+  //   googleHomeList = [];
+  //   for (var location in locations) {
+  //     googleHomeList.add(
+  //       GoogleHomeList(
+  //         imagePath: 'assets/icons/bar.png',
+  //         navigateScreen: GoogleLocationScreen(
+  //           location: location,
+  //         ),
+  //         location: location,
+  //       ),
+  //     );
+  //   }
+  //   print(googleHomeList.length);
+  // }
 
   Future<String> signInWithEmail({String email, String password}) async {
     try {
