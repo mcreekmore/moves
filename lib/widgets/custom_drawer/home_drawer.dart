@@ -74,7 +74,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    bool signedIn = Provider.of<Store>(context).signedInUser != null;
+    bool signedIn = Provider.of<Store>(context).userID != null;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -158,7 +158,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ? Padding(
                           padding: const EdgeInsets.only(top: 8, left: 4),
                           child: Text(
-                            '${Provider.of<Store>(context).signedInUser.email}',
+                            '${Provider.of<Store>(context).userEmail}',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14,

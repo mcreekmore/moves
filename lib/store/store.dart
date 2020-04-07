@@ -23,6 +23,8 @@ class Store with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance; // user info
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseUser signedInUser;
+  String userID;
+  String userEmail;
   List<HomeListItem> homeList = [];
   List<HomeListItem> filteredLocations = [];
   List<GoogleHomeList> googleHomeList = [];
@@ -71,7 +73,19 @@ class Store with ChangeNotifier {
     await getCurrentLocation();
     await getGoogleLocationData();
     await getData();
+    await getUserPersistentData();
     filteredTypes = types;
+  }
+
+  Future<void> getUserPersistentData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('userID') && prefs.containsKey('userID')) {
+      userID = prefs.getString('userID');
+      userEmail = prefs.getString('userEmail');
+    } else {
+      userID = null;
+      userEmail = null;
+    }
   }
 
   Future<void> getGoogleLocationData() async {
@@ -241,6 +255,11 @@ class Store with ChangeNotifier {
       assert(user.uid == currentUser.uid);
 
       signedInUser = user;
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('userID', user.uid);
+      userID = user.uid;
+      prefs.setString('userEmail', user.email);
+      userEmail = user.email;
       notifyListeners();
 
       return 'signInWithGoogle succeeded: ${user.email}';
@@ -251,9 +270,14 @@ class Store with ChangeNotifier {
   }
 
   void signOutGoogle() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     await googleSignIn.signOut(); // signs out both regardless of sign in choice
     await _auth.signOut();
     signedInUser = null;
+    userEmail = null;
+    userID = null;
+    prefs.remove('userEmail');
+    prefs.remove('userID');
     notifyListeners();
   }
 

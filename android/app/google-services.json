@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1084666004751-o10ql2qaenepnruugnpcetkfl7nmk7ih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.creekmore.moves",
+            "certificate_hash": "f7d317ae9ba2244c410669aba0fa038627fcb378"
+          }
+        },
+        {
           "client_id": "1084666004751-eq43aopk9t51eto69cguddvms1h5jucj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
