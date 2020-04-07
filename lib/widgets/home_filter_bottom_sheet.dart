@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:moves/screens/map_screen.dart';
 //import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
 import 'package:moves/model/types_model.dart';
 import 'package:moves/theme_notifier.dart';
-import 'package:moves/screens/map_screen.dart';
 
 class HomeFilterBottomSheet extends StatefulWidget {
   @override
@@ -26,7 +24,11 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
         // Submit
 
         Provider.of<Store>(context, listen: false).filterTypes(_typeFilter);
-        Navigator.pop(context);
+        Navigator.pop(context, () {
+          setState(() {
+            //Provider.of<Store>(context, listen: false).filterTypes(_typeFilter);
+          });
+        });
       } else if (index == 1) {
         // Cancel
         Navigator.pop(context);

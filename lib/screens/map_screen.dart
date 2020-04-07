@@ -7,7 +7,9 @@ import 'package:moves/model/homelist.dart';
 import 'page.dart';
 
 class MapScreen extends Page {
-  MapScreen() : super(const Icon(Icons.place), 'Place marker');
+  MapScreen({this.kek}) : super(const Icon(Icons.place), 'Place marker');
+
+  final kek;
 
   @override
   Widget build(BuildContext context) {

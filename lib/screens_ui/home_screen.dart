@@ -41,22 +41,27 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   List<String> selectedCountList = [];
   int bottomNavBarIndex = 0;
+  bool visible = true;
 
   @override
   Widget build(BuildContext context) {
+    var kek = 1;
     void selectedIndex(int index) async {
       if (index == 0) {
         setState(() {
           bottomNavBarIndex = 0;
+          visible = true;
         });
         bottomNavBarIndex = 0;
       } else if (index == 1) {
         setState(() {
           bottomNavBarIndex = 1;
+          visible = false;
         });
       } else if (index == 2) {
         setState(() {
           bottomNavBarIndex = 2;
+          visible = false;
         });
       }
     }
@@ -155,19 +160,33 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     )
                   ]),
             ),
-            floatingActionButton: FloatingActionButton(
-                backgroundColor: Colors.blueAccent,
-                child: Icon(Icons.filter_list),
-                onPressed: () {
-                  setState(() {
-                    FocusScope.of(context).requestFocus(new FocusNode());
-                    showBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return HomeFilterBottomSheet();
-                        });
-                  });
-                }),
+            floatingActionButton: Visibility(
+              visible: visible,
+              child: FloatingActionButton(
+                  backgroundColor: Colors.blueAccent,
+                  child: Icon(Icons.filter_list),
+                  onPressed: () async {
+                    setState(() async {
+                      FocusScope.of(context).requestFocus(new FocusNode());
+                      // showBottomSheet(
+                      //     context: context,
+                      //     builder: (BuildContext context) {
+                      //       return HomeFilterBottomSheet();
+                      //     });
+                      Navigator.push<dynamic>(
+                        context,
+                        MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) =>
+                                HomeFilterBottomSheet()),
+                      );
+                    });
+                    if (bottomNavBarIndex == 1) {
+                      setState(() {
+                        kek = 2;
+                      });
+                    }
+                  }),
+            ),
             body: bottomNavBarIndex == 0
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -219,7 +238,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                 child: GridView(
                                   padding: const EdgeInsets.only(
                                       top: 0, left: 12, right: 12),
-                                  //physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.vertical,
                                   children: List<Widget>.generate(
                                     Provider.of<Store>(context)
@@ -284,7 +302,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ],
                   )
                 : bottomNavBarIndex == 1
-                    ? MapScreen()
+                    ? MapScreen(
+                        kek: kek,
+                      )
                     : Container(
                         child: Center(
                           child: Text('Profile Coming Soon'),
