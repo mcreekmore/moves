@@ -23,6 +23,7 @@ class LocationBottomSheet extends StatelessWidget {
         ),
         FormBuilderSegmentedControl(
           decoration: InputDecoration(labelText: "Location Rating"),
+          unselectedColor: Colors.grey,
           attribute: "location_rating",
           options: List.generate(5, (i) => i + 1)
               .map(

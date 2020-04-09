@@ -31,7 +31,7 @@ class BottomSheetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future makePostRequest(dynamic body) async {
-      String url = 'https://' +
+      String url = Provider.of<Store>(context, listen: false).getHtp() +
           Provider.of<Store>(context, listen: false).getApi() +
           '/api/locations/update';
 
