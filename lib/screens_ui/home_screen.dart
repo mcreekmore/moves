@@ -343,7 +343,7 @@ class HomeListView extends StatelessWidget {
       );
     } else if (type == 'Hotel') {
       return CircleAvatar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.indigo,
         child: Icon(
           Icons.local_hotel,
           color: Colors.white,
@@ -391,7 +391,7 @@ class HomeListView extends StatelessWidget {
       ); // brown
     } else if (type == 'Bank') {
       return CircleAvatar(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.deepOrangeAccent,
         child: Icon(
           Icons.attach_money,
           color: Colors.white,

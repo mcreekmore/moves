@@ -14,14 +14,68 @@ class HotelBottomSheet extends StatelessWidget {
           ),
         ),
         FormBuilderChoiceChip(
-          decoration: InputDecoration(labelText: "Occupancy"),
-          attribute: "location_occupancy_chip",
+          decoration: InputDecoration(labelText: "Are there vacancies?"),
+          attribute: "hotel_vacancies_bool",
           options: [
-            FormBuilderFieldOption(child: Text("Empty"), value: "empty"),
-            FormBuilderFieldOption(child: Text("Low"), value: "low"),
-            FormBuilderFieldOption(child: Text("Medium"), value: "medium"),
-            FormBuilderFieldOption(child: Text("High"), value: "high"),
-            FormBuilderFieldOption(child: Text("Max"), value: "max"),
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Is there free WIFI?"),
+          attribute: "hotel_wifi_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration:
+              InputDecoration(labelText: "Do they offer free breakfast?"),
+          attribute: "hotel_breakfast_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Is there a pool?"),
+          attribute: "hotel_pool_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Is there air conditioning?"),
+          attribute: "hotel_air_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Is there a bar?"),
+          attribute: "hotel_bar_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Are pets accepted?"),
+          attribute: "hotel_pets_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "Is there a wellness center?"),
+          attribute: "hotel_wellness_bool",
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
           ],
         ),
       ],
