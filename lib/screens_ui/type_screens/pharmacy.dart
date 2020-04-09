@@ -115,7 +115,7 @@ class _PharmacyState extends State<Pharmacy> {
                             ["pharmacy_drive_through_percent"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["pharmacy_update_info"]["pharmacy_drive_through_percent"]}% reported Yes (Last Hour)')
+                        '${widget.location.updateInfo["pharmacy_update_info"]["pharmacy_drive_through_percent"]}% reported Yes (All Time)')
                     : Text('No users reported'),
               ],
             ),

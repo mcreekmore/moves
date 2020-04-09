@@ -19,7 +19,6 @@ class Store with ChangeNotifier {
   }
 
   /// STATE
-  //AppTheme appTheme = AppTheme();
   final FirebaseAuth _auth = FirebaseAuth.instance; // user info
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseUser signedInUser;
@@ -68,11 +67,83 @@ class Store with ChangeNotifier {
     return api;
   }
 
-  String getHtp() {
+  String getHttp() {
     return htp;
   }
 
   /// MUTATORS
+
+  void filterLocations(string) {
+    filteredLocations = homeList
+        .where(
+            (i) => i.location.name.toLowerCase().contains(string.toLowerCase()))
+        .toList();
+    //print(filteredLocations[0].location.name.toString());
+
+    notifyListeners();
+  }
+
+  void filterTypes(LocationType type) {
+    filteredLocations = homeList;
+    if (type == LocationType.restaurant) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Restaurant'))
+          .toList();
+    } else if (type == LocationType.hotel) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Hotel'))
+          .toList();
+    } else if (type == LocationType.bar) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Bar'))
+          .toList();
+    } else if (type == LocationType.cafe) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Cafe'))
+          .toList();
+    } else if (type == LocationType.music_venue) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Music Venue'))
+          .toList();
+    } else if (type == LocationType.grocery) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Grocery'))
+          .toList();
+    } else if (type == LocationType.gas_station) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Gas Station'))
+          .toList();
+    } else if (type == LocationType.bank) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Bank'))
+          .toList();
+    } else if (type == LocationType.post_office) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Post Office'))
+          .toList();
+    } else if (type == LocationType.pharmacy) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Pharmacy'))
+          .toList();
+    } else if (type == LocationType.retail) {
+      filteredLocations = filteredLocations
+          .where((i) => i.location.types.contains('Retail'))
+          .toList();
+    } else if (type == LocationType.all) {
+      filteredLocations = homeList;
+    }
+
+    notifyListeners();
+  }
+
+  void resetFilterTypes() {
+    filteredLocations = homeList;
+    notifyListeners();
+  }
+
+  void changeTypeFilter(type) {
+    typeFilter = type;
+  }
 
   /// METHODS
 
@@ -286,77 +357,5 @@ class Store with ChangeNotifier {
     prefs.remove('userEmail');
     prefs.remove('userID');
     notifyListeners();
-  }
-
-  void filterLocations(string) {
-    filteredLocations = homeList
-        .where(
-            (i) => i.location.name.toLowerCase().contains(string.toLowerCase()))
-        .toList();
-    //print(filteredLocations[0].location.name.toString());
-
-    notifyListeners();
-  }
-
-  void filterTypes(LocationType type) {
-    filteredLocations = homeList;
-    if (type == LocationType.restaurant) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Restaurant'))
-          .toList();
-    } else if (type == LocationType.hotel) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Hotel'))
-          .toList();
-    } else if (type == LocationType.bar) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Bar'))
-          .toList();
-    } else if (type == LocationType.cafe) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Cafe'))
-          .toList();
-    } else if (type == LocationType.music_venue) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Music Venue'))
-          .toList();
-    } else if (type == LocationType.grocery) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Grocery'))
-          .toList();
-    } else if (type == LocationType.gas_station) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Gas Station'))
-          .toList();
-    } else if (type == LocationType.bank) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Bank'))
-          .toList();
-    } else if (type == LocationType.post_office) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Post Office'))
-          .toList();
-    } else if (type == LocationType.pharmacy) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Pharmacy'))
-          .toList();
-    } else if (type == LocationType.retail) {
-      filteredLocations = filteredLocations
-          .where((i) => i.location.types.contains('Retail'))
-          .toList();
-    } else if (type == LocationType.all) {
-      filteredLocations = homeList;
-    }
-
-    notifyListeners();
-  }
-
-  void resetFilterTypes() {
-    filteredLocations = homeList;
-    notifyListeners();
-  }
-
-  void changeTypeFilter(type) {
-    typeFilter = type;
   }
 }

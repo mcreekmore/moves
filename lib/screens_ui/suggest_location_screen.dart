@@ -37,7 +37,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
     }
 
     Future makePostRequest(dynamic body) async {
-      String url = Provider.of<Store>(context, listen: false).getHtp() +
+      String url = Provider.of<Store>(context, listen: false).getHttp() +
           Provider.of<Store>(context, listen: false).getApi() +
           '/api/locations';
       //TODO http for dev and https for server

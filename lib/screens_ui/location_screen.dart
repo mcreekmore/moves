@@ -8,6 +8,7 @@ import 'package:moves/screens_ui/type_screens/grocery.dart';
 import 'package:moves/screens_ui/type_screens/gas_station.dart';
 import 'package:moves/screens_ui/type_screens/pharmacy.dart';
 import 'package:moves/screens_ui/type_screens/restaurant.dart';
+import 'package:moves/screens_ui/type_screens/bank.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
 import 'package:moves/widgets/bottom_sheet.dart';
@@ -297,7 +298,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                       )
                                     : Container(),
                                 widget.location.types.contains('Bank')
-                                    ? Bar(
+                                    ? Bank(
                                         location: widget.location,
                                       )
                                     : Container(),
