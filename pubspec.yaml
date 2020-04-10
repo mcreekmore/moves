@@ -35,11 +35,11 @@ dependencies:
   dio: ^3.0.8 # for post requests with arrays
   flutter_form_builder: ^3.7.3
   #charts_flutter: ^0.8.1
+  intl: ^0.16.0
 
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0
   smooth_star_rating: ^1.0.3
-  intl: ^0.16.0
 
   floating_search_bar: ^0.2.0
 

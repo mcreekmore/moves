@@ -12,6 +12,7 @@ import 'package:moves/screens_ui/type_screens/bank.dart';
 import 'package:moves/screens_ui/type_screens/cafe.dart';
 import 'package:moves/screens_ui/type_screens/hotel.dart';
 import 'package:moves/screens_ui/type_screens/music_venue.dart';
+import 'package:moves/screens_ui/type_screens/post_office.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
 import 'package:moves/widgets/bottom_sheet.dart';
@@ -306,7 +307,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                       )
                                     : Container(),
                                 widget.location.types.contains('Post Office')
-                                    ? Bar(
+                                    ? PostOffice(
                                         location: widget.location,
                                       )
                                     : Container(),

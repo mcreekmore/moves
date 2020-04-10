@@ -14,14 +14,31 @@ class PostOfficeBottomSheet extends StatelessWidget {
           ),
         ),
         FormBuilderChoiceChip(
-          decoration: InputDecoration(labelText: "Occupancy"),
-          attribute: "location_occupancy_chip",
+          decoration: InputDecoration(labelText: "Accepting parcels inside?"),
+          attribute: "post_parcel_bool",
+          selectedColor: Colors.blueAccent,
           options: [
-            FormBuilderFieldOption(child: Text("Empty"), value: "empty"),
-            FormBuilderFieldOption(child: Text("Low"), value: "low"),
-            FormBuilderFieldOption(child: Text("Medium"), value: "medium"),
-            FormBuilderFieldOption(child: Text("High"), value: "high"),
-            FormBuilderFieldOption(child: Text("Max"), value: "max"),
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration:
+              InputDecoration(labelText: "Outside parcel drop-off available?"),
+          attribute: "post_outside_bool",
+          selectedColor: Colors.blueAccent,
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
+          ],
+        ),
+        FormBuilderChoiceChip(
+          decoration: InputDecoration(labelText: "PO boxes available?"),
+          attribute: "post_po_bool",
+          selectedColor: Colors.blueAccent,
+          options: [
+            FormBuilderFieldOption(child: Text("Yes"), value: "true"),
+            FormBuilderFieldOption(child: Text("No"), value: "false"),
           ],
         ),
       ],

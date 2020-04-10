@@ -1,7 +1,7 @@
 class LocationPostModel {
   String name;
   String description;
-  List<String> types; //TODO implement multiple
+  List<String> types;
   String country;
   String region;
   String city;

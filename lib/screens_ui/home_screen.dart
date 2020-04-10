@@ -399,7 +399,7 @@ class HomeListView extends StatelessWidget {
       );
     } else if (type == 'Post Office') {
       return CircleAvatar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.blue,
         child: Icon(
           Icons.local_post_office,
           color: Colors.white,

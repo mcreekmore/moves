@@ -30,10 +30,14 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
       //String region = _suggestKey.currentState.value["region"].toString();
       String city = _suggestKey.currentState.value["city"].toString();
       final query = "$street, $city";
-      var addresses = await Geocoder.local
-          .findAddressesFromQuery(query); //TODO fix geocoder null error
-      var first = addresses.first;
-      return first.coordinates;
+      try {
+        var addresses = await Geocoder.local.findAddressesFromQuery(
+            query); //TODO fix geocoder null error (possibly fixed)
+        var first = addresses.first;
+        return first.coordinates;
+      } catch (e) {
+        return null;
+      }
     }
 
     Future makePostRequest(dynamic body) async {
