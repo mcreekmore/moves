@@ -10,6 +10,8 @@ import 'package:moves/screens_ui/type_screens/pharmacy.dart';
 import 'package:moves/screens_ui/type_screens/restaurant.dart';
 import 'package:moves/screens_ui/type_screens/bank.dart';
 import 'package:moves/screens_ui/type_screens/cafe.dart';
+import 'package:moves/screens_ui/type_screens/hotel.dart';
+import 'package:moves/screens_ui/type_screens/music_venue.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
 import 'package:moves/widgets/bottom_sheet.dart';
@@ -279,12 +281,12 @@ class _LocationScreenState extends State<LocationScreen> {
                                       )
                                     : Container(),
                                 widget.location.types.contains('Hotel')
-                                    ? Bar(
+                                    ? Hotel(
                                         location: widget.location,
                                       )
                                     : Container(),
                                 widget.location.types.contains('Music Venue')
-                                    ? Bar(
+                                    ? MusicVenue(
                                         location: widget.location,
                                       )
                                     : Container(),

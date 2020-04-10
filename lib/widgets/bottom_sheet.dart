@@ -37,9 +37,10 @@ class BottomSheetWidget extends StatelessWidget {
 
       Dio dio = new Dio();
 
-      print(jsonEncode(body));
+      body = jsonEncode(body);
+      print(body);
 
-      await dio.post(url, data: jsonEncode(body));
+      await dio.post(url, data: body);
 
       //print(response.statusMessage);
       // if you want to print, add 'var response =' before the await
@@ -51,6 +52,7 @@ class BottomSheetWidget extends StatelessWidget {
     void selectedIndex(int index) async {
       if (index == 0) {
         // Submit
+        print(_fbKey.currentState.value["date"]);
         if (_fbKey.currentState.saveAndValidate()) {
           await makePostRequest(_fbKey.currentState.value);
           SnackBar snackBar = SnackBar(

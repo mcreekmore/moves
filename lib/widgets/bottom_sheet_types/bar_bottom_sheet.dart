@@ -14,7 +14,9 @@ class BarBottomSheet extends StatelessWidget {
           attribute: "bar_wait",
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              labelText: "How long is the wait/line? (minutes)"),
+            labelText: "How long is the wait/line? (minutes)",
+            labelStyle: TextStyle(color: Colors.grey[600]),
+          ),
           validators: [
             FormBuilderValidators.numeric(),
           ],
@@ -22,6 +24,7 @@ class BarBottomSheet extends StatelessWidget {
         FormBuilderChoiceChip(
           decoration: InputDecoration(labelText: "Is there a cover?"),
           attribute: "bar_cover_bool",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
@@ -31,7 +34,9 @@ class BarBottomSheet extends StatelessWidget {
           attribute: "bar_cover_charge",
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              labelText: "If yes, what is the cover? (dollars)"),
+            labelText: "If yes, what is the cover? (dollars)",
+            labelStyle: TextStyle(color: Colors.grey[600]),
+          ),
           validators: [
             FormBuilderValidators.numeric(),
           ],
@@ -46,6 +51,7 @@ class BarBottomSheet extends StatelessWidget {
         FormBuilderFilterChip(
           decoration: InputDecoration(labelText: "Bar Styles"),
           attribute: "bar_styles",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(
               child: Text("College Bar"),

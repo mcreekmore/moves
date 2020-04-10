@@ -14,21 +14,17 @@ class RestaurantBottomSheet extends StatelessWidget {
           attribute: "restaurant_wait",
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              labelText: "How long is the wait/line? (minutes)"),
+            labelText: "How long is the wait/line? (minutes)",
+            labelStyle: TextStyle(color: Colors.grey[600]),
+          ),
           validators: [
             FormBuilderValidators.numeric(),
           ],
         ),
-        // FormBuilderTextField(
-        //   attribute: "restaurant_specials",
-        //   decoration: InputDecoration(labelText: "Specials / Discounts"),
-        //   validators: [
-        //     FormBuilderValidators.maxLength(300),
-        //   ],
-        // ),
         FormBuilderChoiceChip(
           decoration: InputDecoration(labelText: "Inside seating?"),
           attribute: "restaurant_inside_seating_bool",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
@@ -37,6 +33,7 @@ class RestaurantBottomSheet extends StatelessWidget {
         FormBuilderChoiceChip(
           decoration: InputDecoration(labelText: "Outside seating?"),
           attribute: "restaurant_outside_seating_bool",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
@@ -45,6 +42,7 @@ class RestaurantBottomSheet extends StatelessWidget {
         FormBuilderChoiceChip(
           decoration: InputDecoration(labelText: "Take-out available?"),
           attribute: "restaurant_take_out_bool",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
@@ -53,6 +51,7 @@ class RestaurantBottomSheet extends StatelessWidget {
         FormBuilderChoiceChip(
           decoration: InputDecoration(labelText: "Curb-side pickup available?"),
           attribute: "restaurant_curb_side_bool",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
@@ -61,6 +60,7 @@ class RestaurantBottomSheet extends StatelessWidget {
         // FormBuilderFilterChip(
         //   decoration: InputDecoration(labelText: "Restaurant Styles"),
         //   attribute: "restaurant_styles",
+        //   selectedColor: Colors.blueAccent,
         //   options: [
         //     FormBuilderFieldOption(
         //       child: Text("College Bar"),

@@ -16,6 +16,7 @@ class LocationBottomSheet extends StatelessWidget {
         FormBuilderChoiceChip(
           decoration: InputDecoration(labelText: "Is this location open?"),
           attribute: "location_open_bool",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
@@ -23,8 +24,8 @@ class LocationBottomSheet extends StatelessWidget {
         ),
         FormBuilderSegmentedControl(
           decoration: InputDecoration(labelText: "Location Rating"),
-          unselectedColor: Colors.grey,
           attribute: "location_rating",
+          selectedColor: Colors.blueAccent,
           options: List.generate(5, (i) => i + 1)
               .map(
                 (number) => FormBuilderFieldOption(value: number),
@@ -34,6 +35,7 @@ class LocationBottomSheet extends StatelessWidget {
         FormBuilderChoiceChip(
           decoration: InputDecoration(labelText: "Occupancy"),
           attribute: "location_occupancy",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Empty"), value: "empty"),
             FormBuilderFieldOption(child: Text("Low"), value: "low"),

@@ -17,6 +17,7 @@ class BankBottomSheet extends StatelessWidget {
           decoration:
               InputDecoration(labelText: "Drive through available and open?"),
           attribute: "bank_drive_through",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
@@ -25,6 +26,7 @@ class BankBottomSheet extends StatelessWidget {
         FormBuilderChoiceChip(
           decoration: InputDecoration(labelText: "ATM available?"),
           attribute: "bank_atm",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),

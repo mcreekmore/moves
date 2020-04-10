@@ -86,6 +86,7 @@ final darkTheme = ThemeData(
 );
 
 final lightTheme = ThemeData(
+  textSelectionColor: Colors.purple,
   primarySwatch: Colors.grey,
   primaryColor: Color(0xFFFEFEFE),
   brightness: Brightness.light,
@@ -93,4 +94,5 @@ final lightTheme = ThemeData(
   accentColor: Colors.blueAccent,
   accentIconTheme: IconThemeData(color: Colors.white),
   dividerColor: Colors.grey,
+  scaffoldBackgroundColor: Color(0xFFFEFEFE),
 );

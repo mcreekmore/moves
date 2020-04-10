@@ -17,6 +17,7 @@ class PharmacyBottomSheet extends StatelessWidget {
           decoration:
               InputDecoration(labelText: "Currently filling prescriptions?"),
           attribute: "pharmacy_prescription_fill_bool",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
@@ -25,6 +26,7 @@ class PharmacyBottomSheet extends StatelessWidget {
         FormBuilderChoiceChip(
           decoration: InputDecoration(labelText: "Vaccinations available?"),
           attribute: "pharmacy_vaccinations_bool",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
@@ -34,6 +36,7 @@ class PharmacyBottomSheet extends StatelessWidget {
           decoration:
               InputDecoration(labelText: "Is there a drive through pick up?"),
           attribute: "pharmacy_drive_through_bool",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
@@ -43,6 +46,7 @@ class PharmacyBottomSheet extends StatelessWidget {
           decoration:
               InputDecoration(labelText: "Is pharmacy counseling available?"),
           attribute: "pharmacy_counseling_bool",
+          selectedColor: Colors.blueAccent,
           options: [
             FormBuilderFieldOption(child: Text("Yes"), value: "true"),
             FormBuilderFieldOption(child: Text("No"), value: "false"),
