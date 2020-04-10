@@ -57,9 +57,17 @@ class _MusicVenueState extends State<MusicVenue> {
               color: Colors.deepPurpleAccent,
             ),
             title: Text('Upcoming Performances'),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: getPerformances(),
+            subtitle: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: LimitedBox(
+                maxHeight: 120,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: getPerformances(),
+                  ),
+                ),
+              ),
             ),
           ),
           Divider(),
