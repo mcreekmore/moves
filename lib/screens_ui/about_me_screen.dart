@@ -14,89 +14,84 @@ class _AboutMeState extends State<AboutMe> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SafeArea(
-        top: false,
-        child: Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).padding.top,
-                      left: 16,
-                      right: 16),
-                  child: CircleAvatar(
-                    radius: 150,
-                    backgroundImage: AssetImage('assets/images/matt.jpg'),
-                  ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top,
+                  left: 16,
+                  right: 16),
+              child: CircleAvatar(
+                radius: 150,
+                backgroundImage: AssetImage('assets/images/matt.jpg'),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                'About Me',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                Container(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Text(
-                    'About Me',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: const Text(
+                "Thanks for using my App!\n\nMy name's Matt Creekmore. I'm an aspiring software developer and graduate from UNCW. \n\nOver my time as a student, I saw multiple mandatory evacuations and permanent loss of homes due to hurricanes. Infrastructure broke down and people were lost for food and water. \n\nThis is my project in hopes of serving the community.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  child: const Text(
-                    "Thanks for using my App!\n\nMy name's Matt Creekmore. I'm an aspiring software developer and graduate from UNCW. \n\nOver my time as a student, I saw multiple mandatory evacuations and permanent loss of homes due to hurricanes. Infrastructure broke down and people were lost for food and water. \n\nThis is my project in hopes of serving the community.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Container(
+                  width: 120,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(4.0)),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Container(
-                      width: 120,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4.0)),
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () => launch('https://creekmore.io/#/'),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.share,
-                                  color: Colors.white,
-                                  size: 22,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Text(
-                                    'My Site',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () => launch('https://creekmore.io/#/'),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.share,
+                              color: Colors.white,
+                              size: 22,
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                'My Site',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
