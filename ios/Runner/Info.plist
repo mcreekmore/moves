@@ -43,12 +43,24 @@
 	<false/>
 
 	<key>io.flutter.embedded_views_preview</key>
-	<value>YES</value>
+	<true/>
 
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<value>To allow location services within the app</value>
+	<string>To allow location services within the app</string>
 
 	<key>NSLocationAlwaysUsageDescription</key>
-	<value>To allow location services to update automatically</value>
+	<string>To allow location services to update automatically</string>
+	
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1084666004751-r0o4sh5tc56mr4ep2ems0hf8ookq4ut7</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
