@@ -168,11 +168,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   onPressed: () async {
                     setState(() async {
                       FocusScope.of(context).requestFocus(new FocusNode());
-                      // showBottomSheet(
-                      //     context: context,
-                      //     builder: (BuildContext context) {
-                      //       return HomeFilterBottomSheet();
-                      //     });
                       Navigator.push<dynamic>(
                         context,
                         MaterialPageRoute<dynamic>(
@@ -192,8 +187,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      //appBar(),
-                      // search bar
                       Padding(
                         padding: const EdgeInsets.only(
                             bottom: 16.0, left: 8, right: 8),
@@ -235,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                         .getData();
                                   });
                                 },
-                                child: GridView(
+                                child: ListView(
                                   padding: const EdgeInsets.only(
                                       top: 0, left: 12, right: 12),
                                   scrollDirection: Axis.vertical,
@@ -283,15 +276,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                         },
                                       );
                                     },
-                                  ),
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    //crossAxisCount: multiple ? 2 : 1,
-                                    crossAxisCount: 1,
-                                    //mainAxisSpacing: 12.0,
-                                    crossAxisSpacing: 12.0,
-                                    childAspectRatio:
-                                        5, // this changes the card size
                                   ),
                                 ),
                               );
