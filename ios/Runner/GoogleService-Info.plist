@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1084666004751-r0o4sh5tc56mr4ep2ems0hf8ookq4ut7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1084666004751-r0o4sh5tc56mr4ep2ems0hf8ookq4ut7</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1084666004751-o10ql2qaenepnruugnpcetkfl7nmk7ih.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDy6b2Pu34YiCzbZ60onhgHnqZmL_VZFkY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1084666004751</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>io.creekmore.moves</string>
+	<key>PROJECT_ID</key>
+	<string>moves-df3fb</string>
+	<key>STORAGE_BUCKET</key>
+	<string>moves-df3fb.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1084666004751:ios:c37fb0dc9f31dcb423ea7a</string>
+	<key>DATABASE_URL</key>
+	<string>https://moves-df3fb.firebaseio.com</string>
+</dict>
+</plist>
