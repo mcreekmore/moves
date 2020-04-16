@@ -1,7 +1,9 @@
 import 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:moves/store/store.dart';
 import 'package:flutter/material.dart';
 import 'package:moves/screens/sign_in.dart';
+import 'dart:io';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
@@ -216,7 +218,34 @@ class _HomeDrawerState extends State<HomeDrawer> {
                         color: Colors.redAccent,
                       ),
                       onTap: () {
-                        setState(() {
+                        if(Platform.isIOS) {
+                          setState(() {
+                            showCupertinoDialog(
+                              context: context,
+                              builder: (_) => CupertinoAlertDialog(
+                                    title: Text('Sign Out'),
+                                    content:
+                                        Text('Would you like to sign out?'),
+                                    actions: <Widget>[
+                                      CupertinoDialogAction(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('No', style: TextStyle(color: Colors.redAccent))),
+                                      CupertinoDialogAction(
+                                          onPressed: () {
+                                            Provider.of<Store>(context,
+                                                    listen: false)
+                                                .signOutGoogle();
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('Yes', style: TextStyle(color: Colors.blueAccent),))
+                                    ],
+                                  ));
+                          });
+                        }
+                        else{
+                          setState(() {
                           showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
@@ -239,7 +268,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                           child: Text('Yes'))
                                     ],
                                   ));
-                        });
+                        });}
                       },
                     )
                   : ListTile(

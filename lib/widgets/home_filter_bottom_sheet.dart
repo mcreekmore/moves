@@ -213,21 +213,21 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                   },
                 ),
               ),
-              ListTile(
-                dense: true,
-                title: const Text('Retail'),
-                leading: Radio(
-                  value: LocationType.retail,
-                  groupValue: _typeFilter,
-                  onChanged: (LocationType value) {
-                    setState(() {
-                      //_typeFilter = value;
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
-                    });
-                  },
-                ),
-              ),
+              // ListTile(
+              //   dense: true,
+              //   title: const Text('Retail'),
+              //   leading: Radio(
+              //     value: LocationType.retail,
+              //     groupValue: _typeFilter,
+              //     onChanged: (LocationType value) {
+              //       setState(() {
+              //         //_typeFilter = value;
+              //         Provider.of<Store>(context, listen: false)
+              //             .changeTypeFilter(value);
+              //       });
+              //     },
+              //   ),
+              // ),
             ],
           ),
         ),

@@ -259,10 +259,10 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                           child: Text("Pharmacy"),
                           value: "Pharmacy",
                         ),
-                        FormBuilderFieldOption(
-                          child: Text("Retail"),
-                          value: "Retail",
-                        ),
+                        // FormBuilderFieldOption(
+                        //   child: Text("Retail"),
+                        //   value: "Retail",
+                        // ),
                       ],
                     ),
                     Container(

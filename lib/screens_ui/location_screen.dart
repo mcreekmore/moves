@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
 import 'package:moves/widgets/bottom_sheet.dart';
 import 'package:moves/theme_notifier.dart';
+import 'package:flutter/cupertino.dart';
 
 class LocationScreen extends StatefulWidget {
   LocationScreen({@required this.location});
@@ -82,6 +83,11 @@ class _LocationScreenState extends State<LocationScreen> {
                       builder: (BuildContext context) {
                         return BottomSheetWidget(location: widget.location);
                       });
+
+                      // Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //           builder: (context) => BottomSheetWidget(location: widget.location),),);
                 },
                 //backgroundColor: LocationTheme.nearlyBlue,
                 backgroundColor: Colors.blueAccent,

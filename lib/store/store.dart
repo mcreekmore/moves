@@ -47,7 +47,7 @@ class Store with ChangeNotifier {
     "Post Office",
     "Hospital",
     "Pharmacy",
-    "Retail"
+    //"Retail"
   ];
 
   List<String> filteredTypes = [];
