@@ -49,6 +49,9 @@ class _BarState extends State<Bar> {
     for (var special in specialsList) {
       specialsTextList.add(Text(special.toString()));
     }
+    if (specialsTextList == null) {
+      specialsTextList.add(Text('sup'));
+    }
 
     return specialsTextList;
   }
@@ -56,7 +59,6 @@ class _BarState extends State<Bar> {
   @override
   Widget build(BuildContext context) {
     dynamic barUpdate = widget.location.updateInfo["bar_update_info"];
-    //createSpecialsList();
 
     return Container(
       child: Column(
@@ -115,7 +117,7 @@ class _BarState extends State<Bar> {
             title: Text('Specials'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: _createSpecialsList(),
+              children: _createSpecialsList() ?? Text('None'),
             ),
           ),
           Divider(),

@@ -84,13 +84,13 @@ class _MusicVenueState extends State<MusicVenue> {
                             ["music_alcohol_percent_day"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["music_update_info"]["music_alcohol_percent"]}% reported Yes (Last Day)')
-                    : Text('No users reported in last dat'),
+                        '${widget.location.updateInfo["music_update_info"]["music_alcohol_percent_day"]}% reported Yes (Last Day)')
+                    : Text('No users reported in last day'),
                 widget.location.updateInfo["music_update_info"]
                             ["music_alcohol_percent"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["music_update_info"]["music_alcohol_percent_day"]}% reported Yes (All Time)')
+                        '${widget.location.updateInfo["music_update_info"]["music_alcohol_percent"]}% reported Yes (All Time)')
                     : Text('No users reported ever'),
               ],
             ),
@@ -109,13 +109,13 @@ class _MusicVenueState extends State<MusicVenue> {
                             ["music_18_percent_day"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["music_update_info"]["music_18_percent"]}% reported Yes (Last Day)')
-                    : Text('No users reported in last dat'),
+                        '${widget.location.updateInfo["music_update_info"]["music_18_percent_day"]}% reported Yes (Last Day)')
+                    : Text('No users reported in last day'),
                 widget.location.updateInfo["music_update_info"]
                             ["music_18_percent"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["music_update_info"]["music_18_percent_day"]}% reported Yes (All Time)')
+                        '${widget.location.updateInfo["music_update_info"]["music_18_percent"]}% reported Yes (All Time)')
                     : Text('No users reported ever'),
               ],
             ),
@@ -134,13 +134,13 @@ class _MusicVenueState extends State<MusicVenue> {
                             ["music_21_percent_day"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["music_update_info"]["music_21_percent"]}% reported Yes (Last Day)')
-                    : Text('No users reported in last dat'),
+                        '${widget.location.updateInfo["music_update_info"]["music_21_percent_day"]}% reported Yes (Last Day)')
+                    : Text('No users reported in last day'),
                 widget.location.updateInfo["music_update_info"]
                             ["music_21_percent"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["music_update_info"]["music_21_percent_day"]}% reported Yes (All Time)')
+                        '${widget.location.updateInfo["music_update_info"]["music_21_percent"]}% reported Yes (All Time)')
                     : Text('No users reported ever'),
               ],
             ),
@@ -159,13 +159,13 @@ class _MusicVenueState extends State<MusicVenue> {
                             ["music_atm_percent_day"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["music_update_info"]["music_atm_percent"]}% reported Yes (Last Day)')
-                    : Text('No users reported in last dat'),
+                        '${widget.location.updateInfo["music_update_info"]["music_atm_percent_day"]}% reported Yes (Last Day)')
+                    : Text('No users reported in last day'),
                 widget.location.updateInfo["music_update_info"]
                             ["music_atm_percent"] !=
                         null
                     ? Text(
-                        '${widget.location.updateInfo["music_update_info"]["music_atm_percent_day"]}% reported Yes (All Time)')
+                        '${widget.location.updateInfo["music_update_info"]["music_atm_percent"]}% reported Yes (All Time)')
                     : Text('No users reported ever'),
               ],
             ),

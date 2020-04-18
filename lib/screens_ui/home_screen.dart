@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moves/widgets/messaging.dart';
 import '../model/homelist.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
@@ -289,11 +290,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ? MapScreen(
                         kek: kek,
                       )
-                    : Container(
-                        child: Center(
-                          child: Text('Profile Coming Soon'),
-                        ),
-                      ),
+                    : MessagingWidget(),
+            // Container(
+            //     child: Center(
+            //       child: Text('Profile Coming Soon'),
+            //     ),
+            //   ),
           );
         }
       },

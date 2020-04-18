@@ -71,9 +71,12 @@ class _LocationScreenState extends State<LocationScreen> {
     var expandedHeight = 128.0;
 
     return Container(
-      color: Provider.of<ThemeNotifier>(context, listen: false).getTheme() == darkTheme ? Colors.black : Colors.white,
+      color: Provider.of<ThemeNotifier>(context, listen: false).getTheme() ==
+              darkTheme
+          ? Colors.black
+          : Colors.white,
       child: SafeArea(
-            child: Scaffold(
+        child: Scaffold(
           floatingActionButton: Builder(
             builder: (BuildContext context) {
               return FloatingActionButton(
@@ -84,10 +87,10 @@ class _LocationScreenState extends State<LocationScreen> {
                         return BottomSheetWidget(location: widget.location);
                       });
 
-                      // Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (context) => BottomSheetWidget(location: widget.location),),);
+                  // Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => BottomSheetWidget(location: widget.location),),);
                 },
                 //backgroundColor: LocationTheme.nearlyBlue,
                 backgroundColor: Colors.blueAccent,
@@ -153,7 +156,10 @@ class _LocationScreenState extends State<LocationScreen> {
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 16, right: 16, bottom: 8, top: 16),
+                                        left: 16,
+                                        right: 16,
+                                        bottom: 8,
+                                        top: 16),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -188,7 +194,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                                     'coming soon',
                                                     textAlign: TextAlign.left,
                                                     style: TextStyle(
-                                                      fontWeight: FontWeight.w200,
+                                                      fontWeight:
+                                                          FontWeight.w200,
                                                       fontSize: 12,
                                                       letterSpacing: 0.27,
                                                       color: LocationTheme.grey,
@@ -204,7 +211,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            right: 20, left: 20),
+                                                            right: 20,
+                                                            left: 20),
                                                     child: Text(
                                                       '${widget.location.distance} mi',
                                                       textAlign: TextAlign.left,
@@ -215,7 +223,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                                         letterSpacing: 0.27,
                                                         // color: LocationTheme
                                                         //     .nearlyBlue,
-                                                        color: Colors.blueAccent,
+                                                        color:
+                                                            Colors.blueAccent,
                                                       ),
                                                     ),
                                                   ),
@@ -242,7 +251,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                                     // splashColor: Colors.white
                                                     //     .withOpacity(0.3),
                                                     onPressed: () {
-                                                      openMap(widget.location.lat,
+                                                      openMap(
+                                                          widget.location.lat,
                                                           widget.location.lon);
                                                     },
                                                   ),
@@ -376,7 +386,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                       color: Colors.indigoAccent,
                                     ),
                                     title: Text('Description'),
-                                    subtitle: widget.location.description != null
+                                    subtitle: widget.location.description !=
+                                            null
                                         ? Text('${widget.location.description}')
                                         : Text('No description'),
                                   ),

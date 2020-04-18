@@ -62,7 +62,7 @@ class _HotelState extends State<Hotel> {
                         ["hotel_wifi_percent"] !=
                     null
                 ? Text(
-                    '${widget.location.updateInfo["hotel_update_info"]["hotel_wifi_percent"]}% reported Yes (Last Hour)')
+                    '${widget.location.updateInfo["hotel_update_info"]["hotel_wifi_percent"]}% reported Yes (All Time)')
                 : Text('No users reported ever'),
           ),
           Divider(),
@@ -76,7 +76,7 @@ class _HotelState extends State<Hotel> {
                         ["hotel_breakfast_percent"] !=
                     null
                 ? Text(
-                    '${widget.location.updateInfo["hotel_update_info"]["hotel_breakfast_percent"]}% reported Yes (Last Hour)')
+                    '${widget.location.updateInfo["hotel_update_info"]["hotel_breakfast_percent"]}% reported Yes (All Time)')
                 : Text('No users reported ever'),
           ),
           Divider(),
@@ -90,7 +90,7 @@ class _HotelState extends State<Hotel> {
                         ["hotel_pool_percent"] !=
                     null
                 ? Text(
-                    '${widget.location.updateInfo["hotel_update_info"]["hotel_pool_percent"]}% reported Yes (Last Hour)')
+                    '${widget.location.updateInfo["hotel_update_info"]["hotel_pool_percent"]}% reported Yes (All Time)')
                 : Text('No users reported ever'),
           ),
           Divider(),
@@ -104,7 +104,7 @@ class _HotelState extends State<Hotel> {
                         ["hotel_air_percent"] !=
                     null
                 ? Text(
-                    '${widget.location.updateInfo["hotel_update_info"]["hotel_air_percent"]}% reported Yes (Last Hour)')
+                    '${widget.location.updateInfo["hotel_update_info"]["hotel_air_percent"]}% reported Yes (All Time)')
                 : Text('No users reported ever'),
           ),
           Divider(),
@@ -118,7 +118,7 @@ class _HotelState extends State<Hotel> {
                         ["hotel_bar_percent"] !=
                     null
                 ? Text(
-                    '${widget.location.updateInfo["hotel_update_info"]["hotel_bar_percent"]}% reported Yes (Last Hour)')
+                    '${widget.location.updateInfo["hotel_update_info"]["hotel_bar_percent"]}% reported Yes (All Time)')
                 : Text('No users reported ever'),
           ),
           Divider(),
@@ -132,7 +132,7 @@ class _HotelState extends State<Hotel> {
                         ["hotel_pets_percent"] !=
                     null
                 ? Text(
-                    '${widget.location.updateInfo["hotel_update_info"]["hotel_pets_percent"]}% reported Yes (Last Hour)')
+                    '${widget.location.updateInfo["hotel_update_info"]["hotel_pets_percent"]}% reported Yes (All Time)')
                 : Text('No users reported ever'),
           ),
           Divider(),
@@ -146,7 +146,7 @@ class _HotelState extends State<Hotel> {
                         ["hotel_wellness_percent"] !=
                     null
                 ? Text(
-                    '${widget.location.updateInfo["hotel_update_info"]["hotel_wellness_percent"]}% reported Yes (Last Hour)')
+                    '${widget.location.updateInfo["hotel_update_info"]["hotel_wellness_percent"]}% reported Yes (All Time)')
                 : Text('No users reported ever'),
           ),
           Divider(),
