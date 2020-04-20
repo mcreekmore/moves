@@ -25,7 +25,9 @@ class _BarState extends State<Bar> {
 
     for (var styleType in stylesJSON) {
       if (double.parse(styleType["percent"]) != 0.0) {
-        styleType["percent"] = (double.parse(styleType["percent"])).toString();
+        styleType["percent"] = (double.parse(
+          styleType["percent"],
+        )).round().toString();
         stylesList.add(
           Text(
             '${styleType["percent"]}%: ${styleType["style"]}',
@@ -37,20 +39,20 @@ class _BarState extends State<Bar> {
   }
 
   List<Widget> _createSpecialsList() {
-    List<String> specialsList = widget.location.updateInfo["bar_update_info"]
-                ["bar_specials_list"] !=
-            null
-        ? List.from(
-            widget.location.updateInfo["bar_update_info"]["bar_specials_list"])
-        : null;
+    print("running");
+    List<dynamic> specialsList = widget.location.updateInfo["bar_update_info"]
+            ["bar_specials_list"] =
+        List.from(
+            widget.location.updateInfo["bar_update_info"]["bar_specials_list"]);
 
-    var specialsTextList = List<Widget>();
+    List<Widget> specialsTextList = List();
 
-    for (var special in specialsList) {
-      specialsTextList.add(Text(special.toString()));
-    }
-    if (specialsTextList == null) {
-      specialsTextList.add(Text('sup'));
+    if (specialsList.toString() == "[null]") {
+      specialsTextList.add(Text('No specials added (coming soon)'));
+    } else {
+      for (var special in specialsList) {
+        specialsTextList.add(Text(special.toString()));
+      }
     }
 
     return specialsTextList;
@@ -117,7 +119,7 @@ class _BarState extends State<Bar> {
             title: Text('Specials'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: _createSpecialsList() ?? Text('None'),
+              children: _createSpecialsList(),
             ),
           ),
           Divider(),

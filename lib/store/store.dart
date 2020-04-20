@@ -53,10 +53,10 @@ class Store with ChangeNotifier {
   List<String> filteredTypes = [];
 
   /* API */
-  static String api = 'creekmore.io'; // prod
-  static String htp = 'https://'; // prod
-  //static String htp = 'http://'; // dev
-  //static String api = '10.0.2.2:3000'; // dev
+  //static String api = 'creekmore.io'; // prod
+  //static String htp = 'https://'; // prod
+  static String htp = 'http://'; // dev
+  static String api = '10.0.2.2:3000'; // dev
 
   var uri = Uri.http(api, '/api');
 
