@@ -37,8 +37,8 @@ class BottomSheetWidget extends StatelessWidget {
 
       Dio dio = new Dio();
 
-      body = jsonEncode(body);
       print(body);
+      body = jsonEncode(body);
 
       await dio.post(url, data: body);
 
@@ -148,6 +148,8 @@ class BottomSheetWidget extends StatelessWidget {
                     initialValue: {
                       'date': DateTime.now().toIso8601String(),
                       'locationID': location.id.toString(),
+                      'user_id':
+                          Provider.of<Store>(context, listen: false).userID,
                     },
                     autovalidate: true,
                     child: Column(

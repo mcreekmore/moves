@@ -18,6 +18,8 @@ import 'package:moves/store/store.dart';
 import 'package:moves/widgets/bottom_sheet.dart';
 import 'package:moves/theme_notifier.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 
 class LocationScreen extends StatefulWidget {
   LocationScreen({@required this.location});
@@ -81,11 +83,61 @@ class _LocationScreenState extends State<LocationScreen> {
             builder: (BuildContext context) {
               return FloatingActionButton(
                 onPressed: () {
-                  showBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return BottomSheetWidget(location: widget.location);
+                  if (Provider.of<Store>(context, listen: false).userID !=
+                      null) {
+                    showBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return BottomSheetWidget(location: widget.location);
+                        });
+                  } else {
+                    if (Platform.isIOS) {
+                      setState(() {
+                        showCupertinoDialog(
+                          context: context,
+                          builder: (_) => CupertinoAlertDialog(
+                            title: Text('Not Signed In'),
+                            content: Text(
+                              'You must be signed in to use this feature',
+                            ),
+                            actions: <Widget>[
+                              CupertinoDialogAction(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  'Okay',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
                       });
+                    } else {
+                      setState(() {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: Text('Not Signed In'),
+                            content: Text(
+                              'You must be signed in to use this feature',
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Okay'),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                    }
+                  }
 
                   // Navigator.push(
                   //       context,

@@ -8,6 +8,8 @@ import 'package:moves/screens_ui/suggest_location_screen.dart';
 import 'package:moves/widgets/home_filter_bottom_sheet.dart';
 import 'package:moves/theme_notifier.dart';
 import 'package:moves/screens/map_screen.dart';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
@@ -109,12 +111,55 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       //color: AppTheme().getIconColor(),
                     ),
                     onPressed: () {
-                      Navigator.push<dynamic>(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) =>
-                                SuggestLocationScreen()),
-                      );
+                      if (Provider.of<Store>(context, listen: false).userID !=
+                          null) {
+                        Navigator.push<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                              builder: (BuildContext context) =>
+                                  SuggestLocationScreen()),
+                        );
+                      } else {
+                        if (Platform.isIOS) {
+                          setState(() {
+                            showCupertinoDialog(
+                                context: context,
+                                builder: (_) => CupertinoAlertDialog(
+                                      title: Text('Not Signed In'),
+                                      content: Text(
+                                          'You must be signed in to use this feature'),
+                                      actions: <Widget>[
+                                        CupertinoDialogAction(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text(
+                                              'Okay',
+                                              style: TextStyle(
+                                                  color: Colors.blueAccent),
+                                            ))
+                                      ],
+                                    ));
+                          });
+                        } else {
+                          setState(() {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                      title: Text('Not Signed In'),
+                                      content: Text(
+                                          'You must be signed in to use this feature'),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('Okay')),
+                                      ],
+                                    ));
+                          });
+                        }
+                      }
                     },
                     tooltip: 'Add New Location',
                   ),

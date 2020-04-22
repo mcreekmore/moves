@@ -185,6 +185,10 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                   const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32),
               child: FormBuilder(
                 key: _suggestKey,
+                initialValue: {
+                  'date': DateTime.now().toIso8601String(),
+                  'user_id': Provider.of<Store>(context, listen: false).userID,
+                },
                 autovalidate: true,
                 child: Column(
                   children: <Widget>[
@@ -360,45 +364,4 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
       ),
     );
   }
-
-  // Future makePostRequestOld() async {
-  //   Coordinates coordinates = await calcLatLon();
-  //   // String url = 'https://' +
-  //   //     Provider.of<Store>(context, listen: false).getApi() +
-  //   //     '/api/locations';
-
-  //   Dio dio = new Dio();
-
-  //   // var uri = Uri.http(Provider.of<Store>(context, listen: false).getApi(),
-  //   //         '/api/locations/')
-  //   //     .toString();
-
-  //   var url = Provider.of<Store>(context, listen: false).uri.toString() +
-  //       '/locations';
-
-  //   print(url);
-  //   //print(selectedTypeSetInt.toList());
-
-  //   await dio.post(url, data: {
-  //     'name': locationName,
-  //     'description': description,
-  //     'types': selectedTypes,
-  //     'country': country,
-  //     'region': region,
-  //     'city': city,
-  //     'street': street,
-  //     'zip': zip,
-  //     'lat': coordinates.latitude.toString(),
-  //     'lon': coordinates.longitude.toString(),
-  //     'email': email,
-  //     'phone': phone,
-  //     'website': website,
-  //   });
-
-  //   //print(response.statusMessage);
-  //   // if you want to print, add 'var response =' before the await
-  //   // print('Response status: ${response.statusCode}');
-  //   // print('Response body: ${response.body}');
-  //   // print(await http.read('https://creekmore.io/api/locations'));
-  // }
 }

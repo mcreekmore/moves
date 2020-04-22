@@ -13,6 +13,7 @@ class LocationLoadedModel {
   String email;
   String phone;
   String website;
+  String userID;
   double distance;
   double openPercent;
   //update info
@@ -36,5 +37,6 @@ class LocationLoadedModel {
     this.distance,
     this.openPercent,
     this.updateInfo,
+    this.userID,
   });
 }

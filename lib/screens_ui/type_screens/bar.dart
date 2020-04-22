@@ -39,7 +39,6 @@ class _BarState extends State<Bar> {
   }
 
   List<Widget> _createSpecialsList() {
-    print("running");
     List<dynamic> specialsList = widget.location.updateInfo["bar_update_info"]
             ["bar_specials_list"] =
         List.from(

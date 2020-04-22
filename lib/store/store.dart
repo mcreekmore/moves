@@ -56,7 +56,8 @@ class Store with ChangeNotifier {
   //static String api = 'creekmore.io'; // prod
   //static String htp = 'https://'; // prod
   static String htp = 'http://'; // dev
-  static String api = '10.0.2.2:3000'; // dev
+  //static String api = '10.0.2.2:3000'; // windows dev
+  static String api = 'localhost:3000'; // mac dev
 
   var uri = Uri.http(api, '/api');
 
@@ -69,6 +70,10 @@ class Store with ChangeNotifier {
 
   String getHttp() {
     return htp;
+  }
+
+  FirebaseAuth getAuth() {
+    return _auth;
   }
 
   /// MUTATORS
@@ -198,25 +203,25 @@ class Store with ChangeNotifier {
       for (var location in unparsedLocations) {
         double distance = calcDistance(location);
 
-        locations.add(
-          LocationLoadedModel(
-              id: location["_id"],
-              name: location["name"],
-              description: location["description"],
-              types: location["types"],
-              country: location["country"],
-              region: location["region"],
-              city: location["city"],
-              street: location["street"],
-              zip: location["zip"],
-              lat: location["lat"],
-              lon: location["lon"],
-              email: location["email"],
-              phone: location["phone"],
-              website: location["website"],
-              distance: distance.toDouble(),
-              updateInfo: location["update_info"]),
-        );
+        locations.add(LocationLoadedModel(
+          id: location["_id"],
+          name: location["name"],
+          description: location["description"],
+          types: location["types"],
+          country: location["country"],
+          region: location["region"],
+          city: location["city"],
+          street: location["street"],
+          zip: location["zip"],
+          lat: location["lat"],
+          lon: location["lon"],
+          email: location["email"],
+          phone: location["phone"],
+          website: location["website"],
+          distance: distance.toDouble(),
+          updateInfo: location["update_info"],
+          userID: location["user_id"],
+        ));
       }
 
       sortLocations(locations);
@@ -277,22 +282,6 @@ class Store with ChangeNotifier {
     filteredLocations = homeList;
   }
 
-  // void buildGoogleHomeList(locations) {
-  //   googleHomeList = [];
-  //   for (var location in locations) {
-  //     googleHomeList.add(
-  //       GoogleHomeList(
-  //         imagePath: 'assets/icons/bar.png',
-  //         navigateScreen: GoogleLocationScreen(
-  //           location: location,
-  //         ),
-  //         location: location,
-  //       ),
-  //     );
-  //   }
-  //   print(googleHomeList.length);
-  // }
-
   Future<String> signInWithEmail({String email, String password}) async {
     try {
       final AuthResult result = await _auth.signInWithEmailAndPassword(
@@ -310,7 +299,7 @@ class Store with ChangeNotifier {
   }
 
   Future<String> signInWithGoogle() async {
-    print(signedInUser);
+    //print(signedInUser);
     try {
       final GoogleSignInAccount googleSignInAccount =
           await googleSignIn.signIn();
@@ -333,12 +322,17 @@ class Store with ChangeNotifier {
       assert(user.uid == currentUser.uid);
 
       signedInUser = user;
+
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userID', user.uid);
       userID = user.uid;
       prefs.setString('userEmail', user.email);
       userEmail = user.email;
       notifyListeners();
+      await currentUser.getIdToken().then((IdTokenResult tokenResult) {
+        print(tokenResult.token);
+        prefs.setString('token', tokenResult.token);
+      });
 
       return 'signInWithGoogle succeeded: ${user.email}';
     } catch (e) {
