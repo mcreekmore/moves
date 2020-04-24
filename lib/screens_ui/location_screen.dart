@@ -92,17 +92,17 @@ class _LocationScreenState extends State<LocationScreen> {
     var expandedHeight = 128.0;
     final GlobalKey<State> _key = GlobalKey<State>();
 
-    void showSnackBar(context) {
-      SnackBar snackBar = SnackBar(
-        content: Row(
-          children: <Widget>[
-            Text('SUCCESS: ', style: TextStyle(color: Colors.greenAccent)),
-            Text('Report was sent'),
-          ],
-        ),
-      );
-      //Scaffold.of(_key.currentContext).showSnackBar(snackBar);
-    }
+    // void showSnackBar(context) {
+    //   SnackBar snackBar = SnackBar(
+    //     content: Row(
+    //       children: <Widget>[
+    //         Text('SUCCESS: ', style: TextStyle(color: Colors.greenAccent)),
+    //         Text('Report was sent'),
+    //       ],
+    //     ),
+    //   );
+    //   //Scaffold.of(_key.currentContext).showSnackBar(snackBar);
+    // }
 
     return Container(
       color: Provider.of<ThemeNotifier>(context, listen: false).getTheme() ==

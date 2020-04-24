@@ -492,7 +492,7 @@ class HomeListView extends StatelessWidget {
                         maxLines: 1,
                       ),
                       Text(
-                        '${listData.location.distance} mi',
+                        '${listData.location.distance.round()} mi',
                         // style: TextStyle(
                         //     color: Colors.black.withOpacity(.4), fontSize: 13),
                       ),
