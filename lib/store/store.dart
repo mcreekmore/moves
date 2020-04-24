@@ -56,8 +56,8 @@ class Store with ChangeNotifier {
   //static String api = 'creekmore.io'; // prod
   //static String htp = 'https://'; // prod
   static String htp = 'http://'; // dev
-  //static String api = '10.0.2.2:3000'; // windows dev
-  static String api = 'localhost:3000'; // mac dev
+  static String api = '10.0.2.2:3000'; // windows dev
+  //static String api = 'localhost:3000'; // mac dev
 
   var uri = Uri.http(api, '/api');
 

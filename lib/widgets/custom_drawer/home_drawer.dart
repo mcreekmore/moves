@@ -218,57 +218,63 @@ class _HomeDrawerState extends State<HomeDrawer> {
                         color: Colors.redAccent,
                       ),
                       onTap: () {
-                        if(Platform.isIOS) {
+                        if (Platform.isIOS) {
                           setState(() {
                             showCupertinoDialog(
-                              context: context,
-                              builder: (_) => CupertinoAlertDialog(
-                                    title: Text('Sign Out'),
-                                    content:
-                                        Text('Would you like to sign out?'),
-                                    actions: <Widget>[
-                                      CupertinoDialogAction(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('No', style: TextStyle(color: Colors.redAccent))),
-                                      CupertinoDialogAction(
-                                          onPressed: () {
-                                            Provider.of<Store>(context,
-                                                    listen: false)
-                                                .signOutGoogle();
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('Yes', style: TextStyle(color: Colors.blueAccent),))
-                                    ],
-                                  ));
+                                context: context,
+                                builder: (_) => CupertinoAlertDialog(
+                                      title: Text('Sign Out'),
+                                      content:
+                                          Text('Would you like to sign out?'),
+                                      actions: <Widget>[
+                                        CupertinoDialogAction(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('No',
+                                                style: TextStyle(
+                                                    color: Colors.redAccent))),
+                                        CupertinoDialogAction(
+                                            onPressed: () {
+                                              Provider.of<Store>(context,
+                                                      listen: false)
+                                                  .signOutGoogle();
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text(
+                                              'Yes',
+                                              style: TextStyle(
+                                                  color: Colors.blueAccent),
+                                            ))
+                                      ],
+                                    ));
+                          });
+                        } else {
+                          setState(() {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                      title: Text('Sign Out'),
+                                      content:
+                                          Text('Would you like to sign out?'),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('No')),
+                                        FlatButton(
+                                            onPressed: () {
+                                              Provider.of<Store>(context,
+                                                      listen: false)
+                                                  .signOutGoogle();
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('Yes'))
+                                      ],
+                                    ));
                           });
                         }
-                        else{
-                          setState(() {
-                          showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                    title: Text('Sign Out'),
-                                    content:
-                                        Text('Would you like to sign out?'),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('No')),
-                                      FlatButton(
-                                          onPressed: () {
-                                            Provider.of<Store>(context,
-                                                    listen: false)
-                                                .signOutGoogle();
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('Yes'))
-                                    ],
-                                  ));
-                        });}
                       },
                     )
                   : ListTile(

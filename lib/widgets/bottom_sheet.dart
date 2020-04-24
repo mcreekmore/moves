@@ -66,13 +66,6 @@ class BottomSheetWidget extends StatelessWidget {
 
           Scaffold.of(_fbKey.currentContext).showSnackBar(snackBar);
           _fbKey.currentState.reset();
-          // Alert(
-          //   context: context,
-          //   title: "Thank you!",
-          //   desc: "Your suggested place has been successfully sent.",
-          //   image: Image.asset("assets/images/good-job.png"),
-          // ).show();
-
         }
       } else if (index == 1) {
         // Reset
@@ -148,7 +141,7 @@ class BottomSheetWidget extends StatelessWidget {
                     initialValue: {
                       'date': DateTime.now().toIso8601String(),
                       'locationID': location.id.toString(),
-                      'user_id':
+                      'userID':
                           Provider.of<Store>(context, listen: false).userID,
                     },
                     autovalidate: true,

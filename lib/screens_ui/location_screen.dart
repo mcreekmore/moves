@@ -19,7 +19,9 @@ import 'package:moves/widgets/bottom_sheet.dart';
 import 'package:moves/theme_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart';
+import 'dart:convert';
+//import 'package:flutter/cupertino.dart';
 
 class LocationScreen extends StatefulWidget {
   LocationScreen({@required this.location});
@@ -68,9 +70,39 @@ class _LocationScreenState extends State<LocationScreen> {
     }
   }
 
+  Future reportLocation() async {
+    print('Reporting Location: ${widget.location.id}');
+
+    String url = Provider.of<Store>(context, listen: false).getHttp() +
+        Provider.of<Store>(context, listen: false).getApi() +
+        '/api/locations/report';
+
+    Dio dio = new Dio();
+
+    Object body = {"id": widget.location.id};
+
+    print(body);
+    body = jsonEncode(body);
+
+    await dio.post(url, data: body);
+  }
+
   @override
   Widget build(BuildContext context) {
     var expandedHeight = 128.0;
+    final GlobalKey<State> _key = GlobalKey<State>();
+
+    void showSnackBar(context) {
+      SnackBar snackBar = SnackBar(
+        content: Row(
+          children: <Widget>[
+            Text('SUCCESS: ', style: TextStyle(color: Colors.greenAccent)),
+            Text('Report was sent'),
+          ],
+        ),
+      );
+      //Scaffold.of(_key.currentContext).showSnackBar(snackBar);
+    }
 
     return Container(
       color: Provider.of<ThemeNotifier>(context, listen: false).getTheme() ==
@@ -86,10 +118,11 @@ class _LocationScreenState extends State<LocationScreen> {
                   if (Provider.of<Store>(context, listen: false).userID !=
                       null) {
                     showBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return BottomSheetWidget(location: widget.location);
-                        });
+                      context: context,
+                      builder: (BuildContext context) {
+                        return BottomSheetWidget(location: widget.location);
+                      },
+                    );
                   } else {
                     if (Platform.isIOS) {
                       setState(() {
@@ -485,6 +518,173 @@ class _LocationScreenState extends State<LocationScreen> {
                                         : Text('No Email Added'),
                                   ),
                                   Divider(),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Center(
+                                    child: Platform.isIOS
+                                        ? CupertinoButton(
+                                            key: _key,
+                                            color: Colors.redAccent,
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  showCupertinoDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        CupertinoAlertDialog(
+                                                      title: Text(
+                                                          'Report Location'),
+                                                      content: Text(
+                                                          'Are you sure you would like to report this location for innapropriate content?'),
+                                                      actions: <Widget>[
+                                                        CupertinoDialogAction(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: Text(
+                                                            'No',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .redAccent),
+                                                          ),
+                                                        ),
+                                                        CupertinoDialogAction(
+                                                          onPressed: () {
+                                                            reportLocation();
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                            setState(
+                                                              () {
+                                                                showCupertinoDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (_) =>
+                                                                      CupertinoAlertDialog(
+                                                                    title: Text(
+                                                                        'Successfully Reported'),
+                                                                    content: Text(
+                                                                        'This location has been reported for innapropriate content.'),
+                                                                    actions: <
+                                                                        Widget>[
+                                                                      CupertinoDialogAction(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.of(context)
+                                                                              .pop();
+                                                                        },
+                                                                        child:
+                                                                            Text(
+                                                                          'Okay',
+                                                                          style:
+                                                                              TextStyle(color: Colors.blueAccent),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              },
+                                                            );
+                                                          },
+                                                          child: Text(
+                                                            'Yes',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .blueAccent),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: Text('REPORT THIS LOCATION'))
+                                        : FlatButton(
+                                            color: Colors.redAccent,
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (_) => AlertDialog(
+                                                      title: Text(
+                                                          'Report Location'),
+                                                      content: Text(
+                                                          'Are you sure you would like to report this location for innapropriate content?'),
+                                                      actions: <Widget>[
+                                                        FlatButton(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: Text(
+                                                            'No',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .redAccent),
+                                                          ),
+                                                        ),
+                                                        FlatButton(
+                                                          onPressed: () {
+                                                            reportLocation();
+                                                            // showSnackBar(
+                                                            //     context);
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+
+                                                            setState(() {
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder: (_) =>
+                                                                    AlertDialog(
+                                                                  title: Text(
+                                                                      'Sucessfully Reported'),
+                                                                  content: Text(
+                                                                      'This location has been reported for innapropriate content.'),
+                                                                  actions: <
+                                                                      Widget>[
+                                                                    FlatButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.of(context)
+                                                                            .pop();
+                                                                      },
+                                                                      child:
+                                                                          Text(
+                                                                        'Okay',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.blueAccent),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            });
+                                                          },
+                                                          child: Text(
+                                                            'Yes',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .blueAccent),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child:
+                                                Text('REPORT THIS LOCATION')),
+                                  ),
                                   SizedBox(
                                     height: 75,
                                   ),

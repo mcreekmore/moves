@@ -187,7 +187,7 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                 key: _suggestKey,
                 initialValue: {
                   'date': DateTime.now().toIso8601String(),
-                  'user_id': Provider.of<Store>(context, listen: false).userID,
+                  'userID': Provider.of<Store>(context, listen: false).userID,
                 },
                 autovalidate: true,
                 child: Column(
