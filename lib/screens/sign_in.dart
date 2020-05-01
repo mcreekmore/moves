@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
+import 'package:moves/screens_ui/sign_in_email.dart';
 
 class SignInScreen extends StatelessWidget {
   @override
@@ -10,8 +11,12 @@ class SignInScreen extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: Scaffold(
+          appBar: AppBar(
+            title: Text('Sign In'),
+          ),
           //backgroundColor: AppTheme.nearlyWhite,
           body: Column(
+            //mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
@@ -29,7 +34,7 @@ class SignInScreen extends StatelessWidget {
                     left: 16,
                     right: 16),
                 child: CircleAvatar(
-                  radius: 150,
+                  radius: 100,
                   backgroundImage: AssetImage('assets/images/m.png'),
                 ),
               ),
@@ -57,7 +62,14 @@ class SignInScreen extends StatelessWidget {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push<dynamic>(
+                            context,
+                            MaterialPageRoute<dynamic>(
+                                builder: (BuildContext context) =>
+                                    SignInEmail()),
+                          );
+                        },
                         child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +83,7 @@ class SignInScreen extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
-                                  'Sign In With Moves',
+                                  'Sign In With Email',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white,
@@ -133,51 +145,6 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: Center(
-                  child: Container(
-                    width: 100,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(4.0)),
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.arrow_back,
-                                color: Colors.white,
-                                size: 22,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  'Back',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),

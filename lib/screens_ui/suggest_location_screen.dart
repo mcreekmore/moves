@@ -331,10 +331,10 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
                     ),
                     FormBuilderTextField(
                       attribute: "email",
-                      decoration: InputDecoration(labelText: "*Email"),
+                      decoration: InputDecoration(labelText: "Email"),
                       validators: [
                         FormBuilderValidators.maxLength(300),
-                        FormBuilderValidators.required(),
+                        //FormBuilderValidators.required(),
                         FormBuilderValidators.email(),
                       ],
                     ),

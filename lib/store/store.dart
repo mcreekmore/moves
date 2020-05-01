@@ -321,8 +321,8 @@ class Store with ChangeNotifier {
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.uid == currentUser.uid);
 
+      // setters
       signedInUser = user;
-
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userID', user.uid);
       userID = user.uid;
@@ -339,6 +339,21 @@ class Store with ChangeNotifier {
       print(e);
     }
     return 'error';
+  }
+
+  Future<void> signInEmail(FirebaseUser user) async {
+    // setters
+    signedInUser = user;
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('userID', user.uid);
+    userID = user.uid;
+    prefs.setString('userEmail', user.email);
+    userEmail = user.email;
+    notifyListeners();
+    await user.getIdToken().then((IdTokenResult tokenResult) {
+      print(tokenResult.token);
+      prefs.setString('token', tokenResult.token);
+    });
   }
 
   void signOutGoogle() async {
