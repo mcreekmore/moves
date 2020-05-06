@@ -134,8 +134,12 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
             myLocationEnabled: true,
             onMapCreated: _onMapCreated,
             initialCameraPosition: CameraPosition(
-              target: LatLng(Provider.of<Store>(context).usersLocation.latitude,
-                  Provider.of<Store>(context).usersLocation.longitude),
+              target: Provider.of<Store>(context).manualLocationSelected
+                  ? LatLng(
+                      Provider.of<Store>(context).usersManualLocation.latitude,
+                      Provider.of<Store>(context).usersManualLocation.longitude)
+                  : LatLng(Provider.of<Store>(context).usersLocation.latitude,
+                      Provider.of<Store>(context).usersLocation.longitude),
               zoom: 14.0,
             ),
             markers: Set<Marker>.of(markers.values),
