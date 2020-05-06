@@ -12,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:moves/model/google_home_list.dart';
 import 'package:moves/model/types_model.dart';
+//import 'package:permission_handler/permission_handler.dart';
+//fixes indefinite loading for ios (delayed access prompt) (NOPE)
 
 class Store with ChangeNotifier {
   Store() {
@@ -29,6 +31,8 @@ class Store with ChangeNotifier {
   List<GoogleHomeList> googleHomeList = [];
   List<LocationLoadedModel> locations = [];
   LatLng usersLocation = LatLng(0, 0);
+  LatLng usersManualLocation = LatLng(0, 0);
+  bool manualLocationSelected = false;
   String placesAPIKeyAndroid = 'AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ';
   final GoogleMapsPlaces places =
       GoogleMapsPlaces(apiKey: "AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ");
@@ -150,11 +154,21 @@ class Store with ChangeNotifier {
     typeFilter = type;
   }
 
+  void setUsersManualLocation(lat, lon) {
+    usersManualLocation.latitude = lat;
+    usersManualLocation.longitude = lon;
+  }
+
+  void toggleManualLocation() {
+    manualLocationSelected = !manualLocationSelected;
+    notifyListeners();
+  }
+
   /// METHODS
 
   Future initData() async {
     await getCurrentLocation();
-    await getGoogleLocationData();
+    //await getGoogleLocationData();
     await getData();
     await getUserPersistentData();
     filteredTypes = types;
@@ -171,11 +185,11 @@ class Store with ChangeNotifier {
     }
   }
 
-  Future<void> getGoogleLocationData() async {
-    PlacesSearchResponse response = await places.searchNearbyWithRadius(
-        Location(usersLocation.latitude, usersLocation.longitude), 1500);
-    googleLocationResults = response.results;
-  }
+  // Future<void> getGoogleLocationData() async {
+  //   PlacesSearchResponse response = await places.searchNearbyWithRadius(
+  //       Location(usersLocation.latitude, usersLocation.longitude), 1500);
+  //   googleLocationResults = response.results;
+  // }
 
   Future<dynamic> getUserFromSharedPref() async {
     final prefs = await SharedPreferences.getInstance();
@@ -184,11 +198,6 @@ class Store with ChangeNotifier {
       return null;
     }
     return signedInUserPref;
-  }
-
-  Future<void> signOutUserSharedPref() async {
-    //final prefs = await SharedPreferences.getInstance();
-    //await prefs.set
   }
 
   Future<List<LocationLoadedModel>> getData() async {
@@ -259,10 +268,15 @@ class Store with ChangeNotifier {
     LatLng locationCoord =
         LatLng(location["lat"].toDouble(), location["lon"].toDouble());
 
-    final double distanceCalced =
-        distance.as(LengthUnit.Kilometer, locationCoord, usersLocation);
-
-    return distanceCalced;
+    if (manualLocationSelected) {
+      final double distanceCalced =
+          distance.as(LengthUnit.Kilometer, locationCoord, usersManualLocation);
+      return distanceCalced;
+    } else {
+      final double distanceCalced =
+          distance.as(LengthUnit.Kilometer, locationCoord, usersLocation);
+      return distanceCalced;
+    }
   }
 
   void buildHomeList(locations) {

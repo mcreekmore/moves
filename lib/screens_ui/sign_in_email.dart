@@ -221,18 +221,18 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                 ),
               ],
             ),
-            // Container(
-            //   alignment: Alignment.center,
-            //   padding: const EdgeInsets.symmetric(horizontal: 16),
-            //   child: Text(
-            //     _success == null
-            //         ? ''
-            //         : (_success
-            //             ? 'Successfully signed in ' + _userEmail
-            //             : 'Sign in failed'),
-            //     style: TextStyle(color: Colors.red),
-            //   ),
-            // )
+            Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                _success == null
+                    ? ''
+                    : (_success
+                        ? 'Successfully signed in ' + _userEmail
+                        : 'Sign in failed'),
+                style: TextStyle(color: Colors.red),
+              ),
+            )
           ],
         ),
       ),
@@ -248,21 +248,26 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
 
   // sign in with email and password.
   void _signInWithEmailAndPassword() async {
-    final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text,
-    ))
-        .user;
-    if (user != null) {
-      await Provider.of<Store>(context, listen: false).signInEmail(user);
+    try {
+      final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      ))
+          .user;
+
+      if (user != null) {
+        await Provider.of<Store>(context, listen: false).signInEmail(user);
+        setState(() {
+          _success = true;
+          _userEmail = user.email;
+          Navigator.pop(context);
+          Navigator.pop(context);
+        });
+      }
+    } catch (e) {
       setState(() {
-        //_success = true;
-        //_userEmail = user.email;
-        Navigator.pop(context);
-        Navigator.pop(context);
+        _success = false;
       });
-    } else {
-      _success = false;
     }
   }
 }

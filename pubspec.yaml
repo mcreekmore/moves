@@ -36,6 +36,7 @@ dependencies:
   flutter_form_builder: ^3.7.3
   #charts_flutter: ^0.8.1
   intl: ^0.16.0
+  permission_handler: ^5.0.0+hotfix.4
 
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0
@@ -52,10 +53,6 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/design_course/
-    - assets/fitness_app/
-    - assets/hotel/
-    - assets/icons/
 
   fonts:
     - family: WorkSans

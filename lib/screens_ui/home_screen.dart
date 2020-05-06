@@ -8,6 +8,7 @@ import 'package:moves/screens_ui/suggest_location_screen.dart';
 import 'package:moves/widgets/home_filter_bottom_sheet.dart';
 import 'package:moves/theme_notifier.dart';
 import 'package:moves/screens/map_screen.dart';
+import 'package:moves/screens_ui/manual_location.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 
@@ -85,6 +86,32 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 child: Text('Moves'),
               ),
               actions: <Widget>[
+                // location
+                InkWell(
+                  borderRadius:
+                      BorderRadius.circular(AppBar().preferredSize.height),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.place,
+                    ),
+                    onPressed: () {
+                      Navigator.push<dynamic>(
+                        context,
+                        MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) =>
+                                ManualLocation()),
+                      ).then(
+                        (val) async {
+                          setState(() {
+                            Provider.of<Store>(context, listen: false)
+                                .getData();
+                          });
+                        },
+                      );
+                    },
+                    tooltip: 'Manually change location',
+                  ),
+                ),
                 // favorites
                 InkWell(
                   borderRadius:
@@ -161,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         }
                       }
                     },
-                    tooltip: 'Add New Location',
+                    tooltip: 'Add new location',
                   ),
                 ),
               ],
