@@ -31,6 +31,18 @@ class _FireMapState extends State<FireMap> {
   _onMapCreated(GoogleMapController controller) {
     setState(() {
       mapController = controller;
+      markers.add(Marker(
+        position: LatLng(
+            Provider.of<Store>(context, listen: false)
+                .usersManualLocation
+                .latitude,
+            Provider.of<Store>(context, listen: false)
+                .usersManualLocation
+                .longitude),
+        icon: BitmapDescriptor.defaultMarker,
+        infoWindow: InfoWindow(title: 'Your Location'),
+        markerId: MarkerId('kek'),
+      ));
     });
   }
 
@@ -55,6 +67,7 @@ class _FireMapState extends State<FireMap> {
     manualLocation = _lastMapPosition;
 
     setState(() {
+      markers.remove(markers.elementAt(0));
       markers.add(marker);
     });
   }
@@ -64,7 +77,7 @@ class _FireMapState extends State<FireMap> {
     if (index == 0) {
       // Submit
       Provider.of<Store>(context, listen: false).setUsersManualLocation(
-          manualLocation.latitude, manualLocation.longitude);
+          markers.first.position.latitude, markers.first.position.longitude);
       Navigator.pop(context);
     } else if (index == 1) {
       // Reset (close)
@@ -78,19 +91,6 @@ class _FireMapState extends State<FireMap> {
 
   @override
   Widget build(BuildContext context) {
-    marker = Marker(
-      position: LatLng(
-          Provider.of<Store>(context, listen: false)
-              .usersManualLocation
-              .latitude,
-          Provider.of<Store>(context, listen: false)
-              .usersManualLocation
-              .longitude),
-      icon: BitmapDescriptor.defaultMarker,
-      infoWindow: InfoWindow(title: 'Your Location'),
-      markerId: MarkerId('kek'),
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Choose a location'),
@@ -128,9 +128,9 @@ class _FireMapState extends State<FireMap> {
             //   title: Text('Reset'),
             // ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.close, color: Colors.redAccent),
+              icon: Icon(Icons.cancel, color: Colors.redAccent),
               title: Text(
-                'Close',
+                'Cancel',
                 style: TextStyle(color: Colors.redAccent),
               ),
             )
@@ -141,7 +141,13 @@ class _FireMapState extends State<FireMap> {
         children: <Widget>[
           GoogleMap(
             initialCameraPosition: CameraPosition(
-              target: LatLng(35.78, -78.64),
+              target: LatLng(
+                  Provider.of<Store>(context, listen: false)
+                      .usersManualLocation
+                      .latitude,
+                  Provider.of<Store>(context, listen: false)
+                      .usersManualLocation
+                      .longitude),
               zoom: 15,
             ),
             onMapCreated: _onMapCreated,

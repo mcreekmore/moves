@@ -154,13 +154,21 @@ class Store with ChangeNotifier {
     typeFilter = type;
   }
 
-  void setUsersManualLocation(lat, lon) {
+  void setUsersManualLocation(lat, lon) async {
     usersManualLocation.latitude = lat;
     usersManualLocation.longitude = lon;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setDouble('manualLat', lat);
+    prefs.setDouble('manualLon', lon);
   }
 
-  void toggleManualLocation() {
+  void toggleManualLocation() async {
     manualLocationSelected = !manualLocationSelected;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('manualLocSelected', manualLocationSelected);
+
     notifyListeners();
   }
 
@@ -169,8 +177,8 @@ class Store with ChangeNotifier {
   Future initData() async {
     await getCurrentLocation();
     //await getGoogleLocationData();
-    await getData();
     await getUserPersistentData();
+    await getData();
     filteredTypes = types;
   }
 
@@ -182,6 +190,15 @@ class Store with ChangeNotifier {
     } else {
       userID = null;
       userEmail = null;
+    }
+
+    if (prefs.containsKey('manualLocSelected')) {
+      manualLocationSelected = prefs.getBool('manualLocSelected');
+    }
+
+    if (prefs.containsKey('manualLat') && prefs.containsKey('manualLat')) {
+      usersManualLocation.latitude = prefs.getDouble('manualLat');
+      usersManualLocation.longitude = prefs.getDouble('manualLon');
     }
   }
 
