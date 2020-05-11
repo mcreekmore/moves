@@ -13,7 +13,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:location_permissions/location_permissions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
+import 'package:moves/screens_ui/profile_screen.dart';
 
 // coach
 import 'package:tutorial_coach_mark/animated_focus_light.dart';
@@ -434,7 +434,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         kek: kek,
                       )
                     // ? Container()
-                    : MessagingWidget(),
+                    : ProfileScreen(),
             // Container(
             //     child: Center(
             //       child: Text('Profile Coming Soon'),
@@ -571,7 +571,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   void showTutorial() {
     TutorialCoachMark(context,
         targets: targets,
-        colorShadow: Colors.blue[900],
+        colorShadow: Colors.deepPurpleAccent,
         textSkip: "SKIP",
         paddingFocus: 10,
         opacityShadow: 0.8, finish: () {

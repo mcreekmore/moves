@@ -54,7 +54,8 @@ class ThemeNotifier with ChangeNotifier {
       );
     } else {
       return SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
+        statusBarColor: Colors
+            .transparent, // set back to white if there are any problems with status bar
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness:
             Platform.isAndroid ? Brightness.dark : Brightness.light,
