@@ -200,6 +200,7 @@ class Store with ChangeNotifier {
       usersManualLocation.latitude = prefs.getDouble('manualLat');
       usersManualLocation.longitude = prefs.getDouble('manualLon');
     }
+    notifyListeners();
   }
 
   // Future<void> getGoogleLocationData() async {

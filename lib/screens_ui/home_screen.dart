@@ -12,10 +12,13 @@ import 'package:moves/screens_ui/manual_location.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:location_permissions/location_permissions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
 
 // coach
 import 'package:tutorial_coach_mark/animated_focus_light.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+import 'package:moves/screens/map_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
@@ -39,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     initTargets();
+    firstLaunch();
     // calls API for list of locations
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
@@ -58,8 +62,23 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   List<String> selectedCountList = [];
-  int bottomNavBarIndex = 0;
+
   bool visible = true;
+  int bottomNavBarIndex = 0;
+
+  // DONT TOUCH. this is a workaround for a delayed perimssion issue with iOS
+  void firstLaunch() async {
+    if (Platform.isIOS) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('firstLaunch')) {
+        prefs.setBool('firstLaunch', false);
+        setState(() {
+          bottomNavBarIndex = 1;
+          visible = false;
+        });
+      }
+    }
+  }
 
   void getPermission() async {
     PermissionStatus permission =
@@ -69,7 +88,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var kek = 1;
-
+    // if (Provider.of<Store>(context, listen: false).firstLaunch) {
+    //   bottomNavBarIndex = 1;
+    // }
     //getPermission();
     void selectedIndex(int index) async {
       if (index == 0) {
@@ -409,10 +430,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ],
                   )
                 : bottomNavBarIndex == 1
-                    // ? MapScreen(
-                    //     kek: kek,
-                    //   )
-                    ? Container()
+                    ? MapScreen(
+                        kek: kek,
+                      )
+                    // ? Container()
                     : MessagingWidget(),
             // Container(
             //     child: Center(
