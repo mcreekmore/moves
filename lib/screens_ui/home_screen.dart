@@ -13,6 +13,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:location_permissions/location_permissions.dart';
 
+// coach
+import 'package:tutorial_coach_mark/animated_focus_light.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
 
@@ -25,11 +29,20 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   bool multiple = false;
   bool favoriteSelected = false;
 
+  List<TargetFocus> targets = List();
+  GlobalKey keyButton = GlobalKey();
+  GlobalKey keyButton2 = GlobalKey();
+  GlobalKey keyButton3 = GlobalKey();
+  GlobalKey keyButton4 = GlobalKey();
+  GlobalKey keyButton5 = GlobalKey();
+
   @override
   void initState() {
+    initTargets();
     // calls API for list of locations
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
+
     super.initState();
   }
 
@@ -56,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var kek = 1;
+
     //getPermission();
     void selectedIndex(int index) async {
       if (index == 0) {
@@ -98,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   borderRadius:
                       BorderRadius.circular(AppBar().preferredSize.height),
                   child: IconButton(
+                    key: keyButton,
                     icon: Icon(
                       Icons.place,
                     ),
@@ -124,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   borderRadius:
                       BorderRadius.circular(AppBar().preferredSize.height),
                   child: IconButton(
+                    key: keyButton2,
                     icon: Icon(
                       favoriteSelected ? Icons.favorite : Icons.favorite_border,
                     ),
@@ -140,6 +156,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   borderRadius:
                       BorderRadius.circular(AppBar().preferredSize.height),
                   child: IconButton(
+                    key: keyButton3,
                     icon: Icon(
                       Icons.add_circle_outline,
                       //color: AppTheme().getIconColor(),
@@ -150,52 +167,77 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         Navigator.push<dynamic>(
                           context,
                           MaterialPageRoute<dynamic>(
-                              builder: (BuildContext context) =>
-                                  SuggestLocationScreen()),
+                            builder: (BuildContext context) =>
+                                SuggestLocationScreen(),
+                          ),
                         );
                       } else {
                         if (Platform.isIOS) {
-                          setState(() {
-                            showCupertinoDialog(
+                          setState(
+                            () {
+                              showCupertinoDialog(
                                 context: context,
                                 builder: (_) => CupertinoAlertDialog(
-                                      title: Text('Not Signed In'),
-                                      content: Text(
-                                          'You must be signed in to use this feature'),
-                                      actions: <Widget>[
-                                        CupertinoDialogAction(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text(
-                                              'Okay',
-                                              style: TextStyle(
-                                                  color: Colors.blueAccent),
-                                            ))
-                                      ],
-                                    ));
-                          });
+                                  title: Text('Not Signed In'),
+                                  content: Text(
+                                    'You must be signed in to use this feature',
+                                  ),
+                                  actions: <Widget>[
+                                    CupertinoDialogAction(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(
+                                        'Okay',
+                                        style:
+                                            TextStyle(color: Colors.blueAccent),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          );
                         } else {
-                          setState(() {
-                            showDialog(
+                          setState(
+                            () {
+                              showDialog(
                                 context: context,
                                 builder: (_) => AlertDialog(
-                                      title: Text('Not Signed In'),
-                                      content: Text(
-                                          'You must be signed in to use this feature'),
-                                      actions: <Widget>[
-                                        FlatButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text('Okay')),
-                                      ],
-                                    ));
-                          });
+                                  title: Text('Not Signed In'),
+                                  content: Text(
+                                    'You must be signed in to use this feature',
+                                  ),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Okay'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
                         }
                       }
                     },
                     tooltip: 'Add new location',
+                  ),
+                ),
+                // tutorial
+                InkWell(
+                  borderRadius:
+                      BorderRadius.circular(AppBar().preferredSize.height),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.help_outline,
+                    ),
+                    onPressed: () {
+                      showTutorial();
+                    },
+                    tooltip: 'Manually change location',
                   ),
                 ),
               ],
@@ -243,6 +285,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             floatingActionButton: Visibility(
               visible: visible,
               child: FloatingActionButton(
+                  key: keyButton4,
                   backgroundColor: Colors.blueAccent,
                   child: Icon(Icons.filter_list),
                   onPressed: () async {
@@ -381,6 +424,149 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       },
     );
     //);
+  }
+
+  void initTargets() {
+    targets.add(TargetFocus(
+      identify: "Target 1",
+      keyTarget: keyButton,
+      contents: [
+        ContentTarget(
+            align: AlignContent.bottom,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Manually set your own location",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Don't want to grant us access to your location? No problem! Set your location manually wherever you want.",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            ))
+      ],
+      shape: ShapeLightFocus.RRect,
+    ));
+    targets.add(TargetFocus(
+      identify: "Target 2",
+      keyTarget: keyButton2,
+      contents: [
+        ContentTarget(
+            align: AlignContent.bottom,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Favorited places",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Toggle between all locations and only your favorites (requires sign in)",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            ))
+      ],
+      shape: ShapeLightFocus.RRect,
+    ));
+    targets.add(TargetFocus(
+      identify: "Target 3",
+      keyTarget: keyButton3,
+      contents: [
+        ContentTarget(
+            align: AlignContent.bottom,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Suggest a new place",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Are we missing somewhere? Here is where you can suggest a new place to be added (requries sign in)",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            ))
+      ],
+      shape: ShapeLightFocus.RRect,
+    ));
+    targets.add(TargetFocus(
+      identify: "Target 4",
+      keyTarget: keyButton4,
+      contents: [
+        ContentTarget(
+            align: AlignContent.top,
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Text(
+                      "Filter places by type",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0),
+                    ),
+                  ),
+                ],
+              ),
+            ))
+      ],
+      shape: ShapeLightFocus.Circle,
+    ));
+  }
+
+  void showTutorial() {
+    TutorialCoachMark(context,
+        targets: targets,
+        colorShadow: Colors.blue[900],
+        textSkip: "SKIP",
+        paddingFocus: 10,
+        opacityShadow: 0.8, finish: () {
+      //print("finish");
+    }, clickTarget: (target) {
+      //print(target);
+    }, clickSkip: () {
+      //print("skip");
+    })
+      ..show();
+  }
+
+  void _afterLayout(_) {
+    Future.delayed(Duration(milliseconds: 100), () {
+      showTutorial();
+    });
   }
 }
 

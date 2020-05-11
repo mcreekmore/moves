@@ -38,6 +38,7 @@ dependencies:
   intl: ^0.16.0
   permission_handler: ^5.0.0+hotfix.4
   location_permissions: ^2.0.5
+  tutorial_coach_mark: ^0.3.0
 
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0
