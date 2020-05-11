@@ -1,7 +1,7 @@
 name: moves
 description: A new Flutter project.
 
-version: 1.0.0+1
+version: 0.1.0+1
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -37,6 +37,7 @@ dependencies:
   #charts_flutter: ^0.8.1
   intl: ^0.16.0
   permission_handler: ^5.0.0+hotfix.4
+  location_permissions: ^2.0.5
 
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0

@@ -74,7 +74,8 @@ final darkTheme = ThemeData(
   brightness: Brightness.dark,
   backgroundColor: Colors.black,
   accentColor: Color(0xFFFEFEFE),
-  accentIconTheme: IconThemeData(color: Colors.white),
+  floatingActionButtonTheme:
+      FloatingActionButtonThemeData(foregroundColor: Colors.white),
   dividerColor: Colors.grey[700],
   bottomAppBarColor: Colors.black,
   snackBarTheme: SnackBarThemeData(
@@ -92,7 +93,8 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   backgroundColor: Colors.white,
   accentColor: Colors.blueAccent,
-  accentIconTheme: IconThemeData(color: Colors.white),
+  floatingActionButtonTheme:
+      FloatingActionButtonThemeData(foregroundColor: Colors.white),
   dividerColor: Colors.grey,
   scaffoldBackgroundColor: Color(0xFFFEFEFE),
 );

@@ -4,10 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
 import 'package:moves/model/homelist.dart';
 
-import 'page.dart';
-
-class MapScreen extends Page {
-  MapScreen({this.kek}) : super(const Icon(Icons.place), 'Place marker');
+class MapScreen extends StatelessWidget {
+  MapScreen({this.kek}) : super();
 
   final kek;
 

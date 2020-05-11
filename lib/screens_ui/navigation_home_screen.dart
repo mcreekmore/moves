@@ -1,4 +1,4 @@
-import 'package:moves/screens/map_screen.dart';
+//import 'package:moves/screens/map_screen.dart';
 import '../widgets/custom_drawer/drawer_user_controller.dart';
 import '../widgets/custom_drawer/home_drawer.dart';
 import 'feedback_screen.dart';
@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
 import 'package:moves/screens_ui/settings_screen.dart';
+
 //import 'package:permission_handler/permission_handler.dart';
 
 // import 'package:moves/model/location_model.dart';
@@ -99,10 +100,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         setState(() {
           screenView = InviteFriend();
         });
-      } else if (drawerIndex == DrawerIndex.Map) {
-        setState(() {
-          screenView = MapScreen();
-        });
+        //}
+        // else if (drawerIndex == DrawerIndex.Map) {
+        //   setState(() {
+        //     screenView = MapScreen();
+        //   });
       } else if (drawerIndex == DrawerIndex.About) {
         setState(() {
           screenView = AboutMe();

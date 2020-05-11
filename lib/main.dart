@@ -15,6 +15,7 @@ void main() async {
     (_) {
       SharedPreferences.getInstance().then((prefs) {
         var darkModeOn = prefs.getBool('darkMode') ?? false;
+
         runApp(
           ChangeNotifierProvider<ThemeNotifier>(
             create: (_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
@@ -29,6 +30,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //getPermission(); // todo finish delayed location permission
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     SystemChrome.setSystemUIOverlayStyle(themeNotifier.getSystemOverlayStyle());
     return ChangeNotifierProvider<Store>(

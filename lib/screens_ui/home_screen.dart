@@ -7,10 +7,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:moves/screens_ui/suggest_location_screen.dart';
 import 'package:moves/widgets/home_filter_bottom_sheet.dart';
 import 'package:moves/theme_notifier.dart';
-import 'package:moves/screens/map_screen.dart';
+//import 'package:moves/screens/map_screen.dart';
 import 'package:moves/screens_ui/manual_location.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:location_permissions/location_permissions.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
@@ -47,9 +48,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   int bottomNavBarIndex = 0;
   bool visible = true;
 
+  void getPermission() async {
+    PermissionStatus permission =
+        await LocationPermissions().requestPermissions();
+  }
+
   @override
   Widget build(BuildContext context) {
     var kek = 1;
+    //getPermission();
     void selectedIndex(int index) async {
       if (index == 0) {
         setState(() {
@@ -359,9 +366,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ],
                   )
                 : bottomNavBarIndex == 1
-                    ? MapScreen(
-                        kek: kek,
-                      )
+                    // ? MapScreen(
+                    //     kek: kek,
+                    //   )
+                    ? Container()
                     : MessagingWidget(),
             // Container(
             //     child: Center(
