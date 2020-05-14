@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:moves/screens_ui/register_email.dart';
@@ -53,10 +52,10 @@ class SignInEmailState extends State<SignInEmail> {
     );
   }
 
-  // Example code for sign out.
-  void _signOut() async {
-    await _auth.signOut();
-  }
+  // // Example code for sign out.
+  // void _signOut() async {
+  //   await _auth.signOut();
+  // }
 }
 
 class _EmailPasswordForm extends StatefulWidget {

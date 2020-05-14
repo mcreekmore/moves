@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moves/widgets/messaging.dart';
+//import 'package:moves/widgets/messaging.dart';
 import '../model/homelist.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
@@ -11,9 +11,9 @@ import 'package:moves/theme_notifier.dart';
 import 'package:moves/screens_ui/manual_location.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:location_permissions/location_permissions.dart';
+//import 'package:location_permissions/location_permissions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:moves/screens_ui/profile_screen.dart';
+import 'package:moves/screens_ui/discover_screen.dart';
 
 // coach
 import 'package:tutorial_coach_mark/animated_focus_light.dart';
@@ -80,10 +80,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     }
   }
 
-  void getPermission() async {
-    PermissionStatus permission =
-        await LocationPermissions().requestPermissions();
-  }
+  // void getPermission() async {
+  //   PermissionStatus permission =
+  //       await LocationPermissions().requestPermissions();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -295,12 +295,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       icon: Icon(Icons.map),
                       title: Text('Map'),
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.person),
-                      title: Text(
-                        'Profile',
-                      ),
-                    )
+                    // BottomNavigationBarItem(
+                    //   icon: Icon(Icons.featured_play_list),
+                    //   title: Text(
+                    //     'Discover',
+                    //   ),
+                    // )
                   ]),
             ),
             floatingActionButton: Visibility(
@@ -434,7 +434,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         kek: kek,
                       )
                     // ? Container()
-                    : ProfileScreen(),
+                    : DiscoverScreen(),
             // Container(
             //     child: Center(
             //       child: Text('Profile Coming Soon'),
@@ -584,11 +584,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       ..show();
   }
 
-  void _afterLayout(_) {
-    Future.delayed(Duration(milliseconds: 100), () {
-      showTutorial();
-    });
-  }
+  // void _afterLayout(_) {
+  //   Future.delayed(Duration(milliseconds: 100), () {
+  //     showTutorial();
+  //   });
+  // }
 }
 
 class HomeListView extends StatelessWidget {

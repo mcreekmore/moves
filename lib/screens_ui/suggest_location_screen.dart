@@ -44,7 +44,6 @@ class _SuggestLocationScreenState extends State<SuggestLocationScreen> {
       String url = Provider.of<Store>(context, listen: false).getHttp() +
           Provider.of<Store>(context, listen: false).getApi() +
           '/api/locations';
-      //TODO http for dev and https for server
 
       Coordinates coordinates = await calcLatLon();
       print("coordinates: " + coordinates.toString());
