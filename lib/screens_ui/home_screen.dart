@@ -295,12 +295,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       icon: Icon(Icons.map),
                       title: Text('Map'),
                     ),
-                    // BottomNavigationBarItem(
-                    //   icon: Icon(Icons.featured_play_list),
-                    //   title: Text(
-                    //     'Discover',
-                    //   ),
-                    // )
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.code),
+                      title: Text(
+                        'Scan',
+                      ),
+                    )
                   ]),
             ),
             floatingActionButton: Visibility(

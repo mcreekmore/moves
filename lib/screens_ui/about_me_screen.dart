@@ -20,9 +20,7 @@ class _AboutMeState extends State<AboutMe> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top,
-                  left: 16,
-                  right: 16),
+                  top: MediaQuery.of(context).padding.top, left: 16, right: 16),
               child: CircleAvatar(
                 radius: 150,
                 backgroundImage: AssetImage('assets/images/matt.jpg'),
@@ -41,7 +39,7 @@ class _AboutMeState extends State<AboutMe> {
             Container(
               padding: const EdgeInsets.all(16),
               child: const Text(
-                "Thanks for using my App!\n\nMy name's Matt Creekmore. I'm an aspiring software developer and graduate from UNCW. \n\nOver my time as a student, I saw multiple mandatory evacuations and permanent loss of homes due to hurricanes. Infrastructure broke down and people were lost for food and water. \n\nThis is my project in hopes of serving the community.",
+                "Thanks for using my App!\n\nMy name's Matt Creekmore. I'm an aspiring software developer and graduate from UNCW. \n\nOver my time as a student, I saw permanent loss due to hurricanes. Infrastructure broke down and people were lost for food and water. \n\nNow during the COVID 19 pandemic, access to up-to-date information is as critical as ever.\n\nThis is my project in hopes of serving the community.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -56,8 +54,7 @@ class _AboutMeState extends State<AboutMe> {
                   height: 40,
                   decoration: BoxDecoration(
                     color: Colors.blue,
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(4.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                   ),
                   child: Material(
                     color: Colors.transparent,
