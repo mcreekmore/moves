@@ -33,10 +33,24 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>To allow location services to update automatically</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>To allow location services within the app</string>
+	<!--added-->
+	<key>NSContactsUsageDescription</key>
+	<string>Access to contacts</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Access to calendars</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access to Photo Library</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Access to Apple Music</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Access to Motion Usage</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Access to Speech Recognition</string>
+	<!--stopped-->
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
