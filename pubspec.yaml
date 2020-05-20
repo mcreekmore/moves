@@ -1,7 +1,7 @@
 name: moves
 description: A new Flutter project.
 
-version: 1.0.1+3
+version: 1.0.2+6
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -40,6 +40,7 @@ dependencies:
   location_permissions: ^2.0.5
   tutorial_coach_mark: ^0.3.0
   qr_flutter: ^3.2.0
+  apple_sign_in: ^0.1.0 # ios only
 
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0

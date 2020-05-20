@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:moves/store/store.dart';
 import 'package:moves/screens_ui/sign_in_email.dart';
+import 'dart:io';
 
 class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    void logInApple() async {
+      Provider.of<Store>(context, listen: false).signInApple();
+    }
+
     return Container(
       //color: AppTheme.nearlyWhite,
       child: SafeArea(
@@ -145,6 +150,59 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              Platform.isIOS
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: Center(
+                        child: Container(
+                          width: 210,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade900,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(4.0)),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () async {
+                                // Provider.of<Store>(context, listen: false)
+                                //     .signInWithGoogle()
+                                //     .whenComplete(() {
+                                //
+                                // });
+                                logInApple();
+                                Navigator.pop(context);
+                              },
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                      size: 22,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        'Sign In With Apple',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         ),

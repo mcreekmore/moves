@@ -12,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:moves/model/google_home_list.dart';
 import 'package:moves/model/types_model.dart';
+import 'package:apple_sign_in/apple_sign_in.dart';
+
 //import 'package:permission_handler/permission_handler.dart';
 //fixes indefinite loading for ios (delayed access prompt) (NOPE)
 
@@ -371,6 +373,52 @@ class Store with ChangeNotifier {
       print(e);
     }
     return 'error';
+  }
+
+  Future<void> signInApple() async {
+    final AuthorizationResult result = await AppleSignIn.performRequests([
+      AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+    ]);
+
+    switch (result.status) {
+      case AuthorizationStatus.authorized:
+        print("print: ${result.credential.user}");
+
+        final appleIdCredential = result.credential;
+        final oAuthProvider = OAuthProvider(providerId: 'apple.com');
+        final credential = oAuthProvider.getCredential(
+          idToken: String.fromCharCodes(appleIdCredential.identityToken),
+          accessToken:
+              String.fromCharCodes(appleIdCredential.authorizationCode),
+        );
+        final authResult = await _auth.signInWithCredential(credential);
+        final user = authResult.user;
+
+        // Store user ID
+        // await FlutterSecureStorage()
+        //     .write(key: "userId", value: result.credential.user);
+
+        // setters
+        signedInUser = user;
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('userID', user.uid);
+        userID = user.uid;
+        prefs.setString('userEmail', user.email);
+        userEmail = user.email;
+        notifyListeners();
+        await user.getIdToken().then((IdTokenResult tokenResult) {
+          print(tokenResult.token);
+          prefs.setString('token', tokenResult.token);
+        });
+        break;
+
+      case AuthorizationStatus.error:
+        print("Sign in failed: ${result.error.localizedDescription}");
+        // setState(() {
+        //   errorMessage = "Sign in failed";
+        // });
+        break;
+    }
   }
 
   Future<void> signInEmail(FirebaseUser user) async {
