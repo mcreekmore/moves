@@ -39,7 +39,7 @@ class _AboutMeState extends State<AboutMe> {
             Container(
               padding: const EdgeInsets.all(16),
               child: const Text(
-                "Thanks for using my App!\n\nMy name's Matt Creekmore. I'm an aspiring software developer and graduate from UNCW. \n\nOver my time as a student, I saw permanent loss due to hurricanes. Infrastructure broke down and people were lost for food and water. \n\nNow during the COVID 19 pandemic, access to up-to-date information is as critical as ever.\n\nThis is my project in hopes of serving the community.",
+                "Thanks for using my App!\n\nMy name's Matt Creekmore. I'm an aspiring software developer and graduate from UNCW. \n\nOver my time as a student, I saw permanent loss due to hurricanes. Infrastructure broke down and people were lost for food and water. \n\nNow during these uncertain times, access to up-to-date information is as critical as ever.\n\nThis is my project in hopes of serving the community.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
