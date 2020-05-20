@@ -1,8 +1,9 @@
 import 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:moves/store/store.dart';
-import '../../app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:moves/screens/sign_in.dart';
+import 'dart:io';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
@@ -36,29 +37,25 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Home',
         icon: Icon(Icons.home),
       ),
-      DrawerList(
-          index: DrawerIndex.Map,
-          labelName: 'Map',
-          //isAssetsImage: true,
-          //imageName: 'assets/images/supportIcon.png',
-          icon: Icon(Icons.map)),
-      DrawerList(
-        index: DrawerIndex.Suggest,
-        labelName: 'Suggest Location',
-        // isAssetsImage: true,
-        // imageName: 'assets/images/supportIcon.png',
-        icon: Icon(Icons.explore),
-      ),
+      // DrawerList(
+      //   index: DrawerIndex.Map,
+      //   labelName: 'Map',
+      //   //isAssetsImage: true,
+      //   //imageName: 'assets/images/supportIcon.png',
+      //   icon: Icon(Icons.map),
+      // ),
+
       DrawerList(
         index: DrawerIndex.FeedBack,
         labelName: 'FeedBack',
         icon: Icon(Icons.help),
       ),
-      DrawerList(
-        index: DrawerIndex.Invite,
-        labelName: 'Invite Friend',
-        icon: Icon(Icons.group),
-      ),
+      // DrawerList(
+      //   index: DrawerIndex.Invite,
+      //   labelName: 'Invite Friend',
+      //   icon: Icon(Icons.group),
+      // ),
+
       // DrawerList(
       //   index: DrawerIndex.Share,
       //   labelName: 'Rate the app',
@@ -69,15 +66,18 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'About',
         icon: Icon(Icons.info),
       ),
+      DrawerList(
+        index: DrawerIndex.Settings,
+        labelName: 'Settings',
+        icon: Icon(Icons.settings),
+      ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    bool signedIn = Provider.of<Store>(context).signedInUser != null;
+    bool signedIn = Provider.of<Store>(context).userID != null;
     return Scaffold(
-      //backgroundColor: AppTheme.notWhite.withOpacity(0.5),
-      backgroundColor: AppTheme().getDrawerColor(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -110,23 +110,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 child: Container(
                                   height: 120,
                                   width: 120,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: <BoxShadow>[
-                                      BoxShadow(
-                                          //color: AppTheme.grey.withOpacity(0.6),
-                                          color:
-                                              AppTheme().getDrawerIconShadow(),
-                                          offset: const Offset(2.0, 4.0),
-                                          blurRadius: 8),
-                                    ],
-                                  ),
                                   child: ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(60.0)),
-                                    child:
-                                        Image.asset('assets/images/matt.jpg'),
-                                  ),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(60.0)),
+                                      // child:
+                                      //     Image.asset('assets/images/matt.jpg'),
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 100,
+                                        color: Colors.blueAccent,
+                                      )),
                                 ),
                               ),
                             );
@@ -150,17 +143,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 child: Container(
                                   height: 120,
                                   width: 120,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: <BoxShadow>[
-                                      BoxShadow(
-                                          color: AppTheme.grey.withOpacity(0.2),
-                                          // color:
-                                          //     AppTheme().getDrawerIconShadow(),
-                                          offset: const Offset(2.0, 4.0),
-                                          blurRadius: 8),
-                                    ],
-                                  ),
                                   child: ClipRRect(
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(60.0)),
@@ -178,12 +160,10 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ? Padding(
                           padding: const EdgeInsets.only(top: 8, left: 4),
                           child: Text(
-                            '${Provider.of<Store>(context).signedInUser.displayName}',
+                            '${Provider.of<Store>(context).userEmail}',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              //color: AppTheme.grey,
-                              color: AppTheme().getDrawerTextColor(),
-                              fontSize: 18,
+                              fontSize: 14,
                             ),
                           ),
                         )
@@ -193,8 +173,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             'Sign In',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              //color: AppTheme.grey,
-                              color: AppTheme().getDrawerTextColor(),
                               fontSize: 18,
                             ),
                           ),
@@ -208,8 +186,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ),
           Divider(
             height: 1,
-            //color: AppTheme.grey.withOpacity(0.6),
-            color: AppTheme().getDrawerDividerColor(),
           ),
           Expanded(
             child: ListView.builder(
@@ -223,8 +199,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ),
           Divider(
             height: 1,
-            //color: AppTheme.grey.withOpacity(0.6),
-            color: AppTheme().getDrawerDividerColor(),
           ),
           Column(
             children: <Widget>[
@@ -233,40 +207,89 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       title: Text(
                         'Sign Out',
                         style: TextStyle(
-                          fontFamily: AppTheme.fontName,
+                          //fontFamily: AppTheme.fontName,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
-                          //color: AppTheme.darkText,
-                          color: AppTheme().getDrawerBodyTextColor(),
                         ),
                         textAlign: TextAlign.left,
                       ),
                       trailing: Icon(
                         Icons.power_settings_new,
-                        color: Colors.red,
+                        color: Colors.redAccent,
                       ),
                       onTap: () {
-                        setState(() {
-                          Provider.of<Store>(context, listen: false)
-                              .signOutGoogle();
-                        });
+                        if (Platform.isIOS) {
+                          setState(() {
+                            showCupertinoDialog(
+                                context: context,
+                                builder: (_) => CupertinoAlertDialog(
+                                      title: Text('Sign Out'),
+                                      content:
+                                          Text('Would you like to sign out?'),
+                                      actions: <Widget>[
+                                        CupertinoDialogAction(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('No',
+                                                style: TextStyle(
+                                                    color: Colors.redAccent))),
+                                        CupertinoDialogAction(
+                                            onPressed: () {
+                                              Provider.of<Store>(context,
+                                                      listen: false)
+                                                  .signOutGoogle();
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text(
+                                              'Yes',
+                                              style: TextStyle(
+                                                  color: Colors.blueAccent),
+                                            ))
+                                      ],
+                                    ));
+                          });
+                        } else {
+                          setState(() {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                      title: Text('Sign Out'),
+                                      content:
+                                          Text('Would you like to sign out?'),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('No')),
+                                        FlatButton(
+                                            onPressed: () {
+                                              Provider.of<Store>(context,
+                                                      listen: false)
+                                                  .signOutGoogle();
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('Yes'))
+                                      ],
+                                    ));
+                          });
+                        }
                       },
                     )
                   : ListTile(
                       title: Text(
                         'Sign In',
                         style: TextStyle(
-                          fontFamily: AppTheme.fontName,
+                          //fontFamily: AppTheme.fontName,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
-                          //color: AppTheme.darkText,
-                          color: AppTheme().getDrawerBodyTextColor(),
                         ),
                         textAlign: TextAlign.left,
                       ),
                       trailing: Icon(
                         Icons.power_settings_new,
-                        color: Colors.blue,
+                        color: Colors.blueAccent,
                       ),
                       onTap: () {
                         Navigator.push(
@@ -303,17 +326,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Container(
                     width: 6.0,
                     height: 46.0,
-                    // decoration: BoxDecoration(
-                    //   color: widget.screenIndex == listData.index
-                    //       ? Colors.blue
-                    //       : Colors.transparent,
-                    //   borderRadius: new BorderRadius.only(
-                    //     topLeft: Radius.circular(0),
-                    //     topRight: Radius.circular(16),
-                    //     bottomLeft: Radius.circular(0),
-                    //     bottomRight: Radius.circular(16),
-                    //   ),
-                    // ),
                   ),
                   const Padding(
                     padding: EdgeInsets.all(4.0),
@@ -322,17 +334,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ? Container(
                           width: 24,
                           height: 24,
-                          child: Image.asset(listData.imageName,
-                              color: widget.screenIndex == listData.index
-                                  //? Colors.blue
-                                  ? AppTheme().getDrawerListItemColor()
-                                  : AppTheme.nearlyBlack),
+                          child: Image.asset(
+                            listData.imageName,
+                          ),
                         )
-                      : Icon(listData.icon.icon,
-                          color: widget.screenIndex == listData.index
-                              //? Colors.blue
-                              ? AppTheme().getDrawerListItemColor()
-                              : AppTheme.nearlyBlack),
+                      : Icon(
+                          listData.icon.icon,
+                        ),
                   const Padding(
                     padding: EdgeInsets.all(4.0),
                   ),
@@ -341,10 +349,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
-                      color: widget.screenIndex == listData.index
-                          //? Colors.blue
-                          ? AppTheme().getDrawerListItemColor()
-                          : AppTheme.nearlyBlack,
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -370,7 +374,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 MediaQuery.of(context).size.width * 0.75 - 64,
                             height: 46,
                             decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.2),
+                              color: Colors.blueAccent.withOpacity(0.2),
                               borderRadius: new BorderRadius.only(
                                 topLeft: Radius.circular(0),
                                 topRight: Radius.circular(28),
@@ -402,9 +406,9 @@ enum DrawerIndex {
   Help,
   Share,
   About,
+  Settings,
   Invite,
   Testing,
-  Suggest,
 }
 
 class DrawerList {

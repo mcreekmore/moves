@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "1084666004751-qme5q31p0gvpdhepab3c14rubnmapikg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.creekmore.moves",
+            "certificate_hash": "dff1e0aea283576a825bd7a6f4a3dca5a8c28689"
+          }
+        },
+        {
+          "client_id": "1084666004751-o10ql2qaenepnruugnpcetkfl7nmk7ih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.creekmore.moves",
+            "certificate_hash": "f7d317ae9ba2244c410669aba0fa038627fcb378"
+          }
+        },
+        {
           "client_id": "1084666004751-eq43aopk9t51eto69cguddvms1h5jucj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -38,6 +54,13 @@
             {
               "client_id": "1084666004751-i9o7d0v28qhkqqmc5lt17nqavjju3ql2.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1084666004751-vpmrjn20qdamoah422ie0g5asnqmm8ba.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "uy2geq.ww"
+              }
             }
           ]
         }

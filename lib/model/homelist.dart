@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'location_loaded_model.dart';
 
-class HomeList {
-  HomeList({
+class HomeListItem {
+  HomeListItem({
     this.navigateScreen,
     this.imagePath = '',
     this.location,

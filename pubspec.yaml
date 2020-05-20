@@ -1,7 +1,7 @@
 name: moves
 description: A new Flutter project.
 
-version: 1.0.0+1
+version: 1.0.2+6
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -15,6 +15,7 @@ dependencies:
   firebase_analytics: ^5.0.10
   firebase_auth: ^0.15.4
   cloud_firestore: ^0.13.0+1
+  firebase_messaging: ^6.0.13
   google_sign_in: ^4.1.1
   google_maps_flutter: ^0.5.21+15
   #rxdart: ^0.23.1
@@ -22,7 +23,7 @@ dependencies:
   #bottom_navy_bar: ^5.3.2
   #search_map_place: ^0.1.1
   url_launcher: ^5.4.1
-  rflutter_alert: ^1.0.3
+  #rflutter_alert: ^1.0.3
   #flutter_bloc: ^0.20.0
   geocoder: ^0.2.1
   flutter_spinkit: "^4.1.1"
@@ -32,11 +33,18 @@ dependencies:
   google_maps_webservice: ^0.0.16
   flutter_google_places: ^0.2.3
   dio: ^3.0.8 # for post requests with arrays
+  flutter_form_builder: ^3.7.3
+  #charts_flutter: ^0.8.1
+  intl: ^0.16.0
+  permission_handler: ^5.0.0+hotfix.4
+  location_permissions: ^2.0.5
+  tutorial_coach_mark: ^0.3.0
+  qr_flutter: ^3.2.0
+  apple_sign_in: ^0.1.0 # ios only
 
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0
   smooth_star_rating: ^1.0.3
-  intl: ^0.16.0
 
   floating_search_bar: ^0.2.0
 
@@ -49,10 +57,6 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/design_course/
-    - assets/fitness_app/
-    - assets/hotel/
-    - assets/icons/
 
   fonts:
     - family: WorkSans

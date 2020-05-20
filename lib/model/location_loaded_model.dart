@@ -1,4 +1,5 @@
 class LocationLoadedModel {
+  String id;
   String name;
   String description;
   List<dynamic> types;
@@ -12,9 +13,14 @@ class LocationLoadedModel {
   String email;
   String phone;
   String website;
+  String userID;
   double distance;
+  double openPercent;
+  //update info
+  dynamic updateInfo;
 
   LocationLoadedModel({
+    this.id,
     this.name,
     this.description,
     this.types,
@@ -29,5 +35,8 @@ class LocationLoadedModel {
     this.phone,
     this.website,
     this.distance,
+    this.openPercent,
+    this.updateInfo,
+    this.userID,
   });
 }

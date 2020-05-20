@@ -1,6 +1,4 @@
-import 'package:moves/app_theme.dart';
-import 'package:moves/screens/map_screen.dart';
-import 'package:moves/screens_ui/suggest_location_screen.dart';
+//import 'package:moves/screens/map_screen.dart';
 import '../widgets/custom_drawer/drawer_user_controller.dart';
 import '../widgets/custom_drawer/home_drawer.dart';
 import 'feedback_screen.dart';
@@ -9,8 +7,12 @@ import 'home_screen.dart';
 import 'invite_friend_screen.dart';
 import 'about_me_screen.dart';
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:moves/store/store.dart';
+import 'package:provider/provider.dart';
+import 'package:moves/store/store.dart';
+import 'package:moves/screens_ui/settings_screen.dart';
+
+//import 'package:permission_handler/permission_handler.dart';
+
 // import 'package:moves/model/location_model.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
@@ -21,15 +23,25 @@ class NavigationHomeScreen extends StatefulWidget {
 class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget screenView;
   DrawerIndex drawerIndex;
+
   //AnimationController sliderAnimationController;
+
+  void getLoation() {}
 
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
     screenView = const MyHomePage();
+    //getPermission();
     super.initState();
     //getLocations();
   }
+
+  // Future<void> getPermission() async {
+  //   if (await Permission.location.request().isGranted) {
+  //     // Either the permission was already granted before or the user just granted it.
+  //   }
+  // }
 
   // void getLocations() async {
   //   List<LocationModel> locations =
@@ -39,13 +51,20 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey =
+        Provider.of<Store>(context).scaffoldKey;
+
+    // so that the location updates and gets called on launch
+    //Provider.of<Store>(context).getCurrentLocation();
+
     return Container(
-      color: AppTheme().getContainerColor(),
+      //color: AppTheme().getContainerColor(),
       child: SafeArea(
         top: false,
         bottom: false,
         child: Scaffold(
-          backgroundColor: AppTheme().getContainerColor(),
+          key: scaffoldKey,
+          // backgroundColor: AppTheme().getContainerColor(),
           body: DrawerUserController(
             screenIndex: drawerIndex,
             drawerWidth: MediaQuery.of(context).size.width * 0.75,
@@ -81,17 +100,18 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         setState(() {
           screenView = InviteFriend();
         });
-      } else if (drawerIndex == DrawerIndex.Map) {
-        setState(() {
-          screenView = MapScreen();
-        });
+        //}
+        // else if (drawerIndex == DrawerIndex.Map) {
+        //   setState(() {
+        //     screenView = MapScreen();
+        //   });
       } else if (drawerIndex == DrawerIndex.About) {
         setState(() {
           screenView = AboutMe();
         });
-      } else if (drawerIndex == DrawerIndex.Suggest) {
+      } else if (drawerIndex == DrawerIndex.Settings) {
         setState(() {
-          screenView = SuggestLocationScreen();
+          screenView = Settings();
         });
       } else {
         //do in your way......
