@@ -21,6 +21,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'dart:convert';
+import 'package:moves/model/favorite.dart';
 //import 'package:flutter/cupertino.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -36,6 +37,7 @@ class _LocationScreenState extends State<LocationScreen> {
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;
+  bool favoriteSelected = false;
   @override
   void initState() {
     setData();
@@ -58,6 +60,7 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   bool multiple = false;
+  //bool favoriteSelected = false;
 
   // GOOGLE MAPS URL LAUNCHING
   static Future<void> openMap(double latitude, double longitude) async {
@@ -89,8 +92,47 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    for (Favorite favorite in Provider.of<Store>(context).favorites) {
+      //print(favorite.getPlaceID());
+
+      if (favorite.getPlaceID() == widget.location.id) {
+        setState(() {
+          favoriteSelected = true;
+        });
+        break;
+      }
+      setState(() {
+        favoriteSelected = false;
+      });
+    }
+
+    //print(favoriteSelected);
     var expandedHeight = 128.0;
     final GlobalKey<State> _key = GlobalKey<State>();
+
+    void toggleFavorite() async {
+      if (!favoriteSelected) {
+        await Provider.of<Store>(context, listen: false)
+            .addToFavorites(
+              widget.location.id,
+            )
+            .then(
+              (value) => setState(() {
+                favoriteSelected = !favoriteSelected;
+              }),
+            );
+      } else {
+        Provider.of<Store>(context, listen: false)
+            .deleteFromFavorites(
+              widget.location.id,
+            )
+            .then(
+              (value) => setState(() {
+                favoriteSelected = !favoriteSelected;
+              }),
+            );
+      }
+    }
 
     // void showSnackBar(context) {
     //   SnackBar snackBar = SnackBar(
@@ -186,7 +228,7 @@ class _LocationScreenState extends State<LocationScreen> {
           body: RefreshIndicator(
             onRefresh: () async {
               setState(() {
-                Provider.of<Store>(context, listen: false).getData();
+                Provider.of<Store>(context, listen: false).getData(false);
               });
             },
             child: CustomScrollView(
@@ -218,10 +260,14 @@ class _LocationScreenState extends State<LocationScreen> {
                   ),
                   actions: <Widget>[
                     IconButton(
-                      icon: Icon(Icons.favorite_border),
+                      icon: favoriteSelected
+                          ? Icon(Icons.favorite)
+                          : Icon(Icons.favorite_border),
                       tooltip: 'Add to favorites',
                       //color: AppTheme.darkText,
-                      onPressed: () {/* ... */},
+                      onPressed: () {
+                        toggleFavorite();
+                      },
                     ),
                   ],
                 ),

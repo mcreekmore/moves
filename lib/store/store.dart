@@ -13,6 +13,10 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:moves/model/google_home_list.dart';
 import 'package:moves/model/types_model.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:moves/model/favorite.dart';
 
 //import 'package:permission_handler/permission_handler.dart';
 //fixes indefinite loading for ios (delayed access prompt) (NOPE)
@@ -41,6 +45,10 @@ class Store with ChangeNotifier {
   List<PlacesSearchResult> googleLocationResults;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   LocationType typeFilter = LocationType.all;
+  Database database;
+  List<Favorite> favorites = List();
+  String filterString = '';
+
   List<String> types = [
     "Restaurant",
     "Hotel",
@@ -177,11 +185,30 @@ class Store with ChangeNotifier {
   /// METHODS
 
   Future initData() async {
+    await initDb();
     await getCurrentLocation();
     //await getGoogleLocationData();
     await getUserPersistentData();
-    await getData();
+    await getData(false);
     filteredTypes = types;
+  }
+
+  Future<void> initDb() async {
+    // open the database
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = directory.path + "moves.db";
+
+    database = await openDatabase(path, version: 1,
+        onCreate: (Database db, int version) async {
+      // When creating the db, create the table
+      await db.execute(
+          'CREATE TABLE Favorites (id INTEGER PRIMARY KEY, placeID TEXT)');
+    });
+    // read from db
+    var response = await database.rawQuery('SELECT * FROM Favorites');
+    favorites = response.map((c) => Favorite.fromMap(c)).toList();
+
+    //print(favorites.toString());
   }
 
   Future<void> getUserPersistentData() async {
@@ -211,6 +238,39 @@ class Store with ChangeNotifier {
   //   googleLocationResults = response.results;
   // }
 
+  Future<void> addToFavorites(String id) async {
+    // Insert some records in a transaction
+    await database.transaction(
+      (txn) async {
+        int rowId = await txn.rawInsert(
+          'INSERT INTO Favorites(placeID) VALUES("$id")',
+        );
+        print('inserted: $rowId');
+      },
+    );
+    // read from db
+    var response = await database.rawQuery('SELECT * FROM Favorites');
+    favorites = response.map((c) => Favorite.fromMap(c)).toList();
+
+    //print(favorites[0].getPlaceID());
+  }
+
+  Future<void> deleteFromFavorites(String id) async {
+    // Delete a record
+    await database.rawDelete(
+      'DELETE FROM Favorites WHERE placeID = ?',
+      ['$id'],
+    );
+    print('Removed $id from Favorites');
+    //assert(count == 1);
+
+    // read from db
+    var response = await database.rawQuery('SELECT * FROM Favorites');
+    favorites = response.map((c) => Favorite.fromMap(c)).toList();
+
+    //print(favorites.toString());
+  }
+
   Future<dynamic> getUserFromSharedPref() async {
     final prefs = await SharedPreferences.getInstance();
     FirebaseUser signedInUserPref = prefs.get('signedInUserPref');
@@ -220,7 +280,7 @@ class Store with ChangeNotifier {
     return signedInUserPref;
   }
 
-  Future<List<LocationLoadedModel>> getData() async {
+  Future<List<LocationLoadedModel>> getData(bool favorite) async {
     http.Response response =
         await http.get(uri.toString() + '/locations/approved');
 
@@ -253,9 +313,26 @@ class Store with ChangeNotifier {
         ));
       }
 
+      // favorites filter
+      if (favorite) {
+        List<LocationLoadedModel> locationsFull = locations;
+        locations = List();
+        for (LocationLoadedModel location in locationsFull) {
+          for (Favorite favorite in favorites) {
+            if (favorite.getPlaceID() == location.id) {
+              locations.add(location);
+            }
+          }
+        }
+      }
+
       sortLocations(locations);
 
       buildHomeList(locations);
+
+      if (filterString != '') {
+        filterLocations(filterString);
+      }
 
       notifyListeners();
       return locations;

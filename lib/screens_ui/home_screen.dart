@@ -45,13 +45,19 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     firstLaunch();
     // calls API for list of locations
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 2000), vsync: this);
+        duration: const Duration(milliseconds: 650), vsync: this);
 
     super.initState();
   }
 
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 0));
+    return true;
+  }
+
+  Future<bool> getLocationData() async {
+    //await Future<dynamic>.delayed(const Duration(milliseconds: 0));
+    await Provider.of<Store>(context, listen: false).getData(favoriteSelected);
     return true;
   }
 
@@ -147,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         (val) async {
                           setState(() {
                             Provider.of<Store>(context, listen: false)
-                                .getData();
+                                .getData(favoriteSelected);
                           });
                         },
                       );
@@ -167,6 +173,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     onPressed: () {
                       setState(() {
                         favoriteSelected = !favoriteSelected;
+                        Provider.of<Store>(context, listen: false)
+                            .getData(favoriteSelected);
                       });
                     },
                     tooltip: 'Favorites',
@@ -310,7 +318,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   backgroundColor: Colors.blueAccent,
                   child: Icon(Icons.filter_list),
                   onPressed: () async {
-                    setState(() async {
+                    setState(() {
                       FocusScope.of(context).requestFocus(new FocusNode());
                       Navigator.push<dynamic>(
                         context,
@@ -340,6 +348,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                               hintText: 'Search'),
                           onChanged: (string) {
                             try {
+                              Provider.of<Store>(context, listen: false)
+                                  .filterString = string;
                               setState(() {
                                 Provider.of<Store>(context, listen: false)
                                     .filterLocations(string);
@@ -352,14 +362,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       ),
                       Expanded(
                         child: FutureBuilder<bool>(
-                          future: getData(),
+                          future: getLocationData(),
                           builder: (BuildContext context,
                               AsyncSnapshot<bool> snapshot) {
-                            if (!snapshot.hasData ||
-                                Provider.of<Store>(context)
-                                        .filteredLocations
-                                        .length ==
-                                    0) {
+                            //print(snapshot.hasData);
+                            if (!snapshot.hasData) {
                               return SpinKitDoubleBounce(
                                 color: Colors.blue,
                                 size: 30.0,
@@ -369,59 +376,76 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                 onRefresh: () async {
                                   setState(() {
                                     Provider.of<Store>(context, listen: false)
-                                        .getData();
+                                        .getData(favoriteSelected);
                                   });
                                 },
-                                child: ListView(
-                                  padding: const EdgeInsets.only(
-                                      top: 0, left: 12, right: 12),
-                                  scrollDirection: Axis.vertical,
-                                  children: List<Widget>.generate(
-                                    Provider.of<Store>(context)
-                                        .filteredLocations
-                                        .length,
-                                    (int index) {
-                                      final int count =
+                                child: Provider.of<Store>(context)
+                                            .filteredLocations
+                                            .length ==
+                                        0
+                                    ? Center(
+                                        child: favoriteSelected
+                                            ? Text('No favorites yet')
+                                            : Text(
+                                                'No results with those criteria'),
+                                      )
+                                    : ListView(
+                                        padding: const EdgeInsets.only(
+                                            top: 0, left: 12, right: 12),
+                                        scrollDirection: Axis.vertical,
+                                        children: List<Widget>.generate(
                                           Provider.of<Store>(context)
                                               .filteredLocations
-                                              .length;
-                                      final Animation<double> animation =
-                                          Tween<double>(begin: 0.0, end: 1.0)
-                                              .animate(
-                                        CurvedAnimation(
-                                          parent: animationController,
-                                          curve: Interval(
-                                              (1 / count) * index, 1.0,
-                                              curve: Curves.fastOutSlowIn),
-                                        ),
-                                      );
-                                      animationController.forward();
-                                      return HomeListView(
-                                        animation: animation,
-                                        animationController:
-                                            animationController,
-                                        listData: Provider.of<Store>(context)
-                                            .filteredLocations[index],
-                                        callBack: () {
-                                          setState(() {
-                                            FocusScope.of(context)
-                                                .requestFocus(new FocusNode());
-                                          });
-
-                                          Navigator.push<dynamic>(
-                                            context,
-                                            MaterialPageRoute<dynamic>(
-                                              builder: (BuildContext context) =>
+                                              .length,
+                                          (int index) {
+                                            final int count =
+                                                Provider.of<Store>(context)
+                                                    .filteredLocations
+                                                    .length;
+                                            final Animation<double> animation =
+                                                Tween<double>(
+                                                        begin: 0.0, end: 1.0)
+                                                    .animate(
+                                              CurvedAnimation(
+                                                parent: animationController,
+                                                curve: Interval(
+                                                    (1 / count) * index, 1.0,
+                                                    curve:
+                                                        Curves.fastOutSlowIn),
+                                              ),
+                                            );
+                                            animationController.forward();
+                                            return HomeListView(
+                                              animation: animation,
+                                              animationController:
+                                                  animationController,
+                                              listData:
                                                   Provider.of<Store>(context)
-                                                      .filteredLocations[index]
-                                                      .navigateScreen,
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
+                                                      .filteredLocations[index],
+                                              callBack: () {
+                                                setState(() {
+                                                  FocusScope.of(context)
+                                                      .requestFocus(
+                                                          new FocusNode());
+                                                });
+
+                                                Navigator.push<dynamic>(
+                                                  context,
+                                                  MaterialPageRoute<dynamic>(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        Provider.of<Store>(
+                                                                context)
+                                                            .filteredLocations[
+                                                                index]
+                                                            .navigateScreen,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
                               );
                             }
                           },
