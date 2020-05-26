@@ -322,24 +322,6 @@ class _LocationScreenState extends State<LocationScreen> {
                                             Container(
                                               child: Row(
                                                 children: <Widget>[
-                                                  Text(
-                                                    'coming soon',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w200,
-                                                      fontSize: 12,
-                                                      letterSpacing: 0.27,
-                                                      color: LocationTheme.grey,
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.star,
-                                                    //color: LocationTheme.nearlyBlue,
-                                                    color: Colors.blueAccent,
-
-                                                    size: 24,
-                                                  ),
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(

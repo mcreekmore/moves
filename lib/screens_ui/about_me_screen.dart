@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+// import 'package:provider/provider.dart';
+// import 'package:moves/theme_notifier.dart';
 
 class AboutMe extends StatefulWidget {
   @override
@@ -15,6 +17,11 @@ class _AboutMeState extends State<AboutMe> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor:
+      //     Provider.of<ThemeNotifier>(context, listen: false).getTheme() ==
+      //             darkTheme
+      //         ? Colors.black
+      //         : Color(0xFFB7E4C7),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

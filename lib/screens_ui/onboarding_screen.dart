@@ -72,13 +72,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     const bodyStyle = TextStyle(
       fontSize: 18.0,
     );
-    const pageDecoration = const PageDecoration(
-      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
-      bodyTextStyle: bodyStyle,
-      descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      pageColor: Colors.white,
-      imagePadding: EdgeInsets.zero,
-    );
+    // const pageDecoration = const PageDecoration(
+    //   titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+    //   bodyTextStyle: bodyStyle,
+    //   descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+    //   pageColor: Colors.white,
+    //   imagePadding: EdgeInsets.zero,
+    // );
 
     return IntroductionScreen(
       key: introKey,
@@ -110,8 +110,15 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               ),
             ],
           ),
-          image: _buildImage('pale-uploading'),
-          decoration: pageDecoration,
+          image: _buildImage('pale-fatal-error'),
+          decoration: PageDecoration(
+            titleTextStyle:
+                TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+            bodyTextStyle: bodyStyle,
+            descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+            pageColor: Color(0xFFD8F3DC),
+            imagePadding: EdgeInsets.zero,
+          ),
         ),
         PageViewModel(
           title: "Controlled by you",
@@ -139,8 +146,15 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               ],
             ),
           ),
-          image: _buildImage('pale-fatal-error'),
-          decoration: pageDecoration,
+          image: _buildImage('pale-uploading'),
+          decoration: PageDecoration(
+            titleTextStyle:
+                TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+            bodyTextStyle: bodyStyle,
+            descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+            pageColor: Color(0xFFB7E4C7),
+            imagePadding: EdgeInsets.zero,
+          ),
         ),
         PageViewModel(
           title: "Your Privacy",
@@ -165,14 +179,28 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             ),
           ),
           image: _buildImage('pale-list-is-empty'),
-          decoration: pageDecoration,
+          decoration: PageDecoration(
+            titleTextStyle:
+                TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+            bodyTextStyle: bodyStyle,
+            descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+            pageColor: Color(0xFF95D5B2),
+            imagePadding: EdgeInsets.zero,
+          ),
         ),
         PageViewModel(
           title: "Something inappropriate?",
           body:
               "Theres a big ol' REPORT button at the bottom of each location.\n\nReports are acted on as soon as possible to keep this app healthy and helpful.",
           image: _buildImage('pale-work-at-home'),
-          decoration: pageDecoration,
+          decoration: PageDecoration(
+            titleTextStyle:
+                TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+            bodyTextStyle: bodyStyle,
+            descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+            pageColor: Color(0xFFB7E4C7),
+            imagePadding: EdgeInsets.zero,
+          ),
         ),
         PageViewModel(
           title: "Finally... Save time!",
@@ -203,7 +231,14 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 style: TextStyle(color: Colors.blueAccent),
               ),
               onTap: () => launch('https://icons8.com')),
-          decoration: pageDecoration,
+          decoration: PageDecoration(
+            titleTextStyle:
+                TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+            bodyTextStyle: bodyStyle,
+            descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+            pageColor: Color(0xFFD8F3DC),
+            imagePadding: EdgeInsets.zero,
+          ),
         ),
       ],
       onDone: () => _onIntroEnd(context),
