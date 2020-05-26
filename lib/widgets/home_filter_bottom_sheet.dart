@@ -6,6 +6,10 @@ import 'package:moves/model/types_model.dart';
 import 'package:moves/theme_notifier.dart';
 
 class HomeFilterBottomSheet extends StatefulWidget {
+  HomeFilterBottomSheet({@required this.type});
+
+  LocationType type;
+
   @override
   _HomeFilterBottomSheetState createState() => _HomeFilterBottomSheetState();
 }
@@ -13,23 +17,23 @@ class HomeFilterBottomSheet extends StatefulWidget {
 class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
   //final GlobalKey<FormBuilderState> _fbFilterKey =
   //  GlobalKey<FormBuilderState>();
+  //LocationType _typeFilter = LocationType.all;
 
   @override
   Widget build(BuildContext context) {
-    LocationType _typeFilter = Provider.of<Store>(context).typeFilter;
+    //LocationType _typeFilter = Provider.of<Store>(context).typeFilter;
+
+    //final LocationType _initialValue = Provider.of<Store>(context).typeFilter;
     // List<String> initialValues =
     //     Provider.of<Store>(context, listen: false).filteredTypes;
     void selectedIndex(int index) async {
       if (index == 0) {
-        // Submit
+        // Apply
+        Provider.of<Store>(context, listen: false).filterTypes(widget.type);
+        Navigator.pop(context);
+      }
 
-        Provider.of<Store>(context, listen: false).filterTypes(_typeFilter);
-        Navigator.pop(context, () {
-          setState(() {
-            //Provider.of<Store>(context, listen: false).filterTypes(_typeFilter);
-          });
-        });
-      } else if (index == 1) {
+      if (index == 1) {
         // Cancel
         Navigator.pop(context);
       }
@@ -55,11 +59,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('All'),
                 leading: Radio(
                   value: LocationType.all,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
+                      widget.type = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
                     });
                   },
                 ),
@@ -69,11 +74,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('Bank'),
                 leading: Radio(
                   value: LocationType.bank,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
+                      widget.type = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
                     });
                   },
                 ),
@@ -83,12 +89,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('Bar'),
                 leading: Radio(
                   value: LocationType.bar,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      //_typeFilter = value;
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
+                      widget.type = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
                     });
                   },
                 ),
@@ -98,12 +104,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('Cafe'),
                 leading: Radio(
                   value: LocationType.cafe,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      //_typeFilter = value;
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
+                      widget.type = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
                     });
                   },
                 ),
@@ -113,12 +119,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('Gas Station'),
                 leading: Radio(
                   value: LocationType.gas_station,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      //_typeFilter = value;
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
+                      widget.type = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
                     });
                   },
                 ),
@@ -128,12 +134,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('Grocery'),
                 leading: Radio(
                   value: LocationType.grocery,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
-                      //_typeFilter = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
+                      widget.type = value;
                     });
                   },
                 ),
@@ -143,12 +149,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('Hotel'),
                 leading: Radio(
                   value: LocationType.hotel,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      //_typeFilter = value;
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
+                      widget.type = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
                     });
                   },
                 ),
@@ -158,12 +164,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('Music Venue'),
                 leading: Radio(
                   value: LocationType.music_venue,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      //_typeFilter = value;
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
+                      widget.type = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
                     });
                   },
                 ),
@@ -173,12 +179,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('Pharmacy'),
                 leading: Radio(
                   value: LocationType.pharmacy,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      //_typeFilter = value;
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
+                      widget.type = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
                     });
                   },
                 ),
@@ -188,12 +194,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('Post Office'),
                 leading: Radio(
                   value: LocationType.post_office,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      //_typeFilter = value;
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
+                      widget.type = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
                     });
                   },
                 ),
@@ -203,12 +209,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 title: const Text('Restaurant'),
                 leading: Radio(
                   value: LocationType.restaurant,
-                  groupValue: _typeFilter,
+                  groupValue: widget.type,
                   onChanged: (LocationType value) {
                     setState(() {
-                      //_typeFilter = value;
-                      Provider.of<Store>(context, listen: false)
-                          .changeTypeFilter(value);
+                      widget.type = value;
+                      // Provider.of<Store>(context, listen: false)
+                      //     .changeTypeFilter(value);
                     });
                   },
                 ),
@@ -218,10 +224,10 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
               //   title: const Text('Retail'),
               //   leading: Radio(
               //     value: LocationType.retail,
-              //     groupValue: _typeFilter,
+              //     groupValue: widget.type,
               //     onChanged: (LocationType value) {
               //       setState(() {
-              //         //_typeFilter = value;
+              //         //widget.type = value;
               //         Provider.of<Store>(context, listen: false)
               //             .changeTypeFilter(value);
               //       });
@@ -254,7 +260,7 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                 color: Colors.blueAccent,
               ),
               title: Text(
-                "Accept",
+                "Apply",
                 style: TextStyle(color: Colors.blueAccent),
               ),
             ),

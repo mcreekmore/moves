@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:url_launcher/url_launcher.dart';
+import 'package:email_launcher/email_launcher.dart';
 
 class FeedbackScreen extends StatefulWidget {
   @override
@@ -11,6 +12,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   void initState() {
     super.initState();
   }
+
+  Email email = Email(
+      to: ['matthewacreekmore@gmail.com'], subject: 'Moves Feedback', body: '');
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +66,11 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: () => launch(
-                            'mailto:matthewacreekmore@gmail.com?subject=Moves Feedback&body='),
+                        // onTap: () => launch(
+                        //     'mailto:matthewacreekmore@gmail.com?subject=Moves Feedback&body='),
+                        onTap: () async {
+                          await EmailLauncher.launch(email);
+                        },
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),

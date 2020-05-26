@@ -323,8 +323,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       Navigator.push<dynamic>(
                         context,
                         MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) =>
-                                HomeFilterBottomSheet()),
+                          builder: (BuildContext context) =>
+                              HomeFilterBottomSheet(
+                                  type: Provider.of<Store>(context).typeFilter),
+                        ),
                       );
                     });
                     if (bottomNavBarIndex == 1) {

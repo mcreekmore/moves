@@ -93,7 +93,7 @@ class Store with ChangeNotifier {
   /// MUTATORS
 
   void filterLocations(string) {
-    filteredLocations = homeList
+    filteredLocations = filteredLocations
         .where(
             (i) => i.location.name.toLowerCase().contains(string.toLowerCase()))
         .toList();
@@ -103,6 +103,7 @@ class Store with ChangeNotifier {
   }
 
   void filterTypes(LocationType type) {
+    typeFilter = type;
     filteredLocations = homeList;
     if (type == LocationType.restaurant) {
       filteredLocations = filteredLocations
@@ -152,7 +153,7 @@ class Store with ChangeNotifier {
       filteredLocations = homeList;
     }
 
-    notifyListeners();
+    //notifyListeners();
   }
 
   void resetFilterTypes() {
@@ -334,6 +335,10 @@ class Store with ChangeNotifier {
 
       buildHomeList(locations);
 
+      if (typeFilter != LocationType.all) {
+        filterTypes(typeFilter);
+      }
+
       if (filterString != '') {
         filterLocations(filterString);
       }
@@ -498,6 +503,10 @@ class Store with ChangeNotifier {
         // setState(() {
         //   errorMessage = "Sign in failed";
         // });
+        break;
+
+      default:
+        print('Sign in failed: Most likely canceled (default switch)');
         break;
     }
   }
