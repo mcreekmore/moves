@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     firstLaunch();
     // calls API for list of locations
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 650), vsync: this);
+        duration: const Duration(milliseconds: 1200), vsync: this);
 
     super.initState();
   }

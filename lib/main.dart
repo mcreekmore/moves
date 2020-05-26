@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moves/screens_ui/navigation_home_screen.dart';
+import 'package:moves/screens_ui/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 import 'store/store.dart';
 import 'theme_notifier.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         //   textTheme: AppTheme().getTextTheme(),
         //   //platform: TargetPlatform.iOS,
         // ),
-        home: NavigationHomeScreen(),
+        home: Splash(),
       ),
     );
   }
