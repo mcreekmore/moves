@@ -34,6 +34,7 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  static LocationLoadedModel location = location;
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;

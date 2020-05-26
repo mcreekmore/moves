@@ -240,17 +240,20 @@ class Store with ChangeNotifier {
 
   Future<void> addToFavorites(String id) async {
     // Insert some records in a transaction
+    int rowId;
     await database.transaction(
       (txn) async {
-        int rowId = await txn.rawInsert(
+        rowId = await txn.rawInsert(
           'INSERT INTO Favorites(placeID) VALUES("$id")',
         );
         print('inserted: $rowId');
       },
     );
     // read from db
-    var response = await database.rawQuery('SELECT * FROM Favorites');
-    favorites = response.map((c) => Favorite.fromMap(c)).toList();
+    // var response = await database.rawQuery('SELECT * FROM Favorites');
+    // favorites = response.map((c) => Favorite.fromMap(c)).toList();
+    Favorite newFavorite = Favorite(id: rowId, placeID: id);
+    favorites.add(newFavorite);
 
     //print(favorites[0].getPlaceID());
   }
@@ -265,8 +268,9 @@ class Store with ChangeNotifier {
     //assert(count == 1);
 
     // read from db
-    var response = await database.rawQuery('SELECT * FROM Favorites');
-    favorites = response.map((c) => Favorite.fromMap(c)).toList();
+    // var response = await database.rawQuery('SELECT * FROM Favorites');
+    // favorites = response.map((c) => Favorite.fromMap(c)).toList();
+    favorites.removeWhere((element) => element.placeID.toString() == id);
 
     //print(favorites.toString());
   }
@@ -334,7 +338,7 @@ class Store with ChangeNotifier {
         filterLocations(filterString);
       }
 
-      notifyListeners();
+      //notifyListeners();
       return locations;
     } else {
       print(response.statusCode);
