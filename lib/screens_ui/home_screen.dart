@@ -460,7 +460,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         kek: kek,
                       )
                     // ? Container()
-                    : DiscoverScreen(),
+                    : QRScreen(),
             // Container(
             //     child: Center(
             //       child: Text('Profile Coming Soon'),

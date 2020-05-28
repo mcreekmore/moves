@@ -4,6 +4,7 @@ import 'package:moves/theme_notifier.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:moves/widgets/messaging.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -26,38 +27,41 @@ class _SettingsState extends State<Settings> {
           children: <Widget>[
             ListTile(
               title: Text('Dark Theme'),
-              trailing: Platform.isIOS ? CupertinoSwitch(
-                value: themeNotifier.getThemeBool(),
-                onChanged: (val) {
-                  if (val) {
-                    themeNotifier.setTheme(darkTheme);
-                  } else {
-                    themeNotifier.setTheme(lightTheme);
-                  }
-                  setState(() {
-                    themeNotifier.toggleTheme(val);
-                    SystemChrome.setSystemUIOverlayStyle(
-                      themeNotifier.getSystemOverlayStyle(),
-                    );
-                  });
-                },
-              ) :Switch(
-                value: themeNotifier.getThemeBool(),
-                onChanged: (val) {
-                  if (val) {
-                    themeNotifier.setTheme(darkTheme);
-                  } else {
-                    themeNotifier.setTheme(lightTheme);
-                  }
-                  setState(() {
-                    themeNotifier.toggleTheme(val);
-                    SystemChrome.setSystemUIOverlayStyle(
-                      themeNotifier.getSystemOverlayStyle(),
-                    );
-                  });
-                },
-              ),
+              trailing: Platform.isIOS
+                  ? CupertinoSwitch(
+                      value: themeNotifier.getThemeBool(),
+                      onChanged: (val) {
+                        if (val) {
+                          themeNotifier.setTheme(darkTheme);
+                        } else {
+                          themeNotifier.setTheme(lightTheme);
+                        }
+                        setState(() {
+                          themeNotifier.toggleTheme(val);
+                          SystemChrome.setSystemUIOverlayStyle(
+                            themeNotifier.getSystemOverlayStyle(),
+                          );
+                        });
+                      },
+                    )
+                  : Switch(
+                      value: themeNotifier.getThemeBool(),
+                      onChanged: (val) {
+                        if (val) {
+                          themeNotifier.setTheme(darkTheme);
+                        } else {
+                          themeNotifier.setTheme(lightTheme);
+                        }
+                        setState(() {
+                          themeNotifier.toggleTheme(val);
+                          SystemChrome.setSystemUIOverlayStyle(
+                            themeNotifier.getSystemOverlayStyle(),
+                          );
+                        });
+                      },
+                    ),
             ),
+            MessagingWidget(),
           ],
         ),
       ),

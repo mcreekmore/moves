@@ -11,9 +11,16 @@ class _MessagingWidgetState extends State<MessagingWidget> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final List<Message> messages = [];
 
+  _getToken() {
+    _firebaseMessaging.getToken().then((deviceToken) {
+      print(deviceToken);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    _getToken();
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
@@ -46,6 +53,8 @@ class _MessagingWidgetState extends State<MessagingWidget> {
 
   @override
   Widget build(BuildContext context) => ListView(
+    scrollDirection: Axis.vertical,
+    shrinkWrap: true,
         children: messages.map(buildMessage).toList(),
       );
 
