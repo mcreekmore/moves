@@ -218,9 +218,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 //     child: Icon(Icons.location_on),
                 //   ),
                 // ),
-                TextSpan(
-                    text:
-                        ' at the top right and manually set where you want Moves to find places near.'),
               ],
             ),
           ),
