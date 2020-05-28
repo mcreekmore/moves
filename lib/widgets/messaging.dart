@@ -53,8 +53,8 @@ class _MessagingWidgetState extends State<MessagingWidget> {
 
   @override
   Widget build(BuildContext context) => ListView(
-    scrollDirection: Axis.vertical,
-    shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
         children: messages.map(buildMessage).toList(),
       );
 
