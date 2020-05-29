@@ -17,6 +17,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:moves/model/favorite.dart';
+import 'package:location/location.dart' as locat;
 
 //import 'package:permission_handler/permission_handler.dart';
 //fixes indefinite loading for ios (delayed access prompt) (NOPE)
@@ -357,18 +358,46 @@ class Store with ChangeNotifier {
 
   Future<void> getCurrentLocation() async {
     try {
-      Position position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      double _latitude = position.latitude;
-      double _longitude = position.longitude;
+      // Position position = await Geolocator()
+      //     .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      // double _latitude = position.latitude;
+      // double _longitude = position.longitude;
 
-      usersLocation = LatLng(_latitude, _longitude);
+      // usersLocation = LatLng(_latitude, _longitude);
+
+      locat.Location locationService = locat.Location();
+
+      bool _serviceEnabled;
+      locat.PermissionStatus _permissionGranted;
+      locat.LocationData _locationData;
+
+      _serviceEnabled = await locationService.serviceEnabled();
+      if (!_serviceEnabled) {
+        _serviceEnabled = await locationService.requestService();
+        if (!_serviceEnabled) {
+          return;
+        }
+      }
+
+      _permissionGranted = await locationService.hasPermission();
+      if (_permissionGranted == locat.PermissionStatus.denied) {
+        _permissionGranted = await locationService.requestPermission();
+        if (_permissionGranted != locat.PermissionStatus.granted) {
+          return;
+        }
+      }
+
+      _locationData = await locationService.getLocation();
+
+      usersLocation = LatLng(_locationData.latitude, _locationData.longitude);
     } catch (e) {
       print(e);
     }
   }
 
   double calcDistance(location) {
+    getCurrentLocation();
+
     final Distance distance = new Distance();
 
     LatLng locationCoord =
