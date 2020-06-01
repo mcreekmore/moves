@@ -61,7 +61,7 @@ class _SettingsState extends State<Settings> {
                       },
                     ),
             ),
-            MessagingWidget(),
+            //MessagingWidget(),
           ],
         ),
       ),

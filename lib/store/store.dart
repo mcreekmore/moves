@@ -6,7 +6,7 @@ import 'dart:convert'; // JSON parser
 import '../model/homelist.dart';
 import 'package:moves/model/location_loaded_model.dart';
 import 'package:latlong/latlong.dart';
-import 'package:geolocator/geolocator.dart';
+//import 'package:geolocator/geolocator.dart';
 import 'package:moves/screens_ui/location_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -37,8 +37,8 @@ class Store with ChangeNotifier {
   List<HomeListItem> filteredLocations = [];
   List<GoogleHomeList> googleHomeList = [];
   List<LocationLoadedModel> locations = [];
-  LatLng usersLocation = LatLng(0, 0);
-  LatLng usersManualLocation = LatLng(0, 0);
+  LatLng usersLocation = LatLng(35.7796, -78.6382);
+  LatLng usersManualLocation = LatLng(35.7796, -78.6382);
   bool manualLocationSelected = false;
   String placesAPIKeyAndroid = 'AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ';
   final GoogleMapsPlaces places =
@@ -166,7 +166,7 @@ class Store with ChangeNotifier {
     typeFilter = type;
   }
 
-  void setUsersManualLocation(lat, lon) async {
+  Future<void> setUsersManualLocation(lat, lon) async {
     usersManualLocation.latitude = lat;
     usersManualLocation.longitude = lon;
 
@@ -175,7 +175,7 @@ class Store with ChangeNotifier {
     prefs.setDouble('manualLon', lon);
   }
 
-  void toggleManualLocation() async {
+  Future<void> toggleManualLocation() async {
     manualLocationSelected = !manualLocationSelected;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -215,7 +215,8 @@ class Store with ChangeNotifier {
 
   Future<void> getUserPersistentData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('userID') && prefs.containsKey('userID')) {
+
+    if (prefs.containsKey('userID') && prefs.containsKey('userEmail')) {
       userID = prefs.getString('userID');
       userEmail = prefs.getString('userEmail');
     } else {
@@ -396,9 +397,7 @@ class Store with ChangeNotifier {
   }
 
   double calcDistance(location) {
-    getCurrentLocation();
-
-    final Distance distance = new Distance();
+    final Distance distance = Distance();
 
     LatLng locationCoord =
         LatLng(location["lat"].toDouble(), location["lon"].toDouble());
