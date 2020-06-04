@@ -37,8 +37,8 @@ class Store with ChangeNotifier {
   List<HomeListItem> filteredLocations = [];
   List<GoogleHomeList> googleHomeList = [];
   List<LocationLoadedModel> locations = [];
-  LatLng usersLocation = LatLng(0, 0);
-  LatLng usersManualLocation = LatLng(0, 0);
+  LatLng usersLocation = LatLng(35.7796, -78.6382);
+  LatLng usersManualLocation = LatLng(35.7796, -78.6382);
   bool manualLocationSelected = false;
   String placesAPIKeyAndroid = 'AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ';
   final GoogleMapsPlaces places =
