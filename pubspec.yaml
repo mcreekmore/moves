@@ -1,7 +1,7 @@
 name: moves
 description: A new Flutter project.
 
-version: 1.1.5+16
+version: 1.1.6+17
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
