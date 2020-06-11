@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moves/model/chip_selected.dart';
 //import 'package:moves/widgets/messaging.dart';
 import '../model/homelist.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 //import 'package:location_permissions/location_permissions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moves/screens_ui/discover_screen.dart';
+import 'package:moves/widgets/filter_bar.dart';
 
 // coach
 import 'package:tutorial_coach_mark/animated_focus_light.dart';
@@ -57,7 +59,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   Future<bool> getLocationData() async {
     //await Future<dynamic>.delayed(const Duration(milliseconds: 0));
-    await Provider.of<Store>(context, listen: false).getData(favoriteSelected);
+
+    await Provider.of<Store>(context, listen: false)
+        .getData(favorite: favoriteSelected, filterBarEnum: selectedEnumValue);
     return true;
   }
 
@@ -118,6 +122,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       }
     }
 
+    void filterBarCallback(ChipSelected selectedEnumValue) async {
+      setState(() {
+        Provider.of<Store>(context, listen: false).getData(
+            favorite: favoriteSelected, filterBarEnum: selectedEnumValue);
+      });
+    }
+
     return FutureBuilder<bool>(
       future: getData(),
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
@@ -152,8 +163,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       ).then(
                         (val) async {
                           setState(() {
-                            Provider.of<Store>(context, listen: false)
-                                .getData(favoriteSelected);
+                            Provider.of<Store>(context, listen: false).getData(
+                                favorite: favoriteSelected,
+                                filterBarEnum: selectedEnumValue);
                           });
                         },
                       );
@@ -173,8 +185,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     onPressed: () {
                       setState(() {
                         favoriteSelected = !favoriteSelected;
-                        Provider.of<Store>(context, listen: false)
-                            .getData(favoriteSelected);
+                        Provider.of<Store>(context, listen: false).getData(
+                            favorite: favoriteSelected,
+                            filterBarEnum: selectedEnumValue);
                       });
                     },
                     tooltip: 'Favorites',
@@ -342,8 +355,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 16.0, left: 8, right: 8),
+                        padding: const EdgeInsets.only(left: 8, right: 8),
                         child: TextField(
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(15),
@@ -362,6 +374,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           },
                         ),
                       ),
+                      FilterBar(
+                        favoriteSelected: favoriteSelected,
+                        callback: filterBarCallback,
+                      ),
                       Expanded(
                         child: FutureBuilder<bool>(
                           future: getLocationData(),
@@ -378,7 +394,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                 onRefresh: () async {
                                   setState(() {
                                     Provider.of<Store>(context, listen: false)
-                                        .getData(favoriteSelected);
+                                        .getData(
+                                            favorite: favoriteSelected,
+                                            filterBarEnum: selectedEnumValue);
                                   });
                                 },
                                 child: Provider.of<Store>(context)

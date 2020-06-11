@@ -229,7 +229,8 @@ class _LocationScreenState extends State<LocationScreen> {
           body: RefreshIndicator(
             onRefresh: () async {
               setState(() {
-                Provider.of<Store>(context, listen: false).getData(false);
+                Provider.of<Store>(context, listen: false)
+                    .getData(favorite: false, filterBarEnum: null);
               });
             },
             child: CustomScrollView(

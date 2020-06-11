@@ -18,6 +18,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:moves/model/favorite.dart';
 import 'package:location/location.dart' as locat;
+import 'package:moves/model/chip_selected.dart';
 
 //import 'package:permission_handler/permission_handler.dart';
 //fixes indefinite loading for ios (delayed access prompt) (NOPE)
@@ -157,6 +158,25 @@ class Store with ChangeNotifier {
     //notifyListeners();
   }
 
+  // this is the filter bar below the search on the home screen
+  // one value can be selected at a time
+  // this is filtered last in the stack
+  void filterEnum(ChipSelected enumValue) {
+    String enumValueEnd = enumValue.toString().split('.').last;
+
+    //mutations
+    filteredLocations = filteredLocations
+        .where((i) =>
+            i.location.updateInfo["grocery_update_info"][enumValueEnd] !=
+                null &&
+            i.location.updateInfo["grocery_update_info"][enumValueEnd] != 0)
+        .toList();
+
+    //print(filteredLocations[0].location.updateInfo["grocery_update_info"][enumValueEnd]);
+
+    notifyListeners();
+  }
+
   void resetFilterTypes() {
     filteredLocations = homeList;
     notifyListeners();
@@ -191,7 +211,7 @@ class Store with ChangeNotifier {
     await getCurrentLocation();
     //await getGoogleLocationData();
     await getUserPersistentData();
-    await getData(false);
+    await getData(favorite: false, filterBarEnum: null);
     filteredTypes = types;
   }
 
@@ -286,7 +306,8 @@ class Store with ChangeNotifier {
     return signedInUserPref;
   }
 
-  Future<List<LocationLoadedModel>> getData(bool favorite) async {
+  Future<List<LocationLoadedModel>> getData(
+      {bool favorite, ChipSelected filterBarEnum}) async {
     http.Response response =
         await http.get(uri.toString() + '/locations/approved');
 
@@ -342,6 +363,10 @@ class Store with ChangeNotifier {
 
       if (filterString != '') {
         filterLocations(filterString);
+      }
+
+      if (filterBarEnum != null) {
+        filterEnum(filterBarEnum);
       }
 
       //notifyListeners();
