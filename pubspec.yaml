@@ -46,7 +46,6 @@ dependencies:
   email_launcher: ^1.0.0
   location: ^3.0.2
   #floating_search_bar: ^0.2.0
-
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0
   smooth_star_rating: ^1.0.3

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:moves/model/location_loaded_model.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:moves/theme_notifier.dart';
+import 'package:provider/provider.dart';
 
 class LocationActionBar extends StatelessWidget {
   LocationActionBar({this.location});
@@ -56,8 +58,29 @@ class LocationActionBar extends StatelessWidget {
           onPressed: () {
             _launchUber();
           },
-          color: Colors.black,
-          child: Text('UBER'),
+          color: Provider.of<ThemeNotifier>(context).getTheme() == darkTheme
+              ? Colors.white
+              : Colors.black,
+          // child: Text(
+          //   'UBER',
+          //   style: TextStyle(
+          //     color: Provider.of<ThemeNotifier>(context).getTheme() == darkTheme
+          //         ? Colors.black
+          //         : Colors.white,
+          //   ),
+          // ),
+          child: SizedBox(
+            height: 30,
+            child: Provider.of<ThemeNotifier>(context).getTheme() == darkTheme
+                ? Image.asset(
+                    'assets/images/Uber_Logo_Black_RGB.png',
+                    fit: BoxFit.fitHeight,
+                  )
+                : Image.asset(
+                    'assets/images/Uber_Logo_White_RGB.png',
+                    fit: BoxFit.fitHeight,
+                  ),
+          ),
         ),
         FlatButton(
           shape: new RoundedRectangleBorder(
@@ -65,8 +88,16 @@ class LocationActionBar extends StatelessWidget {
           onPressed: () {
             _launchLyft();
           },
-          child: Text('LYFT'),
-          color: Color(0xFFFE01EA),
+          child: SizedBox(
+            height: 30,
+            child: Image.asset(
+              'assets/images/lyft.png',
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+          color: Provider.of<ThemeNotifier>(context).getTheme() == darkTheme
+              ? Colors.white
+              : Colors.black,
         ),
       ],
     );
