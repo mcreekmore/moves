@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moves/model/location_loaded_model.dart';
-import 'package:moves/themes/location_theme.dart';
+//import 'package:moves/themes/location_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:moves/screens_ui/type_screens/bar.dart';
@@ -22,6 +22,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:moves/model/favorite.dart';
+import 'package:moves/widgets/location_action_bar.dart';
 //import 'package:flutter/cupertino.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -318,63 +319,71 @@ class _LocationScreenState extends State<LocationScreen> {
                                                 '${widget.location.street}, ${widget.location.region}, ${widget.location.country}, ${widget.location.zip}'),
                                           ),
                                         ),
-                                        ButtonBar(
-                                          children: <Widget>[
-                                            Container(
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 20,
-                                                            left: 20),
-                                                    child: Text(
-                                                      '${widget.location.distance} mi',
-                                                      textAlign: TextAlign.left,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w200,
-                                                        fontSize: 22,
-                                                        letterSpacing: 0.27,
-                                                        // color: LocationTheme
-                                                        //     .nearlyBlue,
-                                                        color:
-                                                            Colors.blueAccent,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  FlatButton(
-                                                    shape:
-                                                        new RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                new BorderRadius
-                                                                        .circular(
-                                                                    30.0)),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5),
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: ButtonBar(
+                                            children: <Widget>[
+                                              Container(
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 20,
+                                                              left: 20),
                                                       child: Text(
-                                                        'NAVIGATE',
+                                                        '${widget.location.distance} mi',
+                                                        textAlign:
+                                                            TextAlign.left,
                                                         style: TextStyle(
-                                                            //color: Colors.white,
-                                                            ),
+                                                          fontWeight:
+                                                              FontWeight.w200,
+                                                          fontSize: 22,
+                                                          letterSpacing: 0.27,
+                                                          // color: LocationTheme
+                                                          //     .nearlyBlue,
+                                                          color:
+                                                              Colors.blueAccent,
+                                                        ),
                                                       ),
                                                     ),
-                                                    //color: LocationTheme.nearlyBlue,
-                                                    color: Colors.blueAccent,
-                                                    // splashColor: Colors.white
-                                                    //     .withOpacity(0.3),
-                                                    onPressed: () {
-                                                      openMap(
-                                                          widget.location.lat,
-                                                          widget.location.lon);
-                                                    },
-                                                  ),
-                                                ],
+                                                    FlatButton(
+                                                      shape: new RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              new BorderRadius
+                                                                      .circular(
+                                                                  30.0)),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 5),
+                                                        child: Text(
+                                                          'NAVIGATE',
+                                                          style: TextStyle(
+                                                              //color: Colors.white,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      //color: LocationTheme.nearlyBlue,
+                                                      color: Colors.blueAccent,
+                                                      // splashColor: Colors.white
+                                                      //     .withOpacity(0.3),
+                                                      onPressed: () {
+                                                        openMap(
+                                                            widget.location.lat,
+                                                            widget
+                                                                .location.lon);
+                                                      },
+                                                    ),
+                                                    LocationActionBar(
+                                                      location: widget.location,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),

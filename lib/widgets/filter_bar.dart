@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moves/model/chip_selected.dart';
-import 'package:moves/store/store.dart';
-import 'package:provider/provider.dart';
+// import 'package:moves/store/store.dart';
+// import 'package:provider/provider.dart';
 
 class FilterBar extends StatefulWidget {
   FilterBar({this.favoriteSelected, this.callback});
