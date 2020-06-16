@@ -31,6 +31,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //precacheImage(AssetImage('assets/images/Uber_Logo_White_RGB.png'), context);
+    // fixes slow load of uber logo by caching image on start
+
     //getPermission(); // todo finish delayed location permission
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     SystemChrome.setSystemUIOverlayStyle(themeNotifier.getSystemOverlayStyle());
