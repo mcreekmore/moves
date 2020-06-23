@@ -10,13 +10,11 @@ class LocationActionBar extends StatelessWidget {
 
   final LocationLoadedModel location;
 
-  ImageProvider uberImg = AssetImage("assets/images/Uber_Logo_White_RGB.png");
-
   _launchUber() async {
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-    String url = 'https://m.uber.com/ul/?' +
+    var url = Uri.encodeFull('https://m.uber.com/ul/?' +
         'client_id=j1ZjsNQ24l2nrYYkvEeYMm76M7MSkTUq' +
         '&action=setPickup' +
         '&pickup[latitude]=${position.latitude}' +
@@ -24,7 +22,7 @@ class LocationActionBar extends StatelessWidget {
         '&pickup[nickname]=Current Location' +
         '&dropoff[latitude]=${location.lat}' +
         '&dropoff[longitude]=${location.lon}' +
-        '&dropoff[nickname]=${location.name}';
+        '&dropoff[nickname]=${location.name}');
 
     if (await canLaunch(url)) {
       await launch(url);
@@ -37,11 +35,11 @@ class LocationActionBar extends StatelessWidget {
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-    String url = 'lyft://ridetype?id=lyft' +
+    var url = Uri.encodeFull('https://lyft.com/ride?id=lyft' +
         '&pickup[latitude]=${position.latitude}' +
         '&pickup[longitude]=${position.longitude}' +
         '&destination[latitude]=${location.lat}' +
-        '&destination[longitude]=${location.lon}';
+        '&destination[longitude]=${location.lon}');
 
     if (await canLaunch(url)) {
       await launch(url);
@@ -60,34 +58,12 @@ class LocationActionBar extends StatelessWidget {
           onPressed: () {
             _launchUber();
           },
-          // color: Provider.of<ThemeNotifier>(context).getTheme() == darkTheme
-          //     ? Colors.white
-          //     : Colors.black,
-
           color: Colors.black,
-          // child: Text(
-          //   'UBER',
-          //   style: TextStyle(
-          //     color: Provider.of<ThemeNotifier>(context).getTheme() == darkTheme
-          //         ? Colors.black
-          //         : Colors.white,
-          //   ),
-          // ),
           child: SizedBox(
             height: 30,
-            // child: Provider.of<ThemeNotifier>(context).getTheme() == darkTheme
-            //     ? Image.asset(
-            //         'assets/images/Uber_Logo_Black_RGB.png',
-            //         //fit: BoxFit.fitHeight,
-            //       )
-            //     : Image.asset(
-            //         'assets/images/Uber_Logo_White_RGB.png',
-            //         //fit: BoxFit.fitHeight,
-            //       ),
             child: Image(
               image: AssetImage(
                 'assets/images/Uber_Logo_White_RGB.jpg',
-                //fit: BoxFit.fitHeight,
               ),
             ),
           ),
@@ -102,12 +78,8 @@ class LocationActionBar extends StatelessWidget {
             height: 30,
             child: Image.asset(
               'assets/images/lyft.jpg',
-              //fit: BoxFit.fitHeight,
             ),
           ),
-          // color: Provider.of<ThemeNotifier>(context).getTheme() == darkTheme
-          //     ? Colors.white
-          //     : Colors.black,
           color: Colors.black,
         ),
       ],
