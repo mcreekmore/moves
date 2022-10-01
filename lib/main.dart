@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:moves/screens_ui/navigation_home_screen.dart';
+//import 'package:moves/screens_ui/navigation_home_screen.dart';
+import 'package:moves/screens_ui/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 import 'store/store.dart';
 import 'theme_notifier.dart';
@@ -30,6 +31,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //precacheImage(AssetImage('assets/images/Uber_Logo_White_RGB.png'), context);
+    // fixes slow load of uber logo by caching image on start
+
     //getPermission(); // todo finish delayed location permission
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     SystemChrome.setSystemUIOverlayStyle(themeNotifier.getSystemOverlayStyle());
@@ -45,7 +49,7 @@ class MyApp extends StatelessWidget {
         //   textTheme: AppTheme().getTextTheme(),
         //   //platform: TargetPlatform.iOS,
         // ),
-        home: NavigationHomeScreen(),
+        home: Splash(),
       ),
     );
   }

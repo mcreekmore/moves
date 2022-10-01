@@ -1,7 +1,7 @@
 name: moves
 description: A new Flutter project.
 
-version: 1.0.2+6
+version: 1.2.1+22
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -17,12 +17,12 @@ dependencies:
   cloud_firestore: ^0.13.0+1
   firebase_messaging: ^6.0.13
   google_sign_in: ^4.1.1
-  google_maps_flutter: ^0.5.21+15
+  google_maps_flutter: ^0.5.28+1
   #rxdart: ^0.23.1
   provider: ^4.0.2
   #bottom_navy_bar: ^5.3.2
   #search_map_place: ^0.1.1
-  url_launcher: ^5.4.1
+  url_launcher: ^5.4.10
   #rflutter_alert: ^1.0.3
   #flutter_bloc: ^0.20.0
   geocoder: ^0.2.1
@@ -31,22 +31,24 @@ dependencies:
   geolocator: ^5.2.0
   shared_preferences: ^0.5.6+1
   google_maps_webservice: ^0.0.16
-  flutter_google_places: ^0.2.3
+  #flutter_google_places: ^0.2.3
   dio: ^3.0.8 # for post requests with arrays
   flutter_form_builder: ^3.7.3
   #charts_flutter: ^0.8.1
   intl: ^0.16.0
-  permission_handler: ^5.0.0+hotfix.4
-  location_permissions: ^2.0.5
+  #permission_handler: ^5.0.0+hotfix.4
   tutorial_coach_mark: ^0.3.0
   qr_flutter: ^3.2.0
   apple_sign_in: ^0.1.0 # ios only
-
+  sqflite: ^1.3.0+1
+  path_provider: ^1.6.9
+  introduction_screen: ^1.0.7
+  email_launcher: ^1.0.0
+  location: ^3.0.2
+  #floating_search_bar: ^0.2.0
   # these are from best flutter ui templates
   font_awesome_flutter: ^8.5.0
   smooth_star_rating: ^1.0.3
-
-  floating_search_bar: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -57,20 +59,19 @@ flutter:
 
   assets:
     - assets/images/
-
-  fonts:
-    - family: WorkSans
-      fonts:
-        - asset: assets/fonts/WorkSans-Regular.ttf
-        - asset: assets/fonts/WorkSans-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/WorkSans-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/WorkSans-Bold.ttf
-          weight: 700
-    - family: Roboto
-      fonts:
-        - asset: assets/fonts/Roboto-Bold.ttf
-        - asset: assets/fonts/Roboto-Regular.ttf
-        - asset: assets/fonts/Roboto-Medium.ttf
-          weight: 400
+  # fonts:
+  #   - family: WorkSans
+  #     fonts:
+  #       - asset: assets/fonts/WorkSans-Regular.ttf
+  #       - asset: assets/fonts/WorkSans-Medium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/WorkSans-SemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/WorkSans-Bold.ttf
+  #         weight: 700
+  #   - family: Roboto
+  #     fonts:
+  #       - asset: assets/fonts/Roboto-Bold.ttf
+  #       - asset: assets/fonts/Roboto-Regular.ttf
+  #       - asset: assets/fonts/Roboto-Medium.ttf
+  #         weight: 400

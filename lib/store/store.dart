@@ -13,6 +13,12 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:moves/model/google_home_list.dart';
 import 'package:moves/model/types_model.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:moves/model/favorite.dart';
+import 'package:location/location.dart' as locat;
+import 'package:moves/model/chip_selected.dart';
 
 //import 'package:permission_handler/permission_handler.dart';
 //fixes indefinite loading for ios (delayed access prompt) (NOPE)
@@ -32,8 +38,8 @@ class Store with ChangeNotifier {
   List<HomeListItem> filteredLocations = [];
   List<GoogleHomeList> googleHomeList = [];
   List<LocationLoadedModel> locations = [];
-  LatLng usersLocation = LatLng(0, 0);
-  LatLng usersManualLocation = LatLng(0, 0);
+  LatLng usersLocation = LatLng(35.7796, -78.6382);
+  LatLng usersManualLocation = LatLng(35.7796, -78.6382);
   bool manualLocationSelected = false;
   String placesAPIKeyAndroid = 'AIzaSyBhgIifdX2YAvcIUGOksAyYJM40BzITYdQ';
   final GoogleMapsPlaces places =
@@ -41,6 +47,10 @@ class Store with ChangeNotifier {
   List<PlacesSearchResult> googleLocationResults;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   LocationType typeFilter = LocationType.all;
+  Database database;
+  List<Favorite> favorites = List();
+  String filterString = '';
+
   List<String> types = [
     "Restaurant",
     "Hotel",
@@ -85,7 +95,7 @@ class Store with ChangeNotifier {
   /// MUTATORS
 
   void filterLocations(string) {
-    filteredLocations = homeList
+    filteredLocations = filteredLocations
         .where(
             (i) => i.location.name.toLowerCase().contains(string.toLowerCase()))
         .toList();
@@ -95,6 +105,7 @@ class Store with ChangeNotifier {
   }
 
   void filterTypes(LocationType type) {
+    typeFilter = type;
     filteredLocations = homeList;
     if (type == LocationType.restaurant) {
       filteredLocations = filteredLocations
@@ -144,6 +155,25 @@ class Store with ChangeNotifier {
       filteredLocations = homeList;
     }
 
+    //notifyListeners();
+  }
+
+  // this is the filter bar below the search on the home screen
+  // one value can be selected at a time
+  // this is filtered last in the stack
+  void filterEnum(ChipSelected enumValue) {
+    String enumValueEnd = enumValue.toString().split('.').last;
+
+    //mutations
+    filteredLocations = filteredLocations
+        .where((i) =>
+            i.location.updateInfo["grocery_update_info"][enumValueEnd] !=
+                null &&
+            i.location.updateInfo["grocery_update_info"][enumValueEnd] != 0)
+        .toList();
+
+    //print(filteredLocations[0].location.updateInfo["grocery_update_info"][enumValueEnd]);
+
     notifyListeners();
   }
 
@@ -177,11 +207,30 @@ class Store with ChangeNotifier {
   /// METHODS
 
   Future initData() async {
+    await initDb();
     await getCurrentLocation();
     //await getGoogleLocationData();
     await getUserPersistentData();
-    await getData();
+    await getData(favorite: false, filterBarEnum: null);
     filteredTypes = types;
+  }
+
+  Future<void> initDb() async {
+    // open the database
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = directory.path + "moves.db";
+
+    database = await openDatabase(path, version: 1,
+        onCreate: (Database db, int version) async {
+      // When creating the db, create the table
+      await db.execute(
+          'CREATE TABLE Favorites (id INTEGER PRIMARY KEY, placeID TEXT)');
+    });
+    // read from db
+    var response = await database.rawQuery('SELECT * FROM Favorites');
+    favorites = response.map((c) => Favorite.fromMap(c)).toList();
+
+    //print(favorites.toString());
   }
 
   Future<void> getUserPersistentData() async {
@@ -211,6 +260,43 @@ class Store with ChangeNotifier {
   //   googleLocationResults = response.results;
   // }
 
+  Future<void> addToFavorites(String id) async {
+    // Insert some records in a transaction
+    int rowId;
+    await database.transaction(
+      (txn) async {
+        rowId = await txn.rawInsert(
+          'INSERT INTO Favorites(placeID) VALUES("$id")',
+        );
+        print('inserted: $rowId');
+      },
+    );
+    // read from db
+    // var response = await database.rawQuery('SELECT * FROM Favorites');
+    // favorites = response.map((c) => Favorite.fromMap(c)).toList();
+    Favorite newFavorite = Favorite(id: rowId, placeID: id);
+    favorites.add(newFavorite);
+
+    //print(favorites[0].getPlaceID());
+  }
+
+  Future<void> deleteFromFavorites(String id) async {
+    // Delete a record
+    await database.rawDelete(
+      'DELETE FROM Favorites WHERE placeID = ?',
+      ['$id'],
+    );
+    print('Removed $id from Favorites');
+    //assert(count == 1);
+
+    // read from db
+    // var response = await database.rawQuery('SELECT * FROM Favorites');
+    // favorites = response.map((c) => Favorite.fromMap(c)).toList();
+    favorites.removeWhere((element) => element.placeID.toString() == id);
+
+    //print(favorites.toString());
+  }
+
   Future<dynamic> getUserFromSharedPref() async {
     final prefs = await SharedPreferences.getInstance();
     FirebaseUser signedInUserPref = prefs.get('signedInUserPref');
@@ -220,7 +306,8 @@ class Store with ChangeNotifier {
     return signedInUserPref;
   }
 
-  Future<List<LocationLoadedModel>> getData() async {
+  Future<List<LocationLoadedModel>> getData(
+      {bool favorite, ChipSelected filterBarEnum}) async {
     http.Response response =
         await http.get(uri.toString() + '/locations/approved');
 
@@ -253,11 +340,36 @@ class Store with ChangeNotifier {
         ));
       }
 
+      // favorites filter
+      if (favorite) {
+        List<LocationLoadedModel> locationsFull = locations;
+        locations = List();
+        for (LocationLoadedModel location in locationsFull) {
+          for (Favorite favorite in favorites) {
+            if (favorite.getPlaceID() == location.id) {
+              locations.add(location);
+            }
+          }
+        }
+      }
+
       sortLocations(locations);
 
       buildHomeList(locations);
 
-      notifyListeners();
+      if (typeFilter != LocationType.all) {
+        filterTypes(typeFilter);
+      }
+
+      if (filterString != '') {
+        filterLocations(filterString);
+      }
+
+      if (filterBarEnum != null) {
+        filterEnum(filterBarEnum);
+      }
+
+      //notifyListeners();
       return locations;
     } else {
       print(response.statusCode);
@@ -271,18 +383,46 @@ class Store with ChangeNotifier {
 
   Future<void> getCurrentLocation() async {
     try {
-      Position position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      double _latitude = position.latitude;
-      double _longitude = position.longitude;
+      // Position position = await Geolocator()
+      //     .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      // double _latitude = position.latitude;
+      // double _longitude = position.longitude;
 
-      usersLocation = LatLng(_latitude, _longitude);
+      // usersLocation = LatLng(_latitude, _longitude);
+
+      locat.Location locationService = locat.Location();
+
+      bool _serviceEnabled;
+      locat.PermissionStatus _permissionGranted;
+      locat.LocationData _locationData;
+
+      _serviceEnabled = await locationService.serviceEnabled();
+      if (!_serviceEnabled) {
+        _serviceEnabled = await locationService.requestService();
+        if (!_serviceEnabled) {
+          return;
+        }
+      }
+
+      _permissionGranted = await locationService.hasPermission();
+      if (_permissionGranted == locat.PermissionStatus.denied) {
+        _permissionGranted = await locationService.requestPermission();
+        if (_permissionGranted != locat.PermissionStatus.granted) {
+          return;
+        }
+      }
+
+      _locationData = await locationService.getLocation();
+
+      usersLocation = LatLng(_locationData.latitude, _locationData.longitude);
     } catch (e) {
       print(e);
     }
   }
 
   double calcDistance(location) {
+    getCurrentLocation();
+
     final Distance distance = new Distance();
 
     LatLng locationCoord =
@@ -417,6 +557,10 @@ class Store with ChangeNotifier {
         // setState(() {
         //   errorMessage = "Sign in failed";
         // });
+        break;
+
+      default:
+        print('Sign in failed: Most likely canceled (default switch)');
         break;
     }
   }

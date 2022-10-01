@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moves/model/location_loaded_model.dart';
-import 'package:moves/themes/location_theme.dart';
+//import 'package:moves/themes/location_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:moves/screens_ui/type_screens/bar.dart';
@@ -21,6 +21,8 @@ import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'dart:convert';
+import 'package:moves/model/favorite.dart';
+import 'package:moves/widgets/location_action_bar.dart';
 //import 'package:flutter/cupertino.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -33,9 +35,11 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  static LocationLoadedModel location = location;
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;
+  bool favoriteSelected = false;
   @override
   void initState() {
     setData();
@@ -58,6 +62,7 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   bool multiple = false;
+  //bool favoriteSelected = false;
 
   // GOOGLE MAPS URL LAUNCHING
   static Future<void> openMap(double latitude, double longitude) async {
@@ -89,8 +94,47 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    for (Favorite favorite in Provider.of<Store>(context).favorites) {
+      //print(favorite.getPlaceID());
+
+      if (favorite.getPlaceID() == widget.location.id) {
+        setState(() {
+          favoriteSelected = true;
+        });
+        break;
+      }
+      setState(() {
+        favoriteSelected = false;
+      });
+    }
+
+    //print(favoriteSelected);
     var expandedHeight = 128.0;
     final GlobalKey<State> _key = GlobalKey<State>();
+
+    void toggleFavorite() async {
+      if (!favoriteSelected) {
+        await Provider.of<Store>(context, listen: false)
+            .addToFavorites(
+              widget.location.id,
+            )
+            .then(
+              (value) => setState(() {
+                favoriteSelected = !favoriteSelected;
+              }),
+            );
+      } else {
+        Provider.of<Store>(context, listen: false)
+            .deleteFromFavorites(
+              widget.location.id,
+            )
+            .then(
+              (value) => setState(() {
+                favoriteSelected = !favoriteSelected;
+              }),
+            );
+      }
+    }
 
     // void showSnackBar(context) {
     //   SnackBar snackBar = SnackBar(
@@ -186,7 +230,8 @@ class _LocationScreenState extends State<LocationScreen> {
           body: RefreshIndicator(
             onRefresh: () async {
               setState(() {
-                Provider.of<Store>(context, listen: false).getData();
+                Provider.of<Store>(context, listen: false)
+                    .getData(favorite: false, filterBarEnum: null);
               });
             },
             child: CustomScrollView(
@@ -218,10 +263,14 @@ class _LocationScreenState extends State<LocationScreen> {
                   ),
                   actions: <Widget>[
                     IconButton(
-                      icon: Icon(Icons.favorite_border),
+                      icon: favoriteSelected
+                          ? Icon(Icons.favorite)
+                          : Icon(Icons.favorite_border),
                       tooltip: 'Add to favorites',
                       //color: AppTheme.darkText,
-                      onPressed: () {/* ... */},
+                      onPressed: () {
+                        toggleFavorite();
+                      },
                     ),
                   ],
                 ),
@@ -270,81 +319,71 @@ class _LocationScreenState extends State<LocationScreen> {
                                                 '${widget.location.street}, ${widget.location.region}, ${widget.location.country}, ${widget.location.zip}'),
                                           ),
                                         ),
-                                        ButtonBar(
-                                          children: <Widget>[
-                                            Container(
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Text(
-                                                    'coming soon',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w200,
-                                                      fontSize: 12,
-                                                      letterSpacing: 0.27,
-                                                      color: LocationTheme.grey,
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.star,
-                                                    //color: LocationTheme.nearlyBlue,
-                                                    color: Colors.blueAccent,
-
-                                                    size: 24,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 20,
-                                                            left: 20),
-                                                    child: Text(
-                                                      '${widget.location.distance} mi',
-                                                      textAlign: TextAlign.left,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w200,
-                                                        fontSize: 22,
-                                                        letterSpacing: 0.27,
-                                                        // color: LocationTheme
-                                                        //     .nearlyBlue,
-                                                        color:
-                                                            Colors.blueAccent,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  FlatButton(
-                                                    shape:
-                                                        new RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                new BorderRadius
-                                                                        .circular(
-                                                                    30.0)),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5),
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: ButtonBar(
+                                            children: <Widget>[
+                                              Container(
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 20,
+                                                              left: 20),
                                                       child: Text(
-                                                        'NAVIGATE',
+                                                        '${widget.location.distance} mi',
+                                                        textAlign:
+                                                            TextAlign.left,
                                                         style: TextStyle(
-                                                            //color: Colors.white,
-                                                            ),
+                                                          fontWeight:
+                                                              FontWeight.w200,
+                                                          fontSize: 22,
+                                                          letterSpacing: 0.27,
+                                                          // color: LocationTheme
+                                                          //     .nearlyBlue,
+                                                          color:
+                                                              Colors.blueAccent,
+                                                        ),
                                                       ),
                                                     ),
-                                                    //color: LocationTheme.nearlyBlue,
-                                                    color: Colors.blueAccent,
-                                                    // splashColor: Colors.white
-                                                    //     .withOpacity(0.3),
-                                                    onPressed: () {
-                                                      openMap(
-                                                          widget.location.lat,
-                                                          widget.location.lon);
-                                                    },
-                                                  ),
-                                                ],
+                                                    FlatButton(
+                                                      shape: new RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              new BorderRadius
+                                                                      .circular(
+                                                                  30.0)),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 5),
+                                                        child: Text(
+                                                          'NAVIGATE',
+                                                          style: TextStyle(
+                                                              //color: Colors.white,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      //color: LocationTheme.nearlyBlue,
+                                                      color: Colors.blueAccent,
+                                                      // splashColor: Colors.white
+                                                      //     .withOpacity(0.3),
+                                                      onPressed: () {
+                                                        openMap(
+                                                            widget.location.lat,
+                                                            widget
+                                                                .location.lon);
+                                                      },
+                                                    ),
+                                                    LocationActionBar(
+                                                      location: widget.location,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),

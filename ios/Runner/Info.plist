@@ -40,11 +40,11 @@
 	<key>NSContactsUsageDescription</key>
 	<string>Access to contacts</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>To allow location services to update automatically</string>
+	<string>Requests access to users location only to determine the distance you are from other places.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Requests access to users location</string>
+	<string>Requests access to users location only to determine the distance you are from other places.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>To allow location services within the app</string>
+	<string>Requests access to users location only to determine the distance you are from other places.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Access to Motion Usage</string>
 	<key>NSPhotoLibraryUsageDescription</key>
